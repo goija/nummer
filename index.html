@@ -43,7 +43,7 @@
 
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.5; -webkit-font-smoothing: antialiased; }
-    .page { max-width: 1360px; margin: 0 auto; padding: 20px 18px 56px; min-height: 100vh; display: flex; flex-direction: column; }
+    .page { max-width: 1380px; margin: 0 auto; padding: 18px 18px 56px; min-height: 100vh; display: flex; flex-direction: column; }
     main { flex: 1; }
 
     .pii-blackout {
@@ -52,13 +52,13 @@
     }
 
     /* HEADER */
-    .header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px; padding-bottom: 16px; border-bottom: 2px solid var(--text); margin-bottom: 16px; }
-    .brand h1 { margin: 0 0 4px; font-size: clamp(21px, 2.8vw, 29px); font-weight: 700; letter-spacing: -0.025em; }
-    .brand p { margin: 0; font-size: 13.5px; color: var(--muted); }
+    .header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 2px solid var(--text); margin-bottom: 12px; }
+    .brand h1 { margin: 0 0 3px; font-size: clamp(20px, 2.6vw, 28px); font-weight: 700; letter-spacing: -0.025em; }
+    .brand p { margin: 0; font-size: 13px; color: var(--muted); }
     .brand code { font-family: var(--mono); font-size: 0.92em; color: var(--red); background: var(--red-soft); padding: 1px 6px; border-radius: 5px; border: 1px solid var(--red-border); }
     .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
-    .status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; background: #1E1E1E; color: #FFFFFF; }
+    .status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; background: #1E1E1E; color: #FFFFFF; }
     .status-pill.is-active { background: var(--ok-soft); border: 1px solid var(--ok-border); color: var(--ok); }
 
     .font-controls { display: inline-flex; align-items: center; background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px; }
@@ -66,7 +66,7 @@
     .font-btn.active { background: var(--bg); color: var(--red); box-shadow: var(--shadow-sm); }
 
     .quill-btn {
-      appearance: none; display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 12px;
+      appearance: none; display: inline-flex; align-items: center; gap: 7px; height: 35px; padding: 0 12px;
       border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: var(--paper);
       color: var(--text); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.16s ease;
     }
@@ -74,6 +74,84 @@
     .quill-btn.is-unlocked { background: var(--red); border-color: var(--red); color: #FFFFFF; }
     .quill-dot { width: 7px; height: 7px; border-radius: 50%; background: #FFFFFF; display: none; }
     .quill-btn.is-unlocked .quill-dot { display: inline-block; }
+
+    /* =========================================================================
+       PROFESSIONELE MENUBALK (DROPDOWN MENU ITEMS)
+       ========================================================================= */
+    .menubar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      background: var(--paper);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      padding: 6px 10px;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 40;
+    }
+
+    .menu-item { position: relative; }
+    .menu-trigger {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .menu-trigger:hover, .menu-item.open .menu-trigger {
+      background: var(--bg);
+      border-color: var(--red-border);
+      color: var(--red);
+    }
+
+    .menu-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 240px;
+      background: var(--bg);
+      border: 1px solid var(--border-strong);
+      border-top: 3px solid var(--red);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+      padding: 6px;
+      z-index: 60;
+    }
+    .menu-item.open .menu-dropdown { display: block; }
+
+    .menu-action {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 10px;
+      border: none;
+      border-radius: 5px;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 12.5px;
+      font-weight: 550;
+      text-align: left;
+      cursor: pointer;
+    }
+    .menu-action:hover:not(:disabled) { background: var(--red-soft); color: var(--red); }
+    .menu-action:disabled { opacity: 0.45; cursor: not-allowed; }
+    .menu-action--danger { color: var(--red); }
+    .menu-sep { height: 1px; background: var(--border); margin: 5px 0; }
+    .menu-hint { font-size: 10.5px; color: var(--muted); font-family: var(--mono); }
 
     /* KNOPPEN & INPUTS */
     .btn {
@@ -98,35 +176,40 @@
     .input-field:focus, .select-field:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(163, 28, 28, 0.12); }
 
     /* BALKEN */
-    .notify-bar { display: none; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--warn-soft); border: 1px solid var(--warn-border); border-left: 4px solid var(--red); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 14px; font-size: 13px; }
-    .notify-bar.visible { display: flex; }
+    .notify-bar, .bulk-bar {
+      display: none; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+      border-radius: var(--radius); padding: 9px 14px; margin-bottom: 12px; font-size: 13px;
+    }
+    .notify-bar { background: var(--warn-soft); border: 1px solid var(--warn-border); border-left: 4px solid var(--red); }
+    .bulk-bar { background: var(--info-soft); border: 1px solid var(--info-border); border-left: 4px solid var(--info); }
+    .notify-bar.visible, .bulk-bar.visible { display: flex; }
 
-    .unlock-panel, .admin-bar { display: none; border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; }
+    .unlock-panel, .admin-bar { display: none; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 14px; }
     .unlock-panel { background: var(--paper); border: 1px solid var(--border-strong); border-left: 3.5px solid var(--red); }
     .admin-bar { background: var(--red-soft); border: 1px solid var(--red-border); border-left: 4px solid var(--red); }
     .unlock-panel.visible, .admin-bar.visible { display: block; }
-    .unlock-head, .admin-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+    .unlock-head, .admin-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
     .unlock-title, .admin-status { font-size: 13.5px; font-weight: 700; color: var(--red); }
-    .unlock-form, .admin-actions-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    .unlock-form { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
     .unlock-error { margin: 7px 0 0; font-size: 12.5px; font-weight: 600; color: var(--red); display: none; }
     .unlock-error.visible { display: block; }
 
-    .pii-panel { margin-top: 10px; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--bg); border: 1px solid var(--red-border); }
+    .pii-panel { margin-top: 8px; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--bg); border: 1px solid var(--red-border); }
     .pii-panel-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
     .pii-toggles { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-bottom: 8px; }
     .pii-check { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer; }
     .pii-check input { accent-color: var(--red); margin: 0; }
 
-    .admin-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; justify-content: space-between; padding-top: 10px; margin-top: 10px; border-top: 1px solid var(--red-border); }
+    .admin-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; justify-content: space-between; padding-top: 8px; margin-top: 8px; border-top: 1px solid var(--red-border); }
     .mode-switch { display: inline-flex; flex-wrap: wrap; gap: 6px; }
     .mode-option { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: var(--radius-sm); border: 1px solid var(--red-border); background: var(--bg); font-size: 12.5px; font-weight: 600; cursor: pointer; }
     .mode-option input { accent-color: var(--red); margin: 0; }
     .mode-option.is-active { border-color: var(--red); color: var(--red); }
-    .token-row { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--red-border); gap: 8px; flex-wrap: wrap; align-items: center; }
+    .token-row { display: none; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--red-border); gap: 8px; flex-wrap: wrap; align-items: center; }
     .token-row.visible { display: flex; }
 
     /* WORKSPACE */
-    .workspace { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 18px; align-items: start; }
+    .workspace { display: grid; grid-template-columns: 295px minmax(0, 1fr); gap: 18px; align-items: start; }
     @media (max-width: 920px) { .workspace { grid-template-columns: 1fr; } }
 
     .sidebar { background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; }
@@ -151,8 +234,8 @@
     .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; margin-bottom: 10px; }
     .filter-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 12px; margin-bottom: 14px; font-size: 12.5px; }
     .filter-strip label { font-weight: 600; color: var(--muted); font-size: 12px; }
-    .search-wrap { position: relative; flex: 1; min-width: 200px; }
-    .search-input { width: 100%; padding: 7px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: var(--bg); font-size: 13.5px; }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; display: flex; gap: 6px; }
+    .search-input { flex: 1; padding: 7px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: var(--bg); font-size: 13.5px; }
     .search-input:focus { outline: none; border-color: var(--red); }
     .doc-counter { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--muted); padding: 4px 9px; border-radius: 999px; background: var(--bg); border: 1px solid var(--border); }
 
@@ -166,6 +249,7 @@
     .doc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .doc-main { min-width: 0; flex: 1; }
     .doc-title-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
+    .doc-select { accent-color: var(--red); width: 15px; height: 15px; cursor: pointer; }
     .doc-link { color: var(--text); text-decoration: none; font-weight: 700; word-break: break-word; }
     .doc-link:hover { color: var(--red); text-decoration: underline; }
 
@@ -189,11 +273,18 @@
     .state-box { background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 20px; text-align: center; color: var(--muted); font-size: 14px; }
     .state-box--error { background: var(--red-soft); border-color: var(--red-border); color: var(--red); }
 
+    /* PDF VIEWER MET ZWARTLAK-LAAG */
+    .pdf-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; padding: 8px 10px; background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 12.5px; }
+    .pdf-stage { position: relative; width: 100%; height: 68vh; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; background: #222; }
+    .pdf-frame { width: 100%; height: 100%; border: none; display: block; }
+    .pdf-redact-canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; z-index: 5; }
+    .pdf-redact-canvas.passthrough { pointer-events: none; }
+
     /* MODALS */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(30, 30, 30, 0.54); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
     .modal-backdrop.visible { display: flex; }
     .modal-card { width: 100%; max-width: 600px; background: var(--bg); border: 1px solid var(--border-strong); border-top: 4px solid var(--red); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow-md); max-height: 92vh; overflow-y: auto; }
-    .modal-card--wide { max-width: 940px; }
+    .modal-card--wide { max-width: 960px; }
     .modal-title { margin: 0 0 10px; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .modal-body { margin: 0 0 14px; font-size: 13.5px; color: var(--muted); }
     .field-label { display: block; font-size: 12px; font-weight: 700; color: var(--text); margin: 10px 0 4px; }
@@ -203,9 +294,8 @@
     .audit-box { background: var(--warn-soft); border: 1px solid var(--warn-border); border-radius: var(--radius-sm); padding: 10px 12px; margin: 10px 0; color: var(--text); font-size: 12.5px; }
     .audit-check { display: flex; align-items: flex-start; gap: 8px; margin: 7px 0; font-size: 13px; color: var(--text); cursor: pointer; }
     .audit-check input { accent-color: var(--red); margin-top: 3px; }
-    .pdf-frame { width: 100%; height: 70vh; border: 1px solid var(--border); border-radius: var(--radius-sm); }
     .eml-box { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
-    .eml-body { padding: 14px; background: var(--bg); color: var(--text); white-space: pre-wrap; max-height: 55vh; overflow-y: auto; }
+    .eml-body { padding: 14px; background: var(--bg); color: var(--text); white-space: pre-wrap; max-height: 58vh; overflow-y: auto; }
     .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 14px; }
     .kpi-card { background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
     .kpi-val { font-size: 22px; font-weight: 700; color: var(--red); font-family: var(--mono); }
@@ -224,7 +314,7 @@
     .modal-error.visible { display: block; }
     .modal-footer { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
 
-    .toast { position: fixed; bottom: 20px; right: 20px; max-width: 390px; background: var(--text); color: #FFFFFF; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; z-index: 120; }
+    .toast { position: fixed; bottom: 20px; right: 20px; max-width: 420px; background: var(--text); color: #FFFFFF; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; z-index: 120; }
     .toast.visible { opacity: 1; transform: translateY(0); }
     .toast--red { background: var(--red); }
     .toast--ok { background: var(--ok); }
@@ -239,12 +329,11 @@
     <header class="header">
       <div class="brand">
         <h1>Professioneel Archief- &amp; POD-Systeem</h1>
-        <p>Mappenbeheer, zelf-archiverende PODs (.ttl + .acl), controle-verwijdering &amp; veerpen voor <code>goija/nummer</code></p>
+        <p>Gestructureerd archiefbeheer, PDF-zwartlak, PODs (.ttl + .acl + PUT) &amp; veerpen voor <code>goija/nummer</code></p>
       </div>
 
       <div class="header-actions">
-        <span class="status-pill" id="email-status-pill">E-mail: Inactief (Zwart)</span>
-        <button type="button" class="btn" id="btn-open-analysis">Analyse</button>
+        <span class="status-pill" id="email-status-pill">E-mail &amp; PDF-PII: Zwart</span>
         <div class="font-controls" role="group" aria-label="Lettergrootte">
           <button type="button" class="font-btn" id="btn-font-down">A&minus;</button>
           <button type="button" class="font-btn active" id="btn-font-reset">A</button>
@@ -259,11 +348,77 @@
       </div>
     </header>
 
+    <!-- PROFESSIONELE MENUBALK -->
+    <nav class="menubar" aria-label="Archiefbeheer menu">
+      <!-- MENU 1: UPLOAD & ARCHIVEER -->
+      <div class="menu-item">
+        <button type="button" class="menu-trigger">Upload &amp; Archiveer &#9662;</button>
+        <div class="menu-dropdown">
+          <button type="button" class="menu-action" id="m-upload"><span>+ Document uploaden (naar Tijdelijk)</span><span class="menu-hint">Veerpen</span></button>
+          <button type="button" class="menu-action" id="m-scan"><span>Scan alle headers &amp; inhoud</span><span class="menu-hint">Veerpen</span></button>
+          <button type="button" class="menu-action" id="m-auto-archive"><span>Auto-archiveer op nummer</span><span class="menu-hint">Veerpen</span></button>
+          <div class="menu-sep"></div>
+          <button type="button" class="menu-action" id="m-verify-all"><span>Verifieer alle Veerpen-zegels</span></button>
+          <button type="button" class="menu-action" id="m-refresh"><span>Vernieuw documentenlijst</span></button>
+        </div>
+      </div>
+
+      <!-- MENU 2: MAPPEN & PODs -->
+      <div class="menu-item">
+        <button type="button" class="menu-trigger">Mappen &amp; PODs &#9662;</button>
+        <div class="menu-dropdown">
+          <button type="button" class="menu-action" id="m-new-folder"><span>Nieuwe map / submap aanmaken</span><span class="menu-hint">Veerpen</span></button>
+          <button type="button" class="menu-action" id="m-manage-pods"><span>Archief-PODs beheren (.ttl/.acl/PUT)</span><span class="menu-hint">Veerpen</span></button>
+          <div class="menu-sep"></div>
+          <button type="button" class="menu-action" id="m-export-center"><span>Archiveer- &amp; Exporteercentrum</span><span class="menu-hint">Veerpen</span></button>
+        </div>
+      </div>
+
+      <!-- MENU 3: WIS-KNOPPEN & OPSCHONEN -->
+      <div class="menu-item">
+        <button type="button" class="menu-trigger">Wis-opties &#9662;</button>
+        <div class="menu-dropdown">
+          <button type="button" class="menu-action" id="m-clear-search"><span>Wis zoekveld &amp; filter</span></button>
+          <button type="button" class="menu-action" id="m-clear-dates"><span>Wis datumfilter</span></button>
+          <button type="button" class="menu-action" id="m-clear-watch"><span>Wis notificatie-trefwoorden</span></button>
+          <button type="button" class="menu-action" id="m-clear-selection"><span>Wis document-selectie</span></button>
+          <div class="menu-sep"></div>
+          <button type="button" class="menu-action" id="m-restore-hidden"><span>Herstel verborgen documenten</span><span class="menu-hint">Veerpen</span></button>
+          <button type="button" class="menu-action menu-action--danger" id="m-clear-cache"><span>Wis lokale tekstcache</span><span class="menu-hint">Veerpen</span></button>
+        </div>
+      </div>
+
+      <!-- MENU 4: ANALYSE, AUDIT & KOPPELINGEN -->
+      <div class="menu-item">
+        <button type="button" class="menu-trigger">Analyse &amp; Koppelingen &#9662;</button>
+        <div class="menu-dropdown">
+          <button type="button" class="menu-action" id="m-analysis"><span>Open Analyse-tool</span></button>
+          <button type="button" class="menu-action" id="m-audit"><span>Open Audit-logboek</span><span class="menu-hint">Veerpen</span></button>
+          <div class="menu-sep"></div>
+          <button type="button" class="menu-action" id="m-systems"><span>Systeemkoppelingen &amp; E-mailactivatie</span><span class="menu-hint">Veerpen</span></button>
+        </div>
+      </div>
+    </nav>
+
+    <input type="file" id="file-upload-input" hidden multiple />
+
     <main>
       <!-- NOTIFICATIEBALK -->
       <div class="notify-bar" id="notify-bar" role="status">
         <span id="notify-text"></span>
         <button type="button" class="btn btn--sm" id="btn-filter-alerts">Toon meldingen</button>
+      </div>
+
+      <!-- BULK-ACTIEBALK (BIJ SELECTIE) -->
+      <div class="bulk-bar" id="bulk-bar">
+        <span><strong id="bulk-count">0</strong> document(en) geselecteerd</span>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <select id="bulk-folder-select" class="select-field"></select>
+          <button type="button" class="btn btn--sm" id="btn-bulk-move">Verplaats &amp; archiveer</button>
+          <select id="bulk-pod-select" class="select-field"></select>
+          <button type="button" class="btn btn--pod btn--sm" id="btn-bulk-pod">Koppel aan POD</button>
+          <button type="button" class="btn btn--sm" id="btn-bulk-clear">Wis selectie</button>
+        </div>
       </div>
 
       <!-- VEERPEN ONTGRENDEL-PANEEL -->
@@ -282,32 +437,24 @@
       <!-- ACTIEVE VEERPEN-BEHEERBALK -->
       <section class="admin-bar" id="admin-bar">
         <div class="admin-top">
-          <span class="admin-status">Veerpen Beheer actief — Mappen, PODs, Archief &amp; Export</span>
-          <div class="admin-actions-row">
-            <button type="button" class="btn btn--sm" id="btn-add-file">+ Document (Tijdelijk)</button>
-            <input type="file" id="file-upload-input" hidden multiple />
-            <button type="button" class="btn btn--pod btn--sm" id="btn-open-pods">PODs beheren</button>
-            <button type="button" class="btn btn--primary btn--sm" id="btn-open-export">Archiveer &amp; Exporteer</button>
-            <button type="button" class="btn btn--sm" id="btn-scan-all">Scan headers</button>
-            <button type="button" class="btn btn--sm" id="btn-auto-folders">Auto-archiveer</button>
-            <button type="button" class="btn btn--sm" id="btn-verify-all">Verifieer zegels</button>
-            <button type="button" class="btn btn--sm" id="btn-open-systems">Koppelingen &amp; E-mail</button>
-            <button type="button" class="btn btn--sm" id="btn-open-audit">Audit (0)</button>
-            <button type="button" class="btn btn--sm" id="btn-restore-hidden" disabled>Herstel (0)</button>
-            <button type="button" class="btn btn--sm" id="btn-lock">Vergrendelen</button>
-          </div>
+          <span class="admin-status">Veerpen Beheer actief — Privacy, Zwartlak &amp; Verwijdermodus</span>
+          <button type="button" class="btn btn--primary btn--sm" id="btn-lock">Vergrendelen</button>
         </div>
 
         <div class="pii-panel">
-          <div class="pii-panel-title">Privacy &amp; Zwartlak-beheer (persoonsgegevens inactief zwart)</div>
+          <div class="pii-panel-title">Privacy &amp; Zwartlak-beheer (ook actief op PDF-extractie tot nader order)</div>
           <div class="pii-toggles">
             <label class="pii-check"><input type="checkbox" id="pii-email" checked /> E-mailadressen</label>
             <label class="pii-check"><input type="checkbox" id="pii-phone" checked /> Telefoonnummers</label>
             <label class="pii-check"><input type="checkbox" id="pii-bsn" checked /> BSN-nummers</label>
             <label class="pii-check"><input type="checkbox" id="pii-iban" checked /> IBAN</label>
-            <label class="pii-check"><input type="checkbox" id="pii-postcode" /> Postcodes</label>
+            <label class="pii-check"><input type="checkbox" id="pii-postcode" checked /> Postcodes</label>
+            <label class="pii-check"><input type="checkbox" id="pii-pdf-lock" checked /> PDF persoonsgegevens zwart tot nader order</label>
           </div>
-          <input type="text" id="pii-custom-terms" class="input-field" style="width:100%;" placeholder="Eigen namen/woorden zwartlakken (kommagescheiden)..." />
+          <div style="display:flex; gap:6px;">
+            <input type="text" id="pii-custom-terms" class="input-field" placeholder="Eigen namen/woorden zwartlakken (kommagescheiden)..." />
+            <button type="button" class="btn btn--sm" id="btn-clear-pii-terms">Wis</button>
+          </div>
         </div>
 
         <div class="admin-controls">
@@ -356,24 +503,25 @@
           <div class="toolbar">
             <div class="search-wrap">
               <input type="search" id="search-input" class="search-input" placeholder="Zoek op nummer, map, POD, trefwoord of bestandsnaam..." />
+              <button type="button" class="btn btn--sm" id="btn-clear-search" title="Zoekveld wissen">Wis</button>
             </div>
             <select id="sort-select" class="select-field">
               <option value="number">Sorteer op nummer</option>
               <option value="name">Sorteer op naam (A-Z)</option>
               <option value="date">Sorteer op datum</option>
             </select>
-            <button type="button" class="btn" id="btn-refresh">Vernieuwen</button>
             <span class="doc-counter" id="doc-counter">Laden...</span>
           </div>
 
           <div class="filter-strip">
             <label for="watch-keywords">Notificaties:</label>
-            <input type="text" id="watch-keywords" class="input-field" style="min-width:170px;" placeholder="trefwoorden (komma)..." />
+            <input type="text" id="watch-keywords" class="input-field" style="min-width:160px;" placeholder="trefwoorden (komma)..." />
+            <button type="button" class="btn btn--sm" id="btn-clear-watch">Wis</button>
             <label for="date-from">Vanaf:</label>
             <input type="date" id="date-from" class="select-field" />
             <label for="date-to">Tot:</label>
             <input type="date" id="date-to" class="select-field" />
-            <button type="button" class="btn btn--sm" id="btn-clear-dates">Wis</button>
+            <button type="button" class="btn btn--sm" id="btn-clear-dates">Wis data</button>
           </div>
 
           <div id="list-container"></div>
@@ -383,34 +531,50 @@
 
     <footer class="footer">
       <span>Bron: <a href="https://github.com/goija/nummer" target="_blank" rel="noopener noreferrer">github.com/goija/nummer</a></span>
-      <span style="font-family:var(--mono);">Mappen + Solid PODs (.ttl + .acl) + Audit-logboek + HMAC-SHA256</span>
+      <span style="font-family:var(--mono);">Archiefbeheer + PDF-Zwartlak + Solid PODs (.ttl/.acl/PUT) + Audit</span>
     </footer>
   </div>
 
-  <!-- MODAL: ZELF-ARCHIVERENDE PODS BEHEREN -->
-  <div class="modal-backdrop" id="pod-modal" role="dialog" aria-modal="true">
+  <!-- MODAL: VIEWER (EML & PDF MET ZWARTLAK-MODUS) -->
+  <div class="modal-backdrop" id="viewer-modal" role="dialog" aria-modal="true">
     <div class="modal-card modal-card--wide">
       <div class="modal-title">
-        <span>Zelf-archiverende PODs (Solid / RDF + ACL Capsules)</span>
-        <button type="button" class="btn btn--sm" id="btn-pod-close">&times; Sluiten</button>
+        <span id="viewer-title">Document bekijken</span>
+        <button type="button" class="btn btn--sm" id="btn-viewer-close">&times; Sluiten</button>
       </div>
+      <div class="modal-body" id="viewer-content">Laden...</div>
+    </div>
+  </div>
+
+  <!-- MODAL: ZELF-ARCHIVERENDE PODS -->
+  <div class="modal-backdrop" id="pod-modal" role="dialog" aria-modal="true">
+    <div class="modal-card modal-card--wide">
+      <div class="modal-title"><span>Zelf-archiverende PODs (Solid / RDF + ACL + HTTP PUT)</span><button type="button" class="btn btn--sm" id="btn-pod-close">&times; Sluiten</button></div>
       <div class="modal-body">
         <div class="sys-card">
           <div class="sys-card-head"><span>Nieuwe Archief-POD aanmaken</span></div>
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
-            <input type="text" id="pod-name" class="input-field" placeholder="POD-naam (bijv. Dossier-2026-Pod)" />
-            <input type="url" id="pod-webid" class="input-field" placeholder="Container URI (bijv. https://solid-virid.vercel.app/pod/)" />
-            <input type="url" id="pod-owner-webid" class="input-field" placeholder="Eigenaar WebID (voor .acl, bijv. .../card#me)" />
-            <input type="text" id="pod-retention" class="input-field" placeholder="Bewaartermijn (bijv. 7 jaar / Permanent)" />
+            <input type="text" id="pod-name" class="input-field" placeholder="POD-naam" />
+            <input type="url" id="pod-webid" class="input-field" placeholder="Container URI (http://127.0.0.1:3000/pod/)" />
+            <input type="url" id="pod-owner-webid" class="input-field" placeholder="Eigenaar WebID (.../card#me)" />
+            <input type="text" id="pod-retention" class="input-field" placeholder="Bewaartermijn (bijv. 7 jaar)" />
           </div>
-          <input type="text" id="pod-desc" class="input-field" style="width:100%; margin-top:8px;" placeholder="Omschrijving van deze autonome archief-POD..." />
+          <input type="text" id="pod-desc" class="input-field" style="width:100%; margin-top:8px;" placeholder="Omschrijving..." />
           <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-            <label class="pii-check"><input type="checkbox" id="pod-public-read" /> Publiek alleen-lezen toestaan in .acl (standaard privé)</label>
+            <label class="pii-check"><input type="checkbox" id="pod-public-read" /> Publiek alleen-lezen toestaan in .acl</label>
             <button type="button" class="btn btn--pod btn--sm" id="btn-create-pod">+ POD aanmaken</button>
           </div>
         </div>
 
-        <span class="field-label">Bestaande Archief-PODs</span>
+        <div class="sys-card">
+          <div class="sys-card-head"><span>Solid / POD Authenticatie (voor HTTP PUT)</span></div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <input type="password" id="solid-token-input" class="input-field" placeholder="Optioneel Bearer-token..." autocomplete="off" />
+            <button type="button" class="btn btn--sm" id="btn-save-solid-token">Bewaar</button>
+            <button type="button" class="btn btn--sm btn--ghost" id="btn-clear-solid-token">Wis</button>
+          </div>
+        </div>
+
         <div id="pod-list-container"></div>
       </div>
     </div>
@@ -419,48 +583,38 @@
   <!-- MODAL: ARCHIVEER & EXPORTEER CENTRUM -->
   <div class="modal-backdrop" id="export-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
-      <div class="modal-title">
-        <span>Archiveer- &amp; Exporteercentrum</span>
-        <button type="button" class="btn btn--sm" id="btn-export-close">&times; Sluiten</button>
-      </div>
+      <div class="modal-title"><span>Archiveer- &amp; Exporteercentrum</span><button type="button" class="btn btn--sm" id="btn-export-close">&times; Sluiten</button></div>
       <div class="modal-body">
         <div class="sys-card">
           <div class="sys-card-head"><span>1. Volledig Archief-Manifest (JSON)</span></div>
-          <p style="margin:0 0 8px; font-size:12.5px;">Bevat alle mappen, PODs, documentmetadata, handtekeningen, privacy-instellingen en het volledige audit-logboek.</p>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="btn btn--primary btn--sm" id="btn-exp-manifest">Exporteer volledig archief (.json)</button>
-            <button type="button" class="btn btn--sm" id="btn-imp-manifest">Importeer archief (.json)</button>
+            <button type="button" class="btn btn--primary btn--sm" id="btn-exp-manifest">Exporteer (.json)</button>
+            <button type="button" class="btn btn--sm" id="btn-imp-manifest">Importeer (.json)</button>
             <input type="file" id="manifest-import-input" accept=".json,application/json" hidden />
           </div>
         </div>
-
         <div class="sys-card">
-          <div class="sys-card-head"><span>2. W3C Solid POD Export (Turtle RDF .ttl + .acl)</span></div>
-          <p style="margin:0 0 8px; font-size:12.5px;">Genereert gestandaardiseerde <code>.ttl</code>- en <code>.acl</code>-bestanden met PODs, gekoppelde documenten, SHA-256 hashes en toegangsrechten.</p>
+          <div class="sys-card-head"><span>2. W3C Solid POD Export (.ttl + .acl)</span></div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <button type="button" class="btn btn--pod btn--sm" id="btn-exp-ttl">Exporteer alle PODs (.ttl)</button>
-            <button type="button" class="btn btn--sm" id="btn-exp-acl">Exporteer alle .acl-bestanden</button>
+            <button type="button" class="btn btn--sm" id="btn-exp-acl">Exporteer alle .acl</button>
           </div>
         </div>
-
         <div class="sys-card">
           <div class="sys-card-head"><span>3. Archiefregister (CSV) &amp; Lokale Sync</span></div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <button type="button" class="btn btn--sm" id="btn-exp-csv">Exporteer register (.csv)</button>
-            <button type="button" class="btn btn--sm" id="btn-exp-sync">Synchroniseer naar lokale server</button>
+            <button type="button" class="btn btn--sm" id="btn-exp-sync">Sync naar lokale server</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: SYSTEEMKOPPELINGEN & E-MAIL -->
+  <!-- MODAL: SYSTEEMKOPPELINGEN, AUDIT, CONTROLE, META, ANALYSE, SIGN, VERIFY -->
   <div class="modal-backdrop" id="systems-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
-      <div class="modal-title">
-        <span>Systeemkoppelingen &amp; E-mailactivatie</span>
-        <button type="button" class="btn btn--sm" id="btn-systems-close">&times; Sluiten</button>
-      </div>
+      <div class="modal-title"><span>Systeemkoppelingen &amp; E-mailactivatie</span><button type="button" class="btn btn--sm" id="btn-systems-close">&times; Sluiten</button></div>
       <div class="modal-body">
         <div class="sys-card">
           <div class="sys-card-head"><span>E-mailkoppeling</span><span class="badge" id="sys-email-badge">INACTIEF</span></div>
@@ -476,7 +630,6 @@
     </div>
   </div>
 
-  <!-- MODAL: AUDIT-LOGBOEK -->
   <div class="modal-backdrop" id="audit-modal" role="dialog" aria-modal="true">
     <div class="modal-card modal-card--wide">
       <div class="modal-title"><span>Lokaal Audit-logboek</span><button type="button" class="btn btn--sm" id="btn-audit-close">&times; Sluiten</button></div>
@@ -486,7 +639,7 @@
             <option value="all">Alle acties</option>
             <option value="VERWIJDERD_NA_CONTROLE">Verwijderd na controle</option>
             <option value="MAP_WIJZIGING">Mapwijzigingen</option>
-            <option value="POD_BEHEER">POD-beheer</option>
+            <option value="POD_BEHEER">POD-beheer &amp; PUT</option>
             <option value="ARCHIEF_VERPLAATSING">Archiefverplaatsingen</option>
             <option value="EXPORT">Export &amp; Sync</option>
           </select>
@@ -506,7 +659,6 @@
     </div>
   </div>
 
-  <!-- MODAL: CONTROLE VÓÓR VERWIJDEREN -->
   <div class="modal-backdrop" id="control-delete-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
       <h2 class="modal-title" id="cd-title">Controle vóór verwijderen</h2>
@@ -526,10 +678,9 @@
     </div>
   </div>
 
-  <!-- MODAL: ARCHIVEREN, MAP, POD & HEADERS -->
   <div class="modal-backdrop" id="meta-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
-      <h2 class="modal-title">Archiveren, Map, POD &amp; Headers</h2>
+      <h2 class="modal-title">Archiveren, Bewaartermijn, POD &amp; Headers</h2>
       <div class="modal-body">
         <span class="hash-box" id="meta-filename"></span>
         <label class="field-label" for="meta-status">Archiefstatus</label>
@@ -543,19 +694,23 @@
         <datalist id="folder-datalist"></datalist>
         <label class="field-label" for="meta-pod">Koppel aan Archief-POD</label>
         <select id="meta-pod" class="select-field" style="width:100%;"></select>
+        <label class="field-label" for="meta-retention">Bewaartermijn</label>
+        <select id="meta-retention" class="select-field" style="width:100%;">
+          <option value="7 jaar">7 jaar (fiscaal/administratief)</option>
+          <option value="5 jaar">5 jaar</option>
+          <option value="10 jaar">10 jaar</option>
+          <option value="Permanent">Permanent bewaren</option>
+        </select>
         <label class="field-label" for="meta-number">Dossier- / Volgnummer</label>
         <input type="text" id="meta-number" class="input-field" style="width:100%;" />
-        <label class="field-label" for="meta-role">Documenttype</label>
-        <select id="meta-role" class="select-field" style="width:100%;">
-          <option value="hoofddocument">Hoofddocument</option>
-          <option value="onderlegger">Onderlegger / Bijlage</option>
-        </select>
         <label class="field-label" for="meta-subject">Onderwerp</label>
         <input type="text" id="meta-subject" class="input-field" style="width:100%;" />
         <label class="field-label" for="meta-sender">Afzender / Bron</label>
         <input type="text" id="meta-sender" class="input-field" style="width:100%;" />
         <label class="field-label" for="meta-date">Datum</label>
         <input type="text" id="meta-date" class="input-field" style="width:100%;" placeholder="YYYY-MM-DD" />
+        <label class="field-label" for="meta-notes">Archiefnotitie</label>
+        <input type="text" id="meta-notes" class="input-field" style="width:100%;" placeholder="Opmerking..." />
         <span class="field-label">Uitgelezen ruwe headers</span>
         <table class="header-table"><tbody id="meta-raw-headers"></tbody></table>
       </div>
@@ -564,14 +719,6 @@
         <button type="button" class="btn" id="btn-meta-cancel">Sluiten</button>
         <button type="button" class="btn btn--primary" id="btn-meta-save">Opslaan</button>
       </div>
-    </div>
-  </div>
-
-  <!-- MODAL: VIEWER, ANALYSE, SIGN, VERIFY -->
-  <div class="modal-backdrop" id="viewer-modal" role="dialog" aria-modal="true">
-    <div class="modal-card modal-card--wide">
-      <div class="modal-title"><span id="viewer-title">Document bekijken</span><button type="button" class="btn btn--sm" id="btn-viewer-close">&times; Sluiten</button></div>
-      <div class="modal-body" id="viewer-content">Laden...</div>
     </div>
   </div>
 
@@ -637,41 +784,23 @@
       const TEXT_EXTS = new Set(["html", "htm", "txt", "md", "eml", "json", "csv", "xml", "log", "ttl", "ini"]);
 
       const KEYS = {
-        hidden: `pro_hidden_${REPO_NAME}`,
-        sigs: `pro_sigs_${REPO_NAME}`,
-        meta: `pro_meta_${REPO_NAME}`,
-        folders: `pro_folders_${REPO_NAME}`,
-        pods: `pro_pods_${REPO_NAME}`,
-        pii: `pro_pii_${REPO_NAME}`,
-        audit: `pro_audit_${REPO_NAME}`,
-        systems: `pro_sys_${REPO_NAME}`,
-        watch: `pro_watch_${REPO_NAME}`,
-        font: "pro_font_scale",
-        token: "pro_gh_token"
+        hidden: `pro_hidden_${REPO_NAME}`, sigs: `pro_sigs_${REPO_NAME}`, meta: `pro_meta_${REPO_NAME}`,
+        folders: `pro_folders_${REPO_NAME}`, pods: `pro_pods_${REPO_NAME}`, pii: `pro_pii_${REPO_NAME}`,
+        audit: `pro_audit_${REPO_NAME}`, systems: `pro_sys_${REPO_NAME}`, watch: `pro_watch_${REPO_NAME}`,
+        font: "pro_font_scale", token: "pro_gh_token", solidToken: "pro_solid_token"
       };
 
       const state = {
-        files: [], localFiles: [], textCache: {}, loading: true, error: null,
+        files: [], localFiles: [], textCache: {}, selected: new Set(), loading: true, error: null,
         query: "", watchKeywords: "", dateFrom: "", dateTo: "", sortBy: "number",
         activeFilter: { type: "all", value: "" }, fontScale: 1,
         unlocked: false, activeSecret: "", unlockOpen: false, deleteMode: "local",
         hiddenFiles: new Set(),
         folders: [TEMP_FOLDER, "Algemeen", "Onderleggers"],
-        pods: [
-          {
-            id: "pod-hoofdarchief",
-            name: "Hoofdarchief-POD",
-            webid: "https://solid-virid.vercel.app/pod/hoofdarchief/",
-            ownerWebId: "https://solid-virid.vercel.app/profile/card#me",
-            publicRead: false,
-            retention: "Permanent",
-            desc: "Standaard autonome archief-capsule",
-            createdAt: new Date().toISOString()
-          }
-        ],
+        pods: [{ id: "pod-hoofdarchief", name: "Hoofdarchief-POD", webid: "https://solid-virid.vercel.app/pod/hoofdarchief/", ownerWebId: "https://solid-virid.vercel.app/profile/card#me", publicRead: false, retention: "Permanent", desc: "Standaard archief-capsule", createdAt: new Date().toISOString() }],
         meta: {}, signatures: {}, verifyStatus: {}, auditLog: [],
         systems: { emailActive: false, emailEndpoint: "", localEndpoint: "http://127.0.0.1:3000/sync" },
-        pii: { email: true, phone: true, bsn: true, iban: true, postcode: false, customTerms: "" },
+        pii: { email: true, phone: true, bsn: true, iban: true, postcode: true, pdfLock: true, customTerms: "" },
         pendingControlDelete: null, pendingMetaFile: null, pendingSign: null, pendingSignHash: null, pendingVerifyFile: null
       };
 
@@ -685,12 +814,37 @@
         toastTimer = setTimeout(() => $("toast").classList.remove("visible"), 3400);
       }
 
-      function escapeHtml(s) {
-        return String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+      function escapeHtml(s) { return String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+      function splitFileName(n) { const i = n.lastIndexOf("."); return i <= 0 ? { base: n, ext: "" } : { base: n.slice(0, i), ext: n.slice(i + 1) }; }
+      function formatBytes(b) { if (!Number.isFinite(b) || b < 0) return "—"; if (b < 1024) return `${b} B`; if (b < 1048576) return `${(b / 1024).toFixed(1).replace(".", ",")} KB`; return `${(b / 1048576).toFixed(2).replace(".", ",")} MB`; }
+      function loadJson(k, fb) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch { return fb; } }
+
+      // =======================================================================
+      // MENUBALK DROPDOWNS
+      // =======================================================================
+      function closeAllMenus() { document.querySelectorAll(".menu-item.open").forEach(m => m.classList.remove("open")); }
+      document.querySelectorAll(".menu-trigger").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const item = btn.parentElement;
+          const wasOpen = item.classList.contains("open");
+          closeAllMenus();
+          if (!wasOpen) item.classList.add("open");
+        });
+      });
+      document.addEventListener("click", closeAllMenus);
+
+      function requireUnlock() {
+        if (state.unlocked) return true;
+        showToast("Ontgrendel eerst de Veerpen met de geheime string.", "red");
+        state.unlockOpen = true;
+        $("unlock-panel").classList.add("visible");
+        $("secret-input").focus();
+        return false;
       }
 
       // =======================================================================
-      // PRIVACY & ZWARTLAK-ENGINE
+      // PRIVACY & ZWARTLAK-ENGINE (INCL. PDF-TEKSTEXTRACTIE)
       // =======================================================================
       const PII_RX = {
         email: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,
@@ -722,15 +876,17 @@
         return out;
       }
 
-      function formatBytes(b) {
-        if (!Number.isFinite(b) || b < 0) return "—";
-        if (b < 1024) return `${b} B`;
-        if (b < 1048576) return `${(b / 1024).toFixed(1).replace(".", ",")} KB`;
-        return `${(b / 1048576).toFixed(2).replace(".", ",")} MB`;
+      function extractReadablePdfText(arrayBuffer) {
+        const raw = new TextDecoder("latin1").decode(arrayBuffer);
+        const chunks = [];
+        const regex = /\(([^()\\]*(?:\\.[^()\\]*)*)\)/g;
+        let m;
+        while ((m = regex.exec(raw)) !== null) {
+          const clean = m[1].replace(/\\([()\\])/g, "$1").replace(/[^\x20-\x7E\xA0-\xFF]/g, " ").trim();
+          if (clean.length >= 2) chunks.push(clean);
+        }
+        return chunks.join(" ");
       }
-
-      function splitFileName(n) { const i = n.lastIndexOf("."); return i <= 0 ? { base: n, ext: "" } : { base: n.slice(0, i), ext: n.slice(i + 1) }; }
-      function loadJson(k, fb) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch { return fb; } }
 
       function persistAll() {
         try {
@@ -744,47 +900,124 @@
           localStorage.setItem(KEYS.systems, JSON.stringify(state.systems));
           localStorage.setItem(KEYS.watch, state.watchKeywords);
         } catch {}
-        $("btn-restore-hidden").textContent = `Herstel (${state.hiddenFiles.size})`;
-        $("btn-restore-hidden").disabled = state.hiddenFiles.size === 0;
-        $("btn-open-audit").textContent = `Audit (${state.auditLog.length})`;
       }
 
       function logAudit(action, target, details = "") {
         state.auditLog.unshift({
           id: `AUD-${Date.now()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
-          timestamp: new Date().toISOString(),
-          action,
-          target: redactPlain(target),
-          details: redactPlain(details)
+          timestamp: new Date().toISOString(), action, target: redactPlain(target), details: redactPlain(details)
         });
         if (state.auditLog.length > 2000) state.auditLog.length = 2000;
         persistAll();
       }
 
       // =======================================================================
-      // ZELF-ARCHIVERENDE PODS (W3C TURTLE RDF .ttl + WEB ACCESS CONTROL .acl)
+      // PDF & EML VIEWER (MET PDF PERSOONSGEGEVENS ZWART TOT NADER ORDER)
+      // =======================================================================
+      async function openViewerModal(file) {
+        if (!file) return;
+        const lowExt = splitFileName(file.name).ext.toLowerCase();
+        $("viewer-title").textContent = redactPlain(file.name);
+        $("viewer-content").innerHTML = `<div class="state-box">Laden...</div>`;
+        $("viewer-modal").classList.add("visible");
+
+        try {
+          if (lowExt === "pdf") {
+            let pdfUrl = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`;
+            let extractedText = "";
+            try {
+              const buf = await getFileArrayBuffer(file);
+              extractedText = extractReadablePdfText(buf);
+              if (!file.isLocal) pdfUrl = URL.createObjectURL(new Blob([buf], { type: "application/pdf" }));
+            } catch {}
+
+            const renderPdfSafeText = () => {
+              $("viewer-content").innerHTML = `
+                <div class="pdf-toolbar">
+                  <span><strong>PDF Privacy-modus actief:</strong> Alle herkende persoonsgegevens zijn zwartgelakt tot nader order.</span>
+                  <div style="display:flex; gap:6px;">
+                    <button type="button" class="btn btn--primary btn--sm" id="btn-pdf-visual">Open visuele PDF + Zwartlak-laag</button>
+                  </div>
+                </div>
+                <div class="eml-box">
+                  <div class="eml-body">${extractedText ? redactHtml(extractedText) : "Geen ongecomprimeerde tekstlaag gevonden in deze PDF. Gebruik de visuele PDF met interactieve zwartlak-laag."}</div>
+                </div>
+              `;
+              $("btn-pdf-visual").addEventListener("click", renderPdfVisualWithOverlay);
+            };
+
+            const renderPdfVisualWithOverlay = () => {
+              $("viewer-content").innerHTML = `
+                <div class="pdf-toolbar">
+                  <span><strong>Visuele PDF + Zwartlak-laag:</strong> Sleep over persoonsgegevens om ze zwart te lakken.</span>
+                  <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <button type="button" class="btn btn--sm" id="btn-pdf-toggle-draw">Teken zwartlak: AAN</button>
+                    <button type="button" class="btn btn--sm" id="btn-pdf-clear-redact">Wis lakbalken</button>
+                    <button type="button" class="btn btn--sm" id="btn-pdf-back-text">Terug naar zwartgelakte tekst</button>
+                  </div>
+                </div>
+                <div class="pdf-stage">
+                  <iframe class="pdf-frame" src="${pdfUrl}"></iframe>
+                  <canvas class="pdf-redact-canvas" id="pdf-redact-canvas"></canvas>
+                </div>
+              `;
+              const canvas = $("pdf-redact-canvas");
+              const ctx = canvas.getContext("2d");
+              const resize = () => { canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; };
+              resize();
+              let drawing = false, sx = 0, sy = 0, drawMode = true;
+
+              canvas.addEventListener("mousedown", e => {
+                if (!drawMode) return;
+                const r = canvas.getBoundingClientRect();
+                sx = e.clientX - r.left; sy = e.clientY - r.top; drawing = true;
+              });
+              canvas.addEventListener("mouseup", e => {
+                if (!drawing) return;
+                drawing = false;
+                const r = canvas.getBoundingClientRect();
+                const ex = e.clientX - r.left, ey = e.clientY - r.top;
+                ctx.fillStyle = "#000000";
+                ctx.fillRect(Math.min(sx, ex), Math.min(sy, ey), Math.abs(ex - sx), Math.abs(ey - sy));
+              });
+              $("btn-pdf-clear-redact").addEventListener("click", () => ctx.clearRect(0, 0, canvas.width, canvas.height));
+              $("btn-pdf-toggle-draw").addEventListener("click", () => {
+                drawMode = !drawMode;
+                canvas.classList.toggle("passthrough", !drawMode);
+                $("btn-pdf-toggle-draw").textContent = drawMode ? "Teken zwartlak: AAN" : "Scroll PDF (lakken UIT)";
+              });
+              $("btn-pdf-back-text").addEventListener("click", renderPdfSafeText);
+            };
+
+            if (state.pii.pdfLock) renderPdfSafeText();
+            else renderPdfVisualWithOverlay();
+            return;
+          }
+
+          if (lowExt === "eml" || TEXT_EXTS.has(lowExt)) {
+            const txt = new TextDecoder("utf-8", { fatal: false }).decode(await getFileArrayBuffer(file));
+            state.textCache[file.name] = txt;
+            $("viewer-content").innerHTML = `<div class="eml-box"><div class="eml-body">${redactHtml(txt)}</div></div>`;
+            return;
+          }
+          const url = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`;
+          $("viewer-content").innerHTML = `<div class="state-box"><a class="btn btn--primary" href="${url}" target="_blank" rel="noopener noreferrer">Open bestand</a></div>`;
+        } catch (err) { $("viewer-content").innerHTML = `<div class="state-box state-box--error">${escapeHtml(err.message)}</div>`; }
+      }
+      $("btn-viewer-close").addEventListener("click", () => $("viewer-modal").classList.remove("visible"));
+
+      // =======================================================================
+      // PODS (.ttl + .acl + HTTP PUT)
       // =======================================================================
       function buildTurtleForPod(pod) {
         const docs = getAllFiles().filter(f => state.meta[f.name]?.podId === pod.id);
         const baseUri = (pod.webid || `https://solid-virid.vercel.app/pod/${pod.id}/`).replace(/\/?$/, "/");
-        let ttl = `@prefix ldp: <http://www.w3.org/ns/ldp#> .\n`;
-        ttl += `@prefix dcterms: <http://purl.org/dc/terms/> .\n`;
-        ttl += `@prefix sec: <https://w3id.org/security#> .\n\n`;
-        ttl += `<${baseUri}>\n  a ldp:BasicContainer ;\n`;
-        ttl += `  dcterms:title "${pod.name.replace(/"/g, '\\"')}" ;\n`;
-        ttl += `  dcterms:description "${(pod.desc || "").replace(/"/g, '\\"')}" ;\n`;
-        ttl += `  dcterms:created "${pod.createdAt}" ;\n`;
-        ttl += `  dcterms:accrualPolicy "${(pod.retention || "Permanent").replace(/"/g, '\\"')}" .\n\n`;
-
+        let ttl = `@prefix ldp: <http://www.w3.org/ns/ldp#> .\n@prefix dcterms: <http://purl.org/dc/terms/> .\n@prefix sec: <https://w3id.org/security#> .\n\n`;
+        ttl += `<${baseUri}>\n  a ldp:BasicContainer ;\n  dcterms:title "${pod.name.replace(/"/g, '\\"')}" ;\n  dcterms:created "${pod.createdAt}" .\n\n`;
         for (const f of docs) {
-          const m = state.meta[f.name] || {};
-          const sig = state.signatures[f.name];
-          const docUri = `${baseUri}${encodeURIComponent(f.name)}`;
-          ttl += `<${docUri}>\n  a ldp:Resource ;\n`;
-          ttl += `  dcterms:identifier "${(m.number || f.name).replace(/"/g, '\\"')}" ;\n`;
-          ttl += `  dcterms:title "${redactPlain(m.subject || f.name).replace(/"/g, '\\"')}" ;\n`;
-          if (m.date) ttl += `  dcterms:date "${m.date}" ;\n`;
-          if (sig?.sha256) ttl += `  sec:digestAlgorithm "SHA-256" ;\n  sec:digestValue "${sig.sha256}" ;\n`;
+          const m = state.meta[f.name] || {}, sig = state.signatures[f.name];
+          ttl += `<${baseUri}${encodeURIComponent(f.name)}>\n  a ldp:Resource ;\n  dcterms:title "${redactPlain(m.subject || f.name).replace(/"/g, '\\"')}" ;\n`;
+          if (sig?.sha256) ttl += `  sec:digestValue "${sig.sha256}" ;\n`;
           ttl += `  dcterms:isPartOf <${baseUri}> .\n\n`;
         }
         return ttl;
@@ -793,189 +1026,71 @@
       function buildAclForPod(pod) {
         const baseUri = (pod.webid || `https://solid-virid.vercel.app/pod/${pod.id}/`).replace(/\/?$/, "/");
         const ownerWebId = pod.ownerWebId || `${baseUri}profile/card#me`;
-        let acl = `@prefix acl: <http://www.w3.org/ns/auth/acl#> .\n`;
-        acl += `@prefix foaf: <http://xmlns.com/foaf/0.1/> .\n\n`;
-        acl += `# Eigenaar: volledige controle over container en onderliggende documenten\n`;
-        acl += `<#owner>\n`;
-        acl += `  a acl:Authorization ;\n`;
-        acl += `  acl:agent <${ownerWebId}> ;\n`;
-        acl += `  acl:accessTo <${baseUri}> ;\n`;
-        acl += `  acl:default <${baseUri}> ;\n`;
-        acl += `  acl:mode acl:Read, acl:Write, acl:Control .\n`;
-
-        if (pod.publicRead) {
-          acl += `\n# Publiek alleen-lezen\n`;
-          acl += `<#public>\n`;
-          acl += `  a acl:Authorization ;\n`;
-          acl += `  acl:agentClass foaf:Agent ;\n`;
-          acl += `  acl:accessTo <${baseUri}> ;\n`;
-          acl += `  acl:default <${baseUri}> ;\n`;
-          acl += `  acl:mode acl:Read .\n`;
-        }
+        let acl = `@prefix acl: <http://www.w3.org/ns/auth/acl#> .\n@prefix foaf: <http://xmlns.com/foaf/0.1/> .\n\n<#owner>\n  a acl:Authorization ;\n  acl:agent <${ownerWebId}> ;\n  acl:accessTo <${baseUri}> ;\n  acl:default <${baseUri}> ;\n  acl:mode acl:Read, acl:Write, acl:Control .\n`;
+        if (pod.publicRead) acl += `\n<#public>\n  a acl:Authorization ;\n  acl:agentClass foaf:Agent ;\n  acl:accessTo <${baseUri}> ;\n  acl:default <${baseUri}> ;\n  acl:mode acl:Read .\n`;
         return acl;
       }
 
-      function downloadFile(filename, content, mime) {
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(new Blob([content], { type: mime }));
-        a.download = filename;
-        a.click();
+      async function uploadPodViaPut(pod) {
+        const baseUri = (pod.webid || "").trim().replace(/\/?$/, "/");
+        if (!/^https?:\/\//i.test(baseUri)) throw new Error("Ongeldige Container URI.");
+        const token = ($("solid-token-input")?.value.trim()) || sessionStorage.getItem(KEYS.solidToken) || "";
+        const headers = { "Content-Type": "text/turtle; charset=utf-8" };
+        if (token) headers.Authorization = `Bearer ${token}`;
+        const r1 = await fetch(`${baseUri}${encodeURIComponent(pod.id)}.ttl`, { method: "PUT", headers, body: buildTurtleForPod(pod) });
+        if (!r1.ok) throw new Error(`HTTP ${r1.status} op .ttl`);
+        const r2 = await fetch(`${baseUri}.acl`, { method: "PUT", headers, body: buildAclForPod(pod) });
+        if (!r2.ok) throw new Error(`HTTP ${r2.status} op .acl`);
+        logAudit("POD_BEHEER", pod.name, `HTTP PUT geslaagd naar ${baseUri}`);
       }
+
+      function downloadFile(name, content, mime) { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([content], { type: mime })); a.download = name; a.click(); }
 
       function renderPodModal() {
         const all = getAllFiles();
-        $("pod-list-container").innerHTML = state.pods.length
-          ? state.pods.map(pod => {
-              const cnt = all.filter(f => state.meta[f.name]?.podId === pod.id).length;
-              return `
-                <div class="sys-card">
-                  <div class="sys-card-head">
-                    <span>${escapeHtml(pod.name)} <span class="badge badge--pod">${cnt} doc(s)</span> <span class="badge">${pod.publicRead ? "Publiek lezen" : "Privé (.acl)"}</span></span>
-                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                      <button type="button" class="btn btn--sm" data-export-pod="${escapeHtml(pod.id)}">Exporteer .ttl + .acl</button>
-                      <button type="button" class="btn btn--primary btn--sm" data-del-pod="${escapeHtml(pod.id)}">Verwijder POD</button>
-                    </div>
-                  </div>
-                  <div style="font-size:12px; color:var(--muted); font-family:var(--mono);">${escapeHtml(pod.webid || "Lokaal")} &bull; Bewaartermijn: ${escapeHtml(pod.retention || "Permanent")}</div>
-                  ${pod.desc ? `<div style="font-size:12.5px; margin-top:4px;">${escapeHtml(pod.desc)}</div>` : ""}
-                </div>
-              `;
-            }).join("")
-          : `<div class="state-box">Nog geen PODs aangemaakt.</div>`;
+        $("pod-list-container").innerHTML = state.pods.map(pod => {
+          const cnt = all.filter(f => state.meta[f.name]?.podId === pod.id).length;
+          return `<div class="sys-card"><div class="sys-card-head"><span>${escapeHtml(pod.name)} <span class="badge badge--pod">${cnt} doc(s)</span></span>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button type="button" class="btn btn--sm" data-export-pod="${escapeHtml(pod.id)}">.ttl + .acl</button>
+              <button type="button" class="btn btn--pod btn--sm" data-put-pod="${escapeHtml(pod.id)}">Upload PUT</button>
+              <button type="button" class="btn btn--primary btn--sm" data-del-pod="${escapeHtml(pod.id)}">Verwijder</button>
+            </div></div><div style="font-size:12px; color:var(--muted); font-family:var(--mono);">${escapeHtml(pod.webid)}</div></div>`;
+        }).join("") || `<div class="state-box">Geen PODs.</div>`;
 
         $("pod-list-container").querySelectorAll("[data-export-pod]").forEach(b => b.addEventListener("click", () => {
-          const pod = state.pods.find(p => p.id === b.dataset.exportPod);
-          if (!pod) return;
+          const pod = state.pods.find(p => p.id === b.dataset.exportPod); if (!pod) return;
           downloadFile(`${pod.id}.ttl`, buildTurtleForPod(pod), "text/turtle;charset=utf-8");
-          setTimeout(() => downloadFile(`${pod.id}.acl`, buildAclForPod(pod), "text/turtle;charset=utf-8"), 160);
-          logAudit("EXPORT", pod.name, "POD geëxporteerd als Turtle RDF (.ttl) + Web Access Control (.acl).");
-          showToast(`POD "${pod.name}" geëxporteerd (.ttl + .acl).`, "ok");
+          setTimeout(() => downloadFile(`${pod.id}.acl`, buildAclForPod(pod), "text/turtle;charset=utf-8"), 150);
+          logAudit("EXPORT", pod.name, "POD .ttl + .acl geëxporteerd.");
         }));
-
+        $("pod-list-container").querySelectorAll("[data-put-pod]").forEach(b => b.addEventListener("click", async () => {
+          const pod = state.pods.find(p => p.id === b.dataset.putPod); if (!pod) return;
+          b.disabled = true; b.textContent = "Uploaden...";
+          try { await uploadPodViaPut(pod); showToast("POD via PUT geüpload.", "ok"); }
+          catch (e) { showToast(`PUT mislukt: ${e.message}`, "red"); }
+          finally { b.disabled = false; b.textContent = "Upload PUT"; }
+        }));
         $("pod-list-container").querySelectorAll("[data-del-pod]").forEach(b => b.addEventListener("click", () => {
-          const pod = state.pods.find(p => p.id === b.dataset.delPod);
-          if (pod) openControlDeleteModal("pod", pod);
+          const pod = state.pods.find(p => p.id === b.dataset.delPod); if (pod) openControlDeleteModal("pod", pod);
         }));
       }
-
-      $("btn-open-pods").addEventListener("click", () => { if (!state.unlocked) return; renderPodModal(); $("pod-modal").classList.add("visible"); });
-      $("btn-pod-close").addEventListener("click", () => $("pod-modal").classList.remove("visible"));
-      $("btn-create-pod").addEventListener("click", () => {
-        const name = $("pod-name").value.trim();
-        if (!name) return showToast("Vul een POD-naam in.", "red");
-        const id = `pod-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${Date.now().toString(36).slice(-4)}`;
-        const pod = {
-          id,
-          name,
-          webid: $("pod-webid").value.trim() || `https://solid-virid.vercel.app/pod/${id}/`,
-          ownerWebId: $("pod-owner-webid").value.trim() || "https://solid-virid.vercel.app/profile/card#me",
-          publicRead: $("pod-public-read").checked,
-          retention: $("pod-retention").value.trim() || "Permanent",
-          desc: $("pod-desc").value.trim(),
-          createdAt: new Date().toISOString()
-        };
-        state.pods.push(pod);
-        $("pod-name").value = ""; $("pod-webid").value = ""; $("pod-owner-webid").value = ""; $("pod-retention").value = ""; $("pod-desc").value = ""; $("pod-public-read").checked = false;
-        logAudit("POD_BEHEER", pod.name, `Nieuwe archief-POD aangemaakt (${pod.publicRead ? "publiek lezen" : "privé"}).`);
-        renderPodModal(); renderAll(); showToast(`Archief-POD "${pod.name}" aangemaakt.`, "ok");
-      });
-
-      // =======================================================================
-      // ARCHIVEER & EXPORTEER CENTRUM
-      // =======================================================================
-      $("btn-open-export").addEventListener("click", () => { if (state.unlocked) $("export-modal").classList.add("visible"); });
-      $("btn-export-close").addEventListener("click", () => $("export-modal").classList.remove("visible"));
-
-      $("btn-exp-manifest").addEventListener("click", () => {
-        const payload = { repo: `${REPO_OWNER}/${REPO_NAME}`, exportedAt: new Date().toISOString(), folders: state.folders, pods: state.pods, meta: state.meta, pii: state.pii, systems: state.systems, signatures: state.signatures, auditLog: state.auditLog };
-        downloadFile(`archief-manifest-${REPO_NAME}.json`, JSON.stringify(payload, null, 2), "application/json");
-        logAudit("EXPORT", "Manifest JSON", "Volledig archief-manifest geëxporteerd.");
-        showToast("Volledig archief geëxporteerd (.json).", "ok");
-      });
-
-      $("btn-imp-manifest").addEventListener("click", () => $("manifest-import-input").click());
-      $("manifest-import-input").addEventListener("change", async (e) => {
-        const f = e.target.files?.[0]; e.target.value = "";
-        if (!f) return;
-        try {
-          const p = JSON.parse(await f.text());
-          if (Array.isArray(p.folders)) p.folders.forEach(ensureFolderExists);
-          if (Array.isArray(p.pods)) state.pods = p.pods;
-          if (p.meta) state.meta = { ...state.meta, ...p.meta };
-          if (p.pii) state.pii = { ...state.pii, ...p.pii };
-          if (p.systems) state.systems = { ...state.systems, ...p.systems };
-          if (p.signatures) state.signatures = { ...state.signatures, ...p.signatures };
-          if (Array.isArray(p.auditLog)) state.auditLog = p.auditLog;
-          bindPiiControls(); updateSystemStatusUI(); persistAll(); renderAll();
-          showToast("Archief-manifest geïmporteerd.", "ok");
-        } catch { showToast("Ongeldig JSON-bestand.", "red"); }
-      });
-
-      $("btn-exp-ttl").addEventListener("click", () => {
-        const allTtl = state.pods.map(buildTurtleForPod).join("\n# ==========================================\n\n");
-        downloadFile(`alle-pods-${REPO_NAME}.ttl`, allTtl, "text/turtle;charset=utf-8");
-        logAudit("EXPORT", "Alle PODs (.ttl)", `${state.pods.length} POD(s) geëxporteerd als Turtle RDF.`);
-        showToast("Alle PODs geëxporteerd als .ttl", "ok");
-      });
-
-      $("btn-exp-acl").addEventListener("click", () => {
-        state.pods.forEach((pod, idx) => {
-          setTimeout(() => downloadFile(`${pod.id}.acl`, buildAclForPod(pod), "text/turtle;charset=utf-8"), idx * 180);
-        });
-        logAudit("EXPORT", "Alle PODs (.acl)", `${state.pods.length} W3C .acl-bestand(en) geëxporteerd.`);
-        showToast(`${state.pods.length} .acl-bestand(en) geëxporteerd.`, "ok");
-      });
-
-      $("btn-exp-csv").addEventListener("click", () => {
-        const rows = [["Bestandsnaam", "Nummer", "Status", "Map", "POD", "Datum", "Ondertekend"]];
-        for (const f of getAllFiles()) {
-          const m = state.meta[f.name] || {};
-          const podName = state.pods.find(p => p.id === m.podId)?.name || "";
-          rows.push([redactPlain(f.name), m.number || "", m.status || "tijdelijk", m.folder || TEMP_FOLDER, podName, m.date || "", state.signatures[f.name] ? "Ja" : "Nee"]);
-        }
-        const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
-        downloadFile(`archief-register-${REPO_NAME}.csv`, csv, "text/csv;charset=utf-8");
-        logAudit("EXPORT", "Archiefregister (.csv)", "Register geëxporteerd.");
-      });
-
-      $("btn-exp-sync").addEventListener("click", async () => {
-        const url = state.systems.localEndpoint || "http://127.0.0.1:3000/sync";
-        try {
-          const r = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ repo: `${REPO_OWNER}/${REPO_NAME}`, syncedAt: new Date().toISOString(), folders: state.folders, pods: state.pods, meta: state.meta, signatures: state.signatures, auditLog: state.auditLog })
-          });
-          if (!r.ok) throw new Error(`HTTP ${r.status}`);
-          logAudit("EXPORT", url, "Gesynchroniseerd met lokale server.");
-          showToast("Gesynchroniseerd met lokale server.", "ok");
-        } catch (err) { showToast(`Sync mislukt: ${err.message}`, "red"); }
-      });
 
       // =======================================================================
       // CONTROLEMECHANISME VÓÓR VERWIJDEREN
       // =======================================================================
       function openControlDeleteModal(type, target) {
-        if (!state.unlocked) return;
+        if (!requireUnlock()) return;
         if (type === "folder" && target === TEMP_FOLDER) return showToast(`"${TEMP_FOLDER}" kan niet worden verwijderd.`, "red");
         state.pendingControlDelete = { type, target };
         const name = type === "folder" ? target : target.name;
         $("cd-target-name").textContent = name;
         $("cd-check-1").checked = false; $("cd-check-2").checked = false; $("cd-confirm-input").value = "";
         $("cd-error").classList.remove("visible"); $("btn-cd-confirm").disabled = true;
-
-        if (type === "folder") {
-          const cnt = getAllFiles().filter(f => (state.meta[f.name]?.folder || TEMP_FOLDER) === target).length;
-          $("cd-title").textContent = "Controle vóór map verwijderen";
-          $("cd-summary").innerHTML = `<strong>Mapcontrole:</strong> Bevat <strong>${cnt}</strong> document(en). Deze verhuizen veilig naar <em>${escapeHtml(TEMP_FOLDER)}</em>.`;
-        } else if (type === "pod") {
-          const cnt = getAllFiles().filter(f => state.meta[f.name]?.podId === target.id).length;
-          $("cd-title").textContent = "Controle vóór POD verwijderen";
-          $("cd-summary").innerHTML = `<strong>POD-controle:</strong> Gekoppeld aan <strong>${cnt}</strong> document(en). De documenten blijven behouden, alleen de POD-koppeling vervalt.`;
-        } else {
-          $("cd-title").textContent = "Controle vóór document verwijderen";
-          $("cd-summary").innerHTML = `<strong>Documentcontrole:</strong> Modus = <strong>${target.isLocal ? "Sessie" : state.deleteMode === "github" ? "GitHub DELETE" : "Lokaal verbergen"}</strong>.`;
-        }
+        $("cd-title").textContent = `Controle vóór ${type} verwijderen`;
+        $("cd-summary").innerHTML = type === "folder"
+          ? `Documenten in deze map verhuizen veilig naar <em>${escapeHtml(TEMP_FOLDER)}</em>.`
+          : `Bevestig alle controles om <strong>${escapeHtml(name)}</strong> te verwijderen.`;
         $("control-delete-modal").classList.add("visible");
       }
 
@@ -984,46 +1099,41 @@
         const expected = p.type === "folder" ? p.target : p.target.name;
         $("btn-cd-confirm").disabled = !($("cd-check-1").checked && $("cd-check-2").checked && $("cd-confirm-input").value.trim() === expected);
       }
-      $("cd-check-1").addEventListener("change", validateCD);
-      $("cd-check-2").addEventListener("change", validateCD);
-      $("cd-confirm-input").addEventListener("input", validateCD);
+      $("cd-check-1").addEventListener("change", validateCD); $("cd-check-2").addEventListener("change", validateCD); $("cd-confirm-input").addEventListener("input", validateCD);
       $("btn-cd-cancel").addEventListener("click", () => $("control-delete-modal").classList.remove("visible"));
-
       $("btn-cd-confirm").addEventListener("click", async () => {
         const p = state.pendingControlDelete; if (!p || !state.unlocked) return;
         if (p.type === "folder") {
           for (const k of Object.keys(state.meta)) if (state.meta[k].folder === p.target) { state.meta[k].folder = TEMP_FOLDER; state.meta[k].status = "tijdelijk"; }
           state.folders = state.folders.filter(f => f !== p.target);
-          if (state.activeFilter.type === "folder" && state.activeFilter.value === p.target) state.activeFilter = { type: "all", value: "" };
-          logAudit("VERWIJDERD_NA_CONTROLE", p.target, `Map verwijderd na controle; documenten naar ${TEMP_FOLDER}.`);
+          logAudit("VERWIJDERD_NA_CONTROLE", p.target, "Map verwijderd na controle.");
         } else if (p.type === "pod") {
           for (const k of Object.keys(state.meta)) if (state.meta[k].podId === p.target.id) state.meta[k].podId = "";
           state.pods = state.pods.filter(x => x.id !== p.target.id);
-          if (state.activeFilter.type === "pod" && state.activeFilter.value === p.target.id) state.activeFilter = { type: "all", value: "" };
-          logAudit("VERWIJDERD_NA_CONTROLE", p.target.name, "Archief-POD verwijderd na controle.");
+          logAudit("VERWIJDERD_NA_CONTROLE", p.target.name, "POD verwijderd na controle.");
           renderPodModal();
         } else {
-          const file = p.target;
-          if (file.isLocal) state.localFiles = state.localFiles.filter(f => f.name !== file.name);
-          else if (state.deleteMode === "local") state.hiddenFiles.add(file.name);
+          const f = p.target;
+          if (f.isLocal) state.localFiles = state.localFiles.filter(x => x.name !== f.name);
+          else if (state.deleteMode === "local") state.hiddenFiles.add(f.name);
           else {
             const token = $("gh-token-input").value.trim() || sessionStorage.getItem(KEYS.token) || "";
             if (!token) { $("cd-error").textContent = "GitHub-token vereist."; $("cd-error").classList.add("visible"); return; }
-            const r = await fetch(`${GITHUB_API_BASE}/${encodeURIComponent(file.name)}`, {
+            const r = await fetch(`${GITHUB_API_BASE}/${encodeURIComponent(f.name)}`, {
               method: "DELETE", headers: { Accept: "application/vnd.github.v3+json", Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-              body: JSON.stringify({ message: `Verwijder ${file.name} na controle`, sha: file.sha })
+              body: JSON.stringify({ message: `Verwijder ${f.name}`, sha: f.sha })
             });
             if (!r.ok) { $("cd-error").textContent = `HTTP ${r.status}`; $("cd-error").classList.add("visible"); return; }
-            state.files = state.files.filter(f => f.name !== file.name);
+            state.files = state.files.filter(x => x.name !== f.name);
           }
-          logAudit("VERWIJDERD_NA_CONTROLE", file.name, `Document verwijderd (${state.deleteMode}).`);
+          state.selected.delete(f.name);
+          logAudit("VERWIJDERD_NA_CONTROLE", f.name, `Document verwijderd (${state.deleteMode}).`);
         }
-        $("control-delete-modal").classList.remove("visible");
-        renderAll(); showToast("Verwijderd na controle.", "ok");
+        $("control-delete-modal").classList.remove("visible"); renderAll(); showToast("Verwijderd na controle.", "ok");
       });
 
       // =======================================================================
-      // HEADERS, VIEWER, CRYPTO, RENDERING
+      // CORE DATA, CRYPTO & RENDERING
       // =======================================================================
       function detectFromFileName(name) {
         const { base } = splitFileName(name);
@@ -1031,7 +1141,7 @@
         const dateMatch = base.match(/\b(20\d{2}[-_.]\d{2}[-_.]\d{2})\b/);
         const isOnderlegger = /(onderlegger|bijlage|bewijs|bon|factuur|scan|kopie)/i.test(base);
         const num = numMatch ? numMatch[1].replace(/[_\s]+/g, "-").toUpperCase() : "";
-        return { number: num, role: isOnderlegger ? "onderlegger" : "hoofddocument", status: num ? "in-behandeling" : "tijdelijk", folder: num ? (isOnderlegger ? "Onderleggers" : "Algemeen") : TEMP_FOLDER, podId: "", date: dateMatch ? dateMatch[1].replace(/[_.]/g, "-") : "", subject: base.replace(/[-_]+/g, " ").trim(), sender: "", rawHeaders: {} };
+        return { number: num, role: isOnderlegger ? "onderlegger" : "hoofddocument", status: num ? "in-behandeling" : "tijdelijk", folder: num ? (isOnderlegger ? "Onderleggers" : "Algemeen") : TEMP_FOLDER, podId: "", retention: "7 jaar", notes: "", date: dateMatch ? dateMatch[1].replace(/[_.]/g, "-") : "", subject: base.replace(/[-_]+/g, " ").trim(), sender: "", rawHeaders: {} };
       }
 
       async function getFileArrayBuffer(file) {
@@ -1062,10 +1172,8 @@
             parsed.rawHeaders = raw;
           } catch {}
         }
-        const ex = state.meta[file.name] || {};
-        state.meta[file.name] = { ...parsed, ...ex, rawHeaders: parsed.rawHeaders };
-        ensureFolderExists(state.meta[file.name].folder);
-        persistAll();
+        state.meta[file.name] = { ...parsed, ...(state.meta[file.name] || {}), rawHeaders: parsed.rawHeaders };
+        ensureFolderExists(state.meta[file.name].folder); persistAll();
         return state.meta[file.name];
       }
 
@@ -1095,31 +1203,6 @@
       window.addEventListener("mouseup", () => { isDrawing = false; });
       $("btn-clear-pad").addEventListener("click", resetSigPad);
 
-      async function openViewerModal(file) {
-        if (!file) return;
-        const lowExt = splitFileName(file.name).ext.toLowerCase();
-        $("viewer-title").textContent = redactPlain(file.name);
-        $("viewer-content").innerHTML = `<div class="state-box">Laden...</div>`;
-        $("viewer-modal").classList.add("visible");
-        try {
-          if (lowExt === "pdf") {
-            let url = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`;
-            if (!file.isLocal) { try { url = URL.createObjectURL(new Blob([await getFileArrayBuffer(file)], { type: "application/pdf" })); } catch {} }
-            $("viewer-content").innerHTML = `<iframe class="pdf-frame" src="${url}"></iframe>`;
-            return;
-          }
-          if (lowExt === "eml" || TEXT_EXTS.has(lowExt)) {
-            const txt = new TextDecoder("utf-8", { fatal: false }).decode(await getFileArrayBuffer(file));
-            state.textCache[file.name] = txt;
-            $("viewer-content").innerHTML = `<div class="eml-box"><div class="eml-body">${redactHtml(txt)}</div></div>`;
-            return;
-          }
-          const url = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`;
-          $("viewer-content").innerHTML = `<div class="state-box"><a class="btn btn--primary" href="${url}" target="_blank" rel="noopener noreferrer">Open bestand</a></div>`;
-        } catch (err) { $("viewer-content").innerHTML = `<div class="state-box state-box--error">${escapeHtml(err.message)}</div>`; }
-      }
-      $("btn-viewer-close").addEventListener("click", () => $("viewer-modal").classList.remove("visible"));
-
       function getWatchList() { return state.watchKeywords.split(",").map(s => s.trim().toLowerCase()).filter(Boolean); }
       function getMatchedKeywords(f) {
         const list = getWatchList(); if (!list.length) return [];
@@ -1148,6 +1231,14 @@
         for (const f of state.files) map.set(f.name, f);
         for (const f of state.localFiles) map.set(f.name, f);
         return [...map.values()].filter(f => !state.hiddenFiles.has(f.name));
+      }
+
+      function updateBulkBar() {
+        const n = state.selected.size;
+        $("bulk-bar").classList.toggle("visible", state.unlocked && n > 0);
+        $("bulk-count").textContent = String(n);
+        $("bulk-folder-select").innerHTML = state.folders.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join("");
+        $("bulk-pod-select").innerHTML = `<option value="">Geen POD</option>` + state.pods.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("");
       }
 
       function renderSidebar(all) {
@@ -1186,6 +1277,7 @@
       function renderAll() {
         const all = getAllFiles();
         renderSidebar(all);
+        updateBulkBar();
         const hits = getWatchList().length ? all.filter(f => getMatchedKeywords(f).length > 0) : [];
         $("notify-bar").classList.toggle("visible", hits.length > 0);
         if (hits.length) $("notify-text").innerHTML = `<strong>Notificatie:</strong> ${hits.length} document(en) matchen je trefwoorden.`;
@@ -1234,6 +1326,7 @@
             <div class="doc-top">
               <div class="doc-main">
                 <div class="doc-title-row">
+                  ${state.unlocked ? `<input type="checkbox" class="doc-select" data-sel="${escapeHtml(file.name)}" ${state.selected.has(file.name) ? "checked" : ""} />` : ""}
                   ${m.number ? `<span class="badge badge--num"># ${escapeHtml(m.number)}</span>` : ""}
                   <a class="doc-link" href="#" data-view="${escapeHtml(file.name)}">${redactHtml(base)}</a>
                   ${ext ? `<span class="badge ${ext.toLowerCase() === "pdf" ? "badge--pdf" : ext.toLowerCase() === "eml" ? "badge--eml" : ""}">${escapeHtml(ext.toUpperCase())}</span>` : ""}
@@ -1243,7 +1336,7 @@
                   ${kws.length ? `<span class="badge badge--alert">Treffer</span>` : ""}
                   ${sig ? `<button type="button" class="badge ${vStatus === "ok" ? "badge--ok" : vStatus === "invalid" ? "badge--invalid" : "badge--signed"}" data-verify="${escapeHtml(file.name)}">${vStatus === "ok" ? "Geverifieerd" : "Ondertekend"}</button>` : ""}
                 </div>
-                <div class="doc-meta"><span>${escapeHtml(formatBytes(file.size))}</span><span>&bull;</span><span>${redactHtml(file.name)}</span></div>
+                <div class="doc-meta"><span>${escapeHtml(formatBytes(file.size))}</span><span>&bull;</span><span>${redactHtml(file.name)}</span>${m.retention ? `<span>&bull;</span><span>Bewaar: ${escapeHtml(m.retention)}</span>` : ""}</div>
               </div>
               <div class="doc-actions">
                 <button type="button" class="btn btn--sm" data-view="${escapeHtml(file.name)}">Bekijk</button>
@@ -1259,7 +1352,7 @@
               <div class="meta-cell"><strong>Onderwerp</strong><span>${redactHtml(m.subject || "—")}</span></div>
               <div class="meta-cell"><strong>Afzender</strong><span>${redactHtml(m.sender || "—")}</span></div>
               <div class="meta-cell"><strong>Datum</strong><span>${escapeHtml(m.date || "—")}</span></div>
-              <div class="meta-cell"><strong>Headers</strong><span>${Object.keys(m.rawHeaders || {}).length} herkend</span></div>
+              <div class="meta-cell"><strong>Notitie</strong><span>${redactHtml(m.notes || "—")}</span></div>
             </div>` : ""}
           `;
           ul.appendChild(li);
@@ -1269,6 +1362,7 @@
         ul.querySelectorAll("[data-view]").forEach(el => el.addEventListener("click", e => { e.preventDefault(); openViewerModal(findF(el.dataset.view)); }));
         ul.querySelectorAll("[data-verify]").forEach(b => b.addEventListener("click", () => openVerifyModal(findF(b.dataset.verify))));
         if (state.unlocked) {
+          ul.querySelectorAll("[data-sel]").forEach(cb => cb.addEventListener("change", () => { if (cb.checked) state.selected.add(cb.dataset.sel); else state.selected.delete(cb.dataset.sel); updateBulkBar(); }));
           ul.querySelectorAll("[data-meta]").forEach(b => b.addEventListener("click", () => openMetaModal(findF(b.dataset.meta))));
           ul.querySelectorAll("[data-sign]").forEach(b => b.addEventListener("click", () => openSignModal(findF(b.dataset.sign))));
           ul.querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", () => openControlDeleteModal("file", findF(b.dataset.del))));
@@ -1276,7 +1370,64 @@
       }
 
       // =======================================================================
-      // MODALS: ARCHIVEREN, SIGN, VERIFY, AUDIT, ANALYSE, KOPPELINGEN
+      // MENU-ACTIES & BULK-ARCHIVERING
+      // =======================================================================
+      $("m-upload").addEventListener("click", () => { if (requireUnlock()) $("file-upload-input").click(); });
+      $("m-scan").addEventListener("click", async () => { if (!requireUnlock()) return; for (const f of getAllFiles()) await scanFileHeaders(f, true); renderAll(); showToast("Headers gescand.", "ok"); });
+      $("m-auto-archive").addEventListener("click", () => {
+        if (!requireUnlock()) return;
+        let moved = 0;
+        for (const f of getAllFiles()) { const m = state.meta[f.name] || detectFromFileName(f.name); if (m.number) { m.folder = m.role === "onderlegger" ? `Nummer ${m.number}/Onderleggers` : `Nummer ${m.number}`; m.status = "gearchiveerd"; ensureFolderExists(m.folder); state.meta[f.name] = m; moved++; } }
+        if (moved) logAudit("ARCHIEF_VERPLAATSING", `${moved} doc(s)`, "Auto-gearchiveerd op nummer.");
+        renderAll(); showToast(`${moved} document(en) gearchiveerd.`, "ok");
+      });
+      $("m-verify-all").addEventListener("click", async () => { let ok = 0, bad = 0; for (const f of getAllFiles().filter(x => state.signatures[x.name])) { if ((await verifyFile(f, state.activeSecret)).status === "ok") ok++; else bad++; } renderAll(); showToast(`Verificatie: ${ok} geldig, ${bad} ongeldig.`, bad ? "red" : "ok"); });
+      $("m-refresh").addEventListener("click", fetchDocuments);
+      $("m-new-folder").addEventListener("click", () => { if (requireUnlock()) $("new-folder-input").focus(); });
+      $("m-manage-pods").addEventListener("click", () => { if (requireUnlock()) { renderPodModal(); $("pod-modal").classList.add("visible"); } });
+      $("m-export-center").addEventListener("click", () => { if (requireUnlock()) $("export-modal").classList.add("visible"); });
+
+      // Wis-opties in menu + knoppen
+      const clearSearch = () => { state.query = ""; $("search-input").value = ""; state.activeFilter = { type: "all", value: "" }; renderAll(); };
+      const clearDates = () => { state.dateFrom = ""; state.dateTo = ""; $("date-from").value = ""; $("date-to").value = ""; renderAll(); };
+      const clearWatch = () => { state.watchKeywords = ""; $("watch-keywords").value = ""; persistAll(); renderAll(); };
+      const clearSel = () => { state.selected.clear(); renderAll(); };
+
+      $("m-clear-search").addEventListener("click", clearSearch); $("btn-clear-search").addEventListener("click", clearSearch);
+      $("m-clear-dates").addEventListener("click", clearDates); $("btn-clear-dates").addEventListener("click", clearDates);
+      $("m-clear-watch").addEventListener("click", clearWatch); $("btn-clear-watch").addEventListener("click", clearWatch);
+      $("m-clear-selection").addEventListener("click", clearSel); $("btn-bulk-clear").addEventListener("click", clearSel);
+      $("m-restore-hidden").addEventListener("click", () => { if (!requireUnlock()) return; state.hiddenFiles.clear(); persistAll(); renderAll(); showToast("Verborgen documenten hersteld.", "ok"); });
+      $("m-clear-cache").addEventListener("click", () => { if (!requireUnlock()) return; state.textCache = {}; showToast("Lokale tekstcache gewist."); });
+
+      $("btn-bulk-move").addEventListener("click", () => {
+        const folder = $("bulk-folder-select").value;
+        for (const name of state.selected) { state.meta[name] = { ...(state.meta[name] || detectFromFileName(name)), folder, status: folder === TEMP_FOLDER ? "tijdelijk" : "gearchiveerd" }; }
+        logAudit("ARCHIEF_VERPLAATSING", `${state.selected.size} doc(s)`, `Bulk verplaatst naar "${folder}".`);
+        state.selected.clear(); renderAll(); showToast(`Verplaatst naar "${folder}".`, "ok");
+      });
+      $("btn-bulk-pod").addEventListener("click", () => {
+        const podId = $("bulk-pod-select").value;
+        for (const name of state.selected) { state.meta[name] = { ...(state.meta[name] || detectFromFileName(name)), podId }; }
+        logAudit("POD_BEHEER", `${state.selected.size} doc(s)`, `Bulk gekoppeld aan POD "${podId || "geen"}".`);
+        state.selected.clear(); renderAll(); showToast("POD-koppeling bijgewerkt.", "ok");
+      });
+
+      $("m-analysis").addEventListener("click", () => {
+        const all = getAllFiles();
+        $("analysis-content").innerHTML = `<div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-val">${all.length}</div><div class="kpi-lbl">Documenten</div></div>
+          <div class="kpi-card"><div class="kpi-val">${state.folders.length}</div><div class="kpi-lbl">Mappen</div></div>
+          <div class="kpi-card"><div class="kpi-val">${state.pods.length}</div><div class="kpi-lbl">Archief-PODs</div></div>
+          <div class="kpi-card"><div class="kpi-val">${state.auditLog.length}</div><div class="kpi-lbl">Audit-regels</div></div>
+        </div>`;
+        $("analysis-modal").classList.add("visible");
+      });
+      $("m-audit").addEventListener("click", () => { if (requireUnlock()) { renderAudit(); $("audit-modal").classList.add("visible"); } });
+      $("m-systems").addEventListener("click", () => { if (requireUnlock()) { updateSystemStatusUI(); $("systems-modal").classList.add("visible"); } });
+
+      // =======================================================================
+      // OVERIGE MODALS & HANDLERS
       // =======================================================================
       async function openMetaModal(file) {
         if (!file || !state.unlocked) return;
@@ -1285,14 +1436,10 @@
         $("meta-pod").innerHTML = `<option value="">— Geen POD —</option>` + state.pods.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("");
         $("meta-modal").classList.add("visible");
         const m = await scanFileHeaders(file, false);
-        $("meta-status").value = m.status || "tijdelijk";
-        $("meta-folder").value = m.folder || TEMP_FOLDER;
-        $("meta-pod").value = m.podId || "";
-        $("meta-number").value = m.number || "";
-        $("meta-role").value = m.role || "hoofddocument";
-        $("meta-subject").value = redactPlain(m.subject || "");
-        $("meta-sender").value = redactPlain(m.sender || "");
-        $("meta-date").value = m.date || "";
+        $("meta-status").value = m.status || "tijdelijk"; $("meta-folder").value = m.folder || TEMP_FOLDER; $("meta-pod").value = m.podId || "";
+        $("meta-retention").value = m.retention || "7 jaar"; $("meta-number").value = m.number || "";
+        $("meta-subject").value = redactPlain(m.subject || ""); $("meta-sender").value = redactPlain(m.sender || "");
+        $("meta-date").value = m.date || ""; $("meta-notes").value = redactPlain(m.notes || "");
         const entries = Object.entries(m.rawHeaders || {});
         $("meta-raw-headers").innerHTML = entries.length ? entries.map(([k, v]) => `<tr><th>${escapeHtml(k)}</th><td>${redactHtml(v)}</td></tr>`).join("") : `<tr><td colspan="2">Geen tekstheaders.</td></tr>`;
       }
@@ -1300,11 +1447,10 @@
       $("btn-meta-cancel").addEventListener("click", () => $("meta-modal").classList.remove("visible"));
       $("btn-meta-save").addEventListener("click", () => {
         if (!state.pendingMetaFile) return;
-        const name = state.pendingMetaFile.name, prev = state.meta[name] || {};
-        const folder = $("meta-folder").value.trim() || TEMP_FOLDER, podId = $("meta-pod").value;
+        const name = state.pendingMetaFile.name, folder = $("meta-folder").value.trim() || TEMP_FOLDER;
         ensureFolderExists(folder);
-        state.meta[name] = { ...prev, status: $("meta-status").value, folder, podId, number: $("meta-number").value.trim().toUpperCase(), role: $("meta-role").value, subject: $("meta-subject").value.trim(), sender: $("meta-sender").value.trim(), date: $("meta-date").value.trim() };
-        logAudit("ARCHIEF_VERPLAATSING", name, `Map: "${folder}", POD: "${podId || "geen"}", Status: "${$("meta-status").value}".`);
+        state.meta[name] = { ...(state.meta[name] || {}), status: $("meta-status").value, folder, podId: $("meta-pod").value, retention: $("meta-retention").value, number: $("meta-number").value.trim().toUpperCase(), subject: $("meta-subject").value.trim(), sender: $("meta-sender").value.trim(), date: $("meta-date").value.trim(), notes: $("meta-notes").value.trim() };
+        logAudit("ARCHIEF_VERPLAATSING", name, `Map: "${folder}", Bewaar: "${$("meta-retention").value}".`);
         $("meta-modal").classList.remove("visible"); renderAll(); showToast("Opgeslagen.", "ok");
       });
 
@@ -1331,7 +1477,7 @@
         const sig = state.signatures[f.name]; if (!sig) return { status: "unsigned", message: "Geen handtekening." };
         const liveSha = await sha256Hex(await getFileArrayBuffer(f));
         if (liveSha !== sig.sha256) { state.verifyStatus[f.name] = "invalid"; return { status: "invalid", liveSha, message: "WAARSCHUWING: Inhoud gewijzigd." }; }
-        if (!sec) { state.verifyStatus[f.name] = "hash-only"; return { status: "hash-only", liveSha, message: "SHA-256 klopt. Voer geheime string in voor HMAC." }; }
+        if (!sec) { state.verifyStatus[f.name] = "hash-only"; return { status: "hash-only", liveSha, message: "SHA-256 klopt. Voer geheime string in." }; }
         const ok = (await hmacSha256Hex(sec, buildSignPayload({ name: f.name, sha256: liveSha, signer: sig.signer, signedAt: sig.signedAt, drawingHash: sig.drawingHash || "" }))) === sig.hmac;
         state.verifyStatus[f.name] = ok ? "ok" : "invalid";
         return { status: state.verifyStatus[f.name], liveSha, message: ok ? "GEVERIFIEERD." : "ONGELDIG: HMAC klopt niet." };
@@ -1355,70 +1501,68 @@
         const rows = state.auditLog.filter(e => (flt === "all" || e.action === flt) && (!q || `${e.action} ${e.target} ${e.details}`.toLowerCase().includes(q)));
         $("audit-tbody").innerHTML = rows.map(e => `<tr><td style="font-family:var(--mono); font-size:11.5px;">${escapeHtml(new Date(e.timestamp).toLocaleString("nl-NL"))}</td><td><span class="badge">${escapeHtml(e.action)}</span></td><td>${redactHtml(e.target)}</td><td>${redactHtml(e.details)}</td></tr>`).join("") || `<tr><td colspan="4" style="text-align:center;">Geen regels.</td></tr>`;
       }
-      $("btn-open-audit").addEventListener("click", () => { if (state.unlocked) { renderAudit(); $("audit-modal").classList.add("visible"); } });
       $("btn-audit-close").addEventListener("click", () => $("audit-modal").classList.remove("visible"));
       $("audit-filter").addEventListener("change", renderAudit); $("audit-search").addEventListener("input", renderAudit);
       $("btn-audit-json").addEventListener("click", () => downloadFile(`audit-${REPO_NAME}.json`, JSON.stringify(state.auditLog, null, 2), "application/json"));
-      $("btn-audit-csv").addEventListener("click", () => {
-        const csv = [["ID", "Tijdstempel", "Actie", "Item", "Details"], ...state.auditLog.map(e => [e.id, e.timestamp, e.action, e.target, e.details])].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
-        downloadFile(`audit-${REPO_NAME}.csv`, csv, "text/csv;charset=utf-8");
+      $("btn-audit-csv").addEventListener("click", () => { const csv = [["ID", "Tijdstempel", "Actie", "Item", "Details"], ...state.auditLog.map(e => [e.id, e.timestamp, e.action, e.target, e.details])].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n"); downloadFile(`audit-${REPO_NAME}.csv`, csv, "text/csv;charset=utf-8"); });
+
+      $("btn-pod-close").addEventListener("click", () => $("pod-modal").classList.remove("visible"));
+      $("btn-create-pod").addEventListener("click", () => {
+        const name = $("pod-name").value.trim(); if (!name) return showToast("Vul een POD-naam in.", "red");
+        const id = `pod-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${Date.now().toString(36).slice(-4)}`;
+        const pod = { id, name, webid: $("pod-webid").value.trim() || `https://solid-virid.vercel.app/pod/${id}/`, ownerWebId: $("pod-owner-webid").value.trim() || "https://solid-virid.vercel.app/profile/card#me", publicRead: $("pod-public-read").checked, retention: $("pod-retention").value.trim() || "Permanent", desc: $("pod-desc").value.trim(), createdAt: new Date().toISOString() };
+        state.pods.push(pod); $("pod-name").value = ""; $("pod-webid").value = ""; $("pod-owner-webid").value = ""; $("pod-retention").value = ""; $("pod-desc").value = ""; $("pod-public-read").checked = false;
+        logAudit("POD_BEHEER", pod.name, "Nieuwe POD aangemaakt."); renderPodModal(); renderAll();
+      });
+      $("btn-save-solid-token").addEventListener("click", () => { const t = $("solid-token-input").value.trim(); if (t) { sessionStorage.setItem(KEYS.solidToken, t); showToast("Solid-token bewaard.", "ok"); } });
+      $("btn-clear-solid-token").addEventListener("click", () => { $("solid-token-input").value = ""; sessionStorage.removeItem(KEYS.solidToken); });
+
+      $("btn-export-close").addEventListener("click", () => $("export-modal").classList.remove("visible"));
+      $("btn-exp-manifest").addEventListener("click", () => { downloadFile(`archief-manifest-${REPO_NAME}.json`, JSON.stringify({ repo: `${REPO_OWNER}/${REPO_NAME}`, folders: state.folders, pods: state.pods, meta: state.meta, pii: state.pii, systems: state.systems, signatures: state.signatures, auditLog: state.auditLog }, null, 2), "application/json"); logAudit("EXPORT", "Manifest JSON", "Geëxporteerd."); });
+      $("btn-imp-manifest").addEventListener("click", () => $("manifest-import-input").click());
+      $("manifest-import-input").addEventListener("change", async e => {
+        const f = e.target.files?.[0]; e.target.value = ""; if (!f) return;
+        try { const p = JSON.parse(await f.text()); if (Array.isArray(p.folders)) p.folders.forEach(ensureFolderExists); if (Array.isArray(p.pods)) state.pods = p.pods; if (p.meta) state.meta = { ...state.meta, ...p.meta }; if (p.pii) state.pii = { ...state.pii, ...p.pii }; if (p.signatures) state.signatures = { ...state.signatures, ...p.signatures }; if (Array.isArray(p.auditLog)) state.auditLog = p.auditLog; bindPiiControls(); updateSystemStatusUI(); persistAll(); renderAll(); showToast("Geïmporteerd.", "ok"); } catch { showToast("Ongeldig JSON.", "red"); }
+      });
+      $("btn-exp-ttl").addEventListener("click", () => { downloadFile(`alle-pods-${REPO_NAME}.ttl`, state.pods.map(buildTurtleForPod).join("\n"), "text/turtle;charset=utf-8"); });
+      $("btn-exp-acl").addEventListener("click", () => { state.pods.forEach((p, i) => setTimeout(() => downloadFile(`${p.id}.acl`, buildAclForPod(p), "text/turtle;charset=utf-8"), i * 160)); });
+      $("btn-exp-csv").addEventListener("click", () => { const rows = [["Bestand", "Nummer", "Status", "Map", "Bewaartermijn"], ...getAllFiles().map(f => { const m = state.meta[f.name] || {}; return [redactPlain(f.name), m.number || "", m.status || "tijdelijk", m.folder || TEMP_FOLDER, m.retention || "7 jaar"]; })]; downloadFile(`register-${REPO_NAME}.csv`, rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n"), "text/csv;charset=utf-8"); });
+      $("btn-exp-sync").addEventListener("click", async () => {
+        const url = state.systems.localEndpoint || "http://127.0.0.1:3000/sync";
+        try { const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ repo: `${REPO_OWNER}/${REPO_NAME}`, folders: state.folders, pods: state.pods, meta: state.meta, signatures: state.signatures, auditLog: state.auditLog }) }); if (!r.ok) throw new Error(`HTTP ${r.status}`); showToast("Gesynchroniseerd.", "ok"); } catch (e) { showToast(`Sync mislukt: ${e.message}`, "red"); }
       });
 
-      $("btn-open-analysis").addEventListener("click", () => {
-        const all = getAllFiles();
-        $("analysis-content").innerHTML = `<div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-val">${all.length}</div><div class="kpi-lbl">Documenten</div></div>
-          <div class="kpi-card"><div class="kpi-val">${state.folders.length}</div><div class="kpi-lbl">Mappen</div></div>
-          <div class="kpi-card"><div class="kpi-val">${state.pods.length}</div><div class="kpi-lbl">Archief-PODs</div></div>
-          <div class="kpi-card"><div class="kpi-val">${state.auditLog.length}</div><div class="kpi-lbl">Audit-regels</div></div>
-        </div>`;
-        $("analysis-modal").classList.add("visible");
-      });
       $("btn-analysis-close").addEventListener("click", () => $("analysis-modal").classList.remove("visible"));
-
       function updateSystemStatusUI() {
-        $("email-status-pill").textContent = state.systems.emailActive ? "E-mail: Geactiveerd" : "E-mail: Inactief (Zwart)";
-        $("email-status-pill").classList.toggle("is-active", state.systems.emailActive);
-        $("sys-email-badge").textContent = state.systems.emailActive ? "ACTIEF" : "INACTIEF TOT NADERE ACTIVATIE";
+        $("email-status-pill").textContent = state.systems.emailActive && !state.pii.pdfLock ? "E-mail & PDF: Actief" : "E-mail & PDF-PII: Zwart";
+        $("email-status-pill").classList.toggle("is-active", state.systems.emailActive && !state.pii.pdfLock);
+        $("sys-email-badge").textContent = state.systems.emailActive ? "ACTIEF" : "INACTIEF";
         $("btn-toggle-email-activation").textContent = state.systems.emailActive ? "Zet e-mail weer inactief (Zwart)" : "Activeer e-mailkoppeling";
-        $("sys-email-endpoint").value = state.systems.emailEndpoint || "";
-        $("sys-local-endpoint").value = state.systems.localEndpoint || "";
+        $("sys-email-endpoint").value = state.systems.emailEndpoint || ""; $("sys-local-endpoint").value = state.systems.localEndpoint || "";
       }
-      $("btn-open-systems").addEventListener("click", () => { if (state.unlocked) { updateSystemStatusUI(); $("systems-modal").classList.add("visible"); } });
       $("btn-systems-close").addEventListener("click", () => $("systems-modal").classList.remove("visible"));
-      $("btn-toggle-email-activation").addEventListener("click", () => {
-        state.systems.emailActive = !state.systems.emailActive; state.pii.email = !state.systems.emailActive; $("pii-email").checked = state.pii.email;
-        logAudit("SYSTEEM_KOPPELING", "E-mail", state.systems.emailActive ? "Geactiveerd" : "Inactief zwart");
-        updateSystemStatusUI(); renderAll();
-      });
-      $("btn-save-systems").addEventListener("click", () => { state.systems.emailEndpoint = $("sys-email-endpoint").value.trim(); state.systems.localEndpoint = $("sys-local-endpoint").value.trim(); persistAll(); showToast("Koppelingen opgeslagen.", "ok"); });
+      $("btn-toggle-email-activation").addEventListener("click", () => { state.systems.emailActive = !state.systems.emailActive; state.pii.email = !state.systems.emailActive; $("pii-email").checked = state.pii.email; updateSystemStatusUI(); persistAll(); renderAll(); });
+      $("btn-save-systems").addEventListener("click", () => { state.systems.emailEndpoint = $("sys-email-endpoint").value.trim(); state.systems.localEndpoint = $("sys-local-endpoint").value.trim(); persistAll(); showToast("Opgeslagen.", "ok"); });
 
       function bindPiiControls() {
         ["email", "phone", "bsn", "iban", "postcode"].forEach(k => { const el = $(`pii-${k}`); el.checked = Boolean(state.pii[k]); el.addEventListener("change", () => { state.pii[k] = el.checked; persistAll(); renderAll(); }); });
+        $("pii-pdf-lock").checked = Boolean(state.pii.pdfLock);
+        $("pii-pdf-lock").addEventListener("change", () => { state.pii.pdfLock = $("pii-pdf-lock").checked; updateSystemStatusUI(); persistAll(); });
         $("pii-custom-terms").value = state.pii.customTerms || "";
         $("pii-custom-terms").addEventListener("input", () => { state.pii.customTerms = $("pii-custom-terms").value; persistAll(); renderAll(); });
+        $("btn-clear-pii-terms").addEventListener("click", () => { state.pii.customTerms = ""; $("pii-custom-terms").value = ""; persistAll(); renderAll(); });
       }
 
       $("btn-create-folder").addEventListener("click", () => { const v = $("new-folder-input").value.trim(); if (!v || !state.unlocked) return; ensureFolderExists(v); $("new-folder-input").value = ""; logAudit("MAP_WIJZIGING", v, "Map aangemaakt."); renderAll(); });
-      $("btn-scan-all").addEventListener("click", async () => { for (const f of getAllFiles()) await scanFileHeaders(f, true); renderAll(); showToast("Headers gescand.", "ok"); });
-      $("btn-auto-folders").addEventListener("click", () => {
-        let moved = 0;
-        for (const f of getAllFiles()) { const m = state.meta[f.name] || detectFromFileName(f.name); if (m.number) { m.folder = m.role === "onderlegger" ? `Nummer ${m.number}/Onderleggers` : `Nummer ${m.number}`; m.status = "gearchiveerd"; ensureFolderExists(m.folder); state.meta[f.name] = m; moved++; } }
-        if (moved) logAudit("ARCHIEF_VERPLAATSING", `${moved} doc(s)`, "Auto-gearchiveerd op nummer.");
-        renderAll(); showToast(`${moved} document(en) gearchiveerd.`, "ok");
-      });
-      $("btn-verify-all").addEventListener("click", async () => { let ok = 0, bad = 0; for (const f of getAllFiles().filter(x => state.signatures[x.name])) { if ((await verifyFile(f, state.activeSecret)).status === "ok") ok++; else bad++; } renderAll(); showToast(`Verificatie: ${ok} geldig, ${bad} ongeldig.`, bad ? "red" : "ok"); });
-
-      $("btn-add-file").addEventListener("click", () => $("file-upload-input").click());
       $("file-upload-input").addEventListener("change", async e => {
         for (const file of [...(e.target.files || [])]) {
           const buffer = await file.arrayBuffer();
           const obj = { name: file.name, size: file.size, isLocal: true, buffer, blobUrl: URL.createObjectURL(new Blob([buffer], { type: file.type || "application/octet-stream" })) };
           state.localFiles = state.localFiles.filter(f => f.name !== file.name); state.localFiles.push(obj);
           const m = await scanFileHeaders(obj, true); m.folder = TEMP_FOLDER; m.status = "tijdelijk"; state.meta[file.name] = m;
-          logAudit("ARCHIEF_VERPLAATSING", file.name, `Toegevoegd aan ${TEMP_FOLDER}.`);
+          logAudit("ARCHIEF_VERPLAATSING", file.name, `Geüpload naar ${TEMP_FOLDER}.`);
         }
-        e.target.value = ""; renderAll();
+        e.target.value = ""; renderAll(); showToast(`Toegevoegd aan "${TEMP_FOLDER}".`, "ok");
       });
 
       $("btn-quill").addEventListener("click", () => { if (state.unlocked) return $("admin-bar").scrollIntoView({ behavior: "smooth" }); state.unlockOpen = !state.unlockOpen; $("unlock-panel").classList.toggle("visible", state.unlockOpen); if (state.unlockOpen) $("secret-input").focus(); });
@@ -1428,21 +1572,18 @@
         if (v === GEHEIME_STRING) { state.unlocked = true; state.activeSecret = v; state.unlockOpen = false; $("unlock-panel").classList.remove("visible"); $("admin-bar").classList.add("visible"); $("btn-quill").classList.add("is-unlocked"); $("quill-label").textContent = "Veerpen actief"; $("secret-input").value = ""; renderAll(); showToast("Veerpen ontgrendeld.", "ok"); }
         else $("unlock-error").classList.add("visible");
       });
-      $("btn-lock").addEventListener("click", () => { state.unlocked = false; state.activeSecret = ""; $("admin-bar").classList.remove("visible"); $("btn-quill").classList.remove("is-unlocked"); $("quill-label").textContent = "Veerpen"; document.querySelectorAll(".modal-backdrop").forEach(m => m.classList.remove("visible")); renderAll(); });
+      $("btn-lock").addEventListener("click", () => { state.unlocked = false; state.activeSecret = ""; state.selected.clear(); $("admin-bar").classList.remove("visible"); $("btn-quill").classList.remove("is-unlocked"); $("quill-label").textContent = "Veerpen"; document.querySelectorAll(".modal-backdrop").forEach(m => m.classList.remove("visible")); renderAll(); });
 
       document.querySelectorAll('input[name="deleteMode"]').forEach(r => r.addEventListener("change", e => { state.deleteMode = e.target.value; $("lbl-mode-local").classList.toggle("is-active", state.deleteMode === "local"); $("lbl-mode-github").classList.toggle("is-active", state.deleteMode === "github"); $("token-row").classList.toggle("visible", state.deleteMode === "github"); }));
       $("btn-save-token").addEventListener("click", () => { const t = $("gh-token-input").value.trim(); if (t) { sessionStorage.setItem(KEYS.token, t); showToast("Token bewaard.", "ok"); } });
       $("btn-clear-token").addEventListener("click", () => { $("gh-token-input").value = ""; sessionStorage.removeItem(KEYS.token); });
-      $("btn-restore-hidden").addEventListener("click", () => { state.hiddenFiles.clear(); persistAll(); renderAll(); });
 
       $("search-input").addEventListener("input", e => { state.query = e.target.value; renderAll(); });
       $("watch-keywords").addEventListener("input", e => { state.watchKeywords = e.target.value; persistAll(); renderAll(); });
       $("date-from").addEventListener("change", e => { state.dateFrom = e.target.value; renderAll(); });
       $("date-to").addEventListener("change", e => { state.dateTo = e.target.value; renderAll(); });
-      $("btn-clear-dates").addEventListener("click", () => { state.dateFrom = ""; state.dateTo = ""; $("date-from").value = ""; $("date-to").value = ""; renderAll(); });
       $("btn-filter-alerts").addEventListener("click", () => { state.activeFilter = { type: "alerts", value: "" }; renderAll(); });
       $("sort-select").addEventListener("change", e => { state.sortBy = e.target.value; renderAll(); });
-      $("btn-refresh").addEventListener("click", fetchDocuments);
 
       function applyFont(s) { state.fontScale = Math.max(0.85, Math.min(1.35, Math.round(s * 100) / 100)); document.documentElement.style.setProperty("--doc-scale", String(state.fontScale)); localStorage.setItem(KEYS.font, String(state.fontScale)); }
       $("btn-font-down").addEventListener("click", () => applyFont(state.fontScale - 0.1));
@@ -1463,6 +1604,7 @@
         bindPiiControls(); updateSystemStatusUI();
         const sc = parseFloat(localStorage.getItem(KEYS.font)); if (Number.isFinite(sc)) applyFont(sc);
         const tk = sessionStorage.getItem(KEYS.token); if (tk) $("gh-token-input").value = tk;
+        const stk = sessionStorage.getItem(KEYS.solidToken); if (stk && $("solid-token-input")) $("solid-token-input").value = stk;
         persistAll(); fetchDocuments();
       });
     })();
