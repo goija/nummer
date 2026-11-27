@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datananalyses — Overzicht</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #fafafa;
+      --text: #111111;
+      --muted: #555555;
+      --accent: #A31C1C;
+      --accent-hover: #7d1414;
+      --border: #dcdcdc;
+      --base-font: 19px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: var(--base-font);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    header {
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 1rem;
+      margin-bottom: 1.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    header p {
+      margin: 0.35rem 0 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    button {
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover,
+    button:focus-visible {
+      border-color: var(--accent);
+      color: var(--accent);
+      outline: none;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1 1 240px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .search-input:focus {
+      outline: 2px solid var(--accent);
+      border-color: var(--accent);
+    }
+
+    .status {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0 0 1rem;
+    }
+
+    .doc-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .doc-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .doc-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 0.6rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: background-color 0.15s ease;
+    }
+
+    .doc-link:hover,
+    .doc-link:focus-visible {
+      background-color: var(--surface);
+      outline: none;
+    }
+
+    .doc-link:hover .doc-title,
+    .doc-link:focus-visible .doc-title {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .doc-title {
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .doc-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.45rem;
+      border-radius: 3px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+    }
+
+    .badge-html {
+      background-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .badge-md {
+      background-color: #eeeeee;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .error-box {
+      padding: 1rem;
+      border-left: 4px solid var(--accent);
+      background-color: var(--surface);
+      font-size: 0.9rem;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Datananalyses</h1>
+        <p>Automatisch overzicht van documenten in <strong>goija/datananalyses</strong></p>
+      </div>
+      <div class="controls" aria-label="Tekstgrootte aanpassen">
+        <button type="button" id="font-dec" aria-label="Kleiner lettertype">A-</button>
+        <button type="button" id="font-reset" aria-label="Standaard lettertype">A</button>
+        <button type="button" id="font-inc" aria-label="Groter lettertype">A+</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="toolbar">
+        <input
+          type="search"
+          id="filter-input"
+          class="search-input"
+          placeholder="Filter documenten op naam..."
+          aria-label="Filter documenten op naam"
+        >
+        <button type="button" id="refresh-btn">Lijst vernieuwen</button>
+      </div>
+
+      <p id="status" class="status" aria-live="polite">Bestanden ophalen uit GitHub...</p>
+
+      <nav aria-label="Repository bestanden">
+        <ul id="repo-links" class="doc-list"></ul>
+      </nav>
+    </main>
+
+    <footer>
+      <span>Bron: <a href="https://github.com/goija/datananalyses" target="_blank" rel="noopener noreferrer">github.com/goija/datananalyses</a></span>
+      <span id="last-updated"></span>
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      const OWNER = 'goija';
+      const REPO = 'datananalyses';
+      const EXCLUDE = new Set(['index.html', 'README.md']);
+      const CACHE_KEY = `gh_files_${OWNER}_${REPO}`;
+      const CACHE_TTL = 5 * 60 * 1000; // 5 minuten
+
+      const listEl = document.getElementById('repo-links');
+      const statusEl = document.getElementById('status');
+      const filterInput = document.getElementById('filter-input');
+      const refreshBtn = document.getElementById('refresh-btn');
+      const lastUpdatedEl = document.getElementById('last-updated');
+
+      let allFiles = [];
+
+      // Lettergrootte-regeling (standaard 19px)
+      let currentFont = 19;
+      const setFont = (px) => {
+        currentFont = Math.min(26, Math.max(15, px));
+        document.documentElement.style.setProperty('--base-font', `${currentFont}px`);
+      };
+      document.getElementById('font-dec').addEventListener('click', () => setFont(currentFont - 2));
+      document.getElementById('font-reset').addEventListener('click', () => setFont(19));
+      document.getElementById('font-inc').addEventListener('click', () => setFont(currentFont + 2));
+
+      const formatSize = (bytes) => {
+        if (typeof bytes !== 'number') return '';
+        return bytes < 1024 ? `${bytes} B` : `${(bytes / 1024).toFixed(1)} KB`;
+      };
+
+      const renderList = (files) => {
+        listEl.innerHTML = '';
+
+        if (files.length === 0) {
+          statusEl.textContent = 'Geen overeenkomende documenten gevonden.';
+          return;
+        }
+
+        statusEl.textContent = `${files.length} document${files.length === 1 ? '' : 'en'} weergegeven.`;
+
+        const fragment = document.createDocumentFragment();
+        files.forEach((file) => {
+          const isHtml = file.name.toLowerCase().endsWith('.html');
+          const cleanName = file.name.replace(/\.(md|html)$/i, '');
+
+          const li = document.createElement('li');
+          li.className = 'doc-item';
+
+          const a = document.createElement('a');
+          a.className = 'doc-link';
+          a.href = isHtml ? `./${encodeURIComponent(file.name)}` : file.html_url;
+          if (!isHtml) {
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+          }
+
+          const titleSpan = document.createElement('span');
+          titleSpan.className = 'doc-title';
+          titleSpan.textContent = cleanName;
+
+          const metaSpan = document.createElement('span');
+          metaSpan.className = 'doc-meta';
+
+          const sizeSpan = document.createElement('span');
+          sizeSpan.textContent = formatSize(file.size);
+
+          const badge = document.createElement('span');
+          badge.className = `badge ${isHtml ? 'badge-html' : 'badge-md'}`;
+          badge.textContent = isHtml ? 'HTML' : 'MD';
+
+          metaSpan.appendChild(sizeSpan);
+          metaSpan.appendChild(badge);
+
+          a.appendChild(titleSpan);
+          a.appendChild(metaSpan);
+          li.appendChild(a);
+          fragment.appendChild(li);
+        });
+
+        listEl.appendChild(fragment);
+      };
+
+      const applyFilter = () => {
+        const term = filterInput.value.trim().toLowerCase();
+        const filtered = term
+          ? allFiles.filter((f) => f.name.toLowerCase().includes(term))
+          : allFiles;
+        renderList(filtered);
+      };
+
+      const loadFiles = async (forceRefresh = false) => {
+        statusEl.textContent = 'Bestanden ophalen uit GitHub...';
+        listEl.innerHTML = '';
+
+        try {
+          if (!forceRefresh) {
+            const cached = sessionStorage.getItem(CACHE_KEY);
+            if (cached) {
+              const { ts, data } = JSON.parse(cached);
+              if (Date.now() - ts < CACHE_TTL) {
+                allFiles = data;
+                lastUpdatedEl.textContent = `Bijgewerkt: ${new Date(ts).toLocaleTimeString('nl-NL')}`;
+                applyFilter();
+                return;
+              }
+            }
+          }
+
+          const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/`);
+          if (!res.ok) {
+            throw new Error(`GitHub API gaf status ${res.status}`);
+          }
+
+          const items = await res.json();
+          allFiles = items
+            .filter((item) =>
+              item.type === 'file' &&
+              /\.(md|html)$/i.test(item.name) &&
+              !EXCLUDE.has(item.name)
+            )
+            .sort((a, b) => a.name.localeCompare(b.name, 'nl'));
+
+          const now = Date.now();
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: now, data: allFiles }));
+          lastUpdatedEl.textContent = `Bijgewerkt: ${new Date(now).toLocaleTimeString('nl-NL')}`;
+          applyFilter();
+        } catch (err) {
+          statusEl.textContent = '';
+          listEl.innerHTML = `
+            <li class="error-box">
+              Kon de bestandenlijst niet laden (${err.message}).
+              Bekijk de bestanden direct op <a href="https://github.com/${OWNER}/${REPO}" target="_blank" rel="noopener noreferrer">GitHub</a>.
+            </li>
+          `;
+        }
+      };
+
+      filterInput.addEventListener('input', applyFilter);
+      refreshBtn.addEventListener('click', () => loadFiles(true));
+
+      loadFiles();
+    })();
+  </script>
+</body>
+</html>
