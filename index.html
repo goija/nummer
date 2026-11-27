@@ -1,402 +1,1647 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Datananalyses — Overzicht</title>
   <style>
+    /* =========================================================================
+       KRIJTWIT & ZEEUWS MEEKRAB-ROOD — KLEUREN & BASISVARIABELEN
+       ========================================================================= */
     :root {
-      --bg: #ffffff;
-      --surface: #fafafa;
-      --text: #111111;
-      --muted: #555555;
-      --accent: #A31C1C;
-      --accent-hover: #7d1414;
-      --border: #dcdcdc;
-      --base-font: 19px;
+      --bg: #FFFFFF;
+      --paper: #FAF9F7;
+      --paper-hover: #F4F1EC;
+      --border: #E5E2DC;
+      --border-strong: #CFCAC0;
+      --text: #1E1E1E;
+      --muted: #5F5C56;
+      --red: #A31C1C;
+      --red-hover: #851515;
+      --red-soft: #FDF2F2;
+      --red-border: #E8C5C5;
+      --ok: #1B6B43;
+      --ok-soft: #EEF8F2;
+      --ok-border: #BCE0CB;
+      --radius: 10px;
+      --radius-sm: 7px;
+      --shadow-sm: 0 1px 2px rgba(30, 30, 30, 0.05);
+      --shadow-md: 0 10px 30px rgba(30, 30, 30, 0.12);
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --doc-scale: 1;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html {
-      font-size: var(--base-font);
-    }
-
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
+      font-family: var(--sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container {
-      max-width: 860px;
+    .page {
+      max-width: 980px;
       margin: 0 auto;
-      padding: 2rem 1.25rem 3rem;
+      padding: 24px 18px 56px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    header {
-      border-bottom: 3px solid var(--accent);
-      padding-bottom: 1rem;
-      margin-bottom: 1.75rem;
+    main {
+      flex: 1;
+    }
+
+    /* =========================================================================
+       HEADER
+       ========================================================================= */
+    .header {
       display: flex;
       flex-wrap: wrap;
+      align-items: flex-start;
       justify-content: space-between;
-      align-items: flex-end;
-      gap: 1rem;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--text);
+      margin-bottom: 16px;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.6rem;
-      line-height: 1.2;
+    .brand h1 {
+      margin: 0 0 4px;
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
       color: var(--text);
     }
 
-    header p {
-      margin: 0.35rem 0 0;
-      font-size: 0.85rem;
+    .brand p {
+      margin: 0;
+      font-size: 14px;
       color: var(--muted);
     }
 
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
+    .brand code {
+      font-family: var(--mono);
+      font-size: 0.92em;
+      color: var(--red);
+      background: var(--red-soft);
+      padding: 1px 6px;
+      border-radius: 5px;
+      border: 1px solid var(--red-border);
     }
 
-    button {
-      font-family: inherit;
-      font-size: 0.8rem;
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Lettergrootte-knoppen (A- / A / A+) */
+    .font-controls {
+      display: inline-flex;
+      align-items: center;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+    }
+
+    .font-btn {
+      appearance: none;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 13px;
       font-weight: 600;
-      padding: 0.35rem 0.65rem;
+      padding: 6px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.14s ease, color 0.14s ease;
+    }
+
+    .font-btn:hover {
+      background: var(--paper-hover);
+      color: var(--red);
+    }
+
+    .font-btn.active {
+      background: var(--bg);
+      color: var(--red);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Subtiele Penveer-knop */
+    .quill-btn {
+      appearance: none;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--paper);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .quill-btn:hover {
+      border-color: var(--red);
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .quill-btn.is-unlocked {
+      background: var(--red);
+      border-color: var(--red);
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(163, 28, 28, 0.25);
+    }
+
+    .quill-btn.is-unlocked:hover {
+      background: var(--red-hover);
+      border-color: var(--red-hover);
+    }
+
+    .quill-dot {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1.5px solid var(--red);
+      display: none;
+    }
+
+    .quill-btn.is-unlocked .quill-dot {
+      display: block;
+    }
+
+    /* =========================================================================
+       PENVEER ONTGRENDEL-PANEEL & BEHEERBALK
+       ========================================================================= */
+    .unlock-panel {
+      display: none;
+      background: var(--paper);
+      border: 1px solid var(--border-strong);
+      border-left: 3.5px solid var(--red);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .unlock-panel.visible {
+      display: block;
+    }
+
+    .unlock-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .unlock-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .unlock-title svg {
+      color: var(--red);
+    }
+
+    .unlock-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .input-field {
+      flex: 1;
+      min-width: 200px;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
       background: var(--bg);
       color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 4px;
+      font-family: var(--sans);
+      font-size: 14px;
+      transition: border-color 0.14s ease, box-shadow 0.14s ease;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(163, 28, 28, 0.12);
+    }
+
+    .input-field.shake {
+      animation: shakeX 0.34s ease;
+      border-color: var(--red);
+    }
+
+    @keyframes shakeX {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    .unlock-error {
+      margin: 7px 0 0;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--red);
+      display: none;
+    }
+
+    .unlock-error.visible {
+      display: block;
+    }
+
+    /* Actieve Penveer-beheerbalk (zichtbaar na ontgrendelen) */
+    .admin-bar {
+      display: none;
+      background: var(--red-soft);
+      border: 1px solid var(--red-border);
+      border-left: 4px solid var(--red);
+      border-radius: var(--radius);
+      padding: 13px 15px;
+      margin-bottom: 16px;
+    }
+
+    .admin-bar.visible {
+      display: block;
+    }
+
+    .admin-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .admin-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--red);
+    }
+
+    .admin-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .mode-switch {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .mode-option {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--red-border);
+      background: var(--bg);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.14s ease, background-color 0.14s ease;
+    }
+
+    .mode-option input {
+      accent-color: var(--red);
+      margin: 0;
       cursor: pointer;
     }
 
-    button:hover,
-    button:focus-visible {
-      border-color: var(--accent);
-      color: var(--accent);
-      outline: none;
+    .mode-option.is-active {
+      border-color: var(--red);
+      background: #FFFFFF;
+      color: var(--red);
     }
 
-    .toolbar {
-      display: flex;
+    .token-row {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--red-border);
+      gap: 8px;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1.25rem;
       align-items: center;
     }
 
-    .search-input {
-      flex: 1 1 240px;
-      font-family: inherit;
-      font-size: 0.9rem;
-      padding: 0.5rem 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      color: var(--text);
+    .token-row.visible {
+      display: flex;
+    }
+
+    .token-note {
+      width: 100%;
+      font-size: 11.5px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* =========================================================================
+       KNOPPEN
+       ========================================================================= */
+    .btn {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 13px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
       background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.14s ease;
+    }
+
+    .btn:hover:not(:disabled) {
+      border-color: var(--red);
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn--primary {
+      background: var(--red);
+      border-color: var(--red);
+      color: #FFFFFF;
+    }
+
+    .btn--primary:hover:not(:disabled) {
+      background: var(--red-hover);
+      border-color: var(--red-hover);
+      color: #FFFFFF;
+    }
+
+    .btn--sm {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .btn--ghost {
+      background: transparent;
+      border-color: transparent;
+      color: var(--muted);
+      padding: 4px 8px;
+    }
+
+    .btn--ghost:hover:not(:disabled) {
+      background: var(--paper-hover);
+      border-color: transparent;
+      color: var(--text);
+    }
+
+    /* =========================================================================
+       WERKBALK (ZOEKEN, VERNIEUWEN, TELLER)
+       ========================================================================= */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      margin-bottom: 16px;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 210px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 32px 8px 34px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 14px;
     }
 
     .search-input:focus {
-      outline: 2px solid var(--accent);
-      border-color: var(--accent);
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(163, 28, 28, 0.1);
     }
 
-    .status {
-      font-size: 0.85rem;
+    .search-clear {
+      position: absolute;
+      right: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      appearance: none;
+      border: none;
+      background: transparent;
       color: var(--muted);
-      margin: 0 0 1rem;
+      font-size: 16px;
+      line-height: 1;
+      padding: 4px 6px;
+      cursor: pointer;
+      display: none;
     }
 
+    .search-clear.visible {
+      display: block;
+    }
+
+    .search-clear:hover {
+      color: var(--red);
+    }
+
+    .doc-counter {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    /* =========================================================================
+       DOCUMENTENLIJST
+       ========================================================================= */
     .doc-list {
       list-style: none;
       margin: 0;
       padding: 0;
-      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: calc(15px * var(--doc-scale));
     }
 
     .doc-item {
-      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      transition: border-color 0.14s ease, background-color 0.14s ease, transform 0.12s ease;
+    }
+
+    .doc-item:hover {
+      border-color: var(--border-strong);
+      background: var(--paper-hover);
+    }
+
+    .doc-main {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .doc-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .doc-link {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.9rem 0.6rem;
-      text-decoration: none;
       color: var(--text);
-      transition: background-color 0.15s ease;
-    }
-
-    .doc-link:hover,
-    .doc-link:focus-visible {
-      background-color: var(--surface);
-      outline: none;
-    }
-
-    .doc-link:hover .doc-title,
-    .doc-link:focus-visible .doc-title {
-      color: var(--accent);
-      text-decoration: underline;
-    }
-
-    .doc-title {
-      font-weight: 600;
+      text-decoration: none;
+      font-weight: 650;
+      font-size: 1em;
       word-break: break-word;
+    }
+
+    .doc-link:hover {
+      color: var(--red);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .ext-badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 1px 6px;
+      border-radius: 5px;
+      background: var(--bg);
+      border: 1px solid var(--border-strong);
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .ext-badge--html {
+      background: var(--red-soft);
+      border-color: var(--red-border);
+      color: var(--red);
     }
 
     .doc-meta {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    .doc-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
       flex-shrink: 0;
-      font-size: 0.75rem;
-      color: var(--muted);
     }
 
-    .badge {
-      display: inline-block;
-      padding: 0.15rem 0.45rem;
-      border-radius: 3px;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-    }
-
-    .badge-html {
-      background-color: var(--accent);
-      color: #ffffff;
-    }
-
-    .badge-md {
-      background-color: #eeeeee;
-      color: var(--text);
+    .gh-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 9px;
+      border-radius: var(--radius-sm);
       border: 1px solid var(--border);
-    }
-
-    .error-box {
-      padding: 1rem;
-      border-left: 4px solid var(--accent);
-      background-color: var(--surface);
-      font-size: 0.9rem;
-    }
-
-    footer {
-      margin-top: 2.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.8rem;
+      background: var(--bg);
       color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.14s ease;
+    }
+
+    .gh-link:hover {
+      border-color: var(--text);
+      color: var(--text);
+    }
+
+    /* Verwijderknop (wordt ALLEEN gerenderd in ontgrendelde Penveer-modus) */
+    .delete-btn {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--red);
+      background: var(--red);
+      color: #FFFFFF;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.14s ease, transform 0.1s ease;
+    }
+
+    .delete-btn:hover {
+      background: var(--red-hover);
+      border-color: var(--red-hover);
+    }
+
+    @media (max-width: 640px) {
+      .doc-item {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .doc-actions {
+        justify-content: flex-end;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+      }
+    }
+
+    /* Statuskaarten (laden / leeg / fout) */
+    .state-box {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .state-box--error {
+      background: var(--red-soft);
+      border-color: var(--red-border);
+      color: var(--red);
+    }
+
+    .state-box p {
+      margin: 0 0 12px;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid var(--border-strong);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* =========================================================================
+       BEVESTIGINGSMODAL (EIGEN UI, GEEN BROWSER-ALERT/CONFIRM)
+       ========================================================================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 30, 30, 0.48);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+
+    .modal-backdrop.visible {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 460px;
+      background: var(--bg);
+      border: 1px solid var(--border-strong);
+      border-top: 4px solid var(--red);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .modal-title {
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-body {
+      margin: 0 0 14px;
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+
+    .modal-filename {
+      display: block;
+      margin: 8px 0;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--paper);
+      border: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    .modal-mode-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      background: var(--red-soft);
+      border: 1px solid var(--red-border);
+      color: var(--red);
+      margin-bottom: 6px;
+    }
+
+    .modal-error {
+      display: none;
+      margin: 0 0 12px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--red-soft);
+      border: 1px solid var(--red-border);
+      color: var(--red);
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+
+    .modal-error.visible {
+      display: block;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* =========================================================================
+       TOAST MELDING & FOOTER
+       ========================================================================= */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      max-width: 380px;
+      background: var(--text);
+      color: #FFFFFF;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 120;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast--red {
+      background: var(--red);
+    }
+
+    .footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
       justify-content: space-between;
-      gap: 0.5rem;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
     }
 
-    footer a {
-      color: var(--accent);
+    .footer a {
+      color: var(--red);
       text-decoration: none;
+      font-weight: 600;
     }
 
-    footer a:hover {
+    .footer a:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div>
+  <div class="page">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="brand">
         <h1>Datananalyses</h1>
-        <p>Automatisch overzicht van documenten in <strong>goija/datananalyses</strong></p>
+        <p>Automatisch overzicht van documenten in <code>goija/datananalyses</code></p>
       </div>
-      <div class="controls" aria-label="Tekstgrootte aanpassen">
-        <button type="button" id="font-dec" aria-label="Kleiner lettertype">A-</button>
-        <button type="button" id="font-reset" aria-label="Standaard lettertype">A</button>
-        <button type="button" id="font-inc" aria-label="Groter lettertype">A+</button>
+
+      <div class="header-actions">
+        <!-- Lettergrootte-knoppen -->
+        <div class="font-controls" role="group" aria-label="Lettergrootte aanpassen">
+          <button type="button" class="font-btn" id="btn-font-down" title="Kleinere tekst" aria-label="Lettergrootte verkleinen">A&minus;</button>
+          <button type="button" class="font-btn active" id="btn-font-reset" title="Standaard tekstgrootte" aria-label="Standaard lettergrootte">A</button>
+          <button type="button" class="font-btn" id="btn-font-up" title="Grotere tekst" aria-label="Lettergrootte vergroten">A+</button>
+        </div>
+
+        <!-- Penveer-knop (Geheime beheermodus) -->
+        <button
+          type="button"
+          class="quill-btn"
+          id="btn-quill"
+          title="Penveer-beheer"
+          aria-label="Penveer-beheermodus openen"
+          aria-expanded="false"
+        >
+          <!-- Strak inline SVG-icoon van een klassieke penveer / ganzenveer -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.24 3.76a6 6 0 0 0-8.49 0L5 10.5V19h8.5l6.74-6.75a6 6 0 0 0 0-8.49z"/>
+            <line x1="16" y1="8" x2="2" y2="22"/>
+            <line x1="17.5" y1="15" x2="9" y2="15"/>
+          </svg>
+          <span class="quill-dot" aria-hidden="true"></span>
+        </button>
       </div>
     </header>
 
     <main>
-      <div class="toolbar">
-        <input
-          type="search"
-          id="filter-input"
-          class="search-input"
-          placeholder="Filter documenten op naam..."
-          aria-label="Filter documenten op naam"
-        >
-        <button type="button" id="refresh-btn">Lijst vernieuwen</button>
-      </div>
+      <!-- PENVEER ONTGRENDEL-PANEEL (alleen zichtbaar na klik op penveer als vergrendeld) -->
+      <section class="unlock-panel" id="unlock-panel" aria-label="Beheermodus ontgrendelen">
+        <div class="unlock-head">
+          <span class="unlock-title">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20.24 3.76a6 6 0 0 0-8.49 0L5 10.5V19h8.5l6.74-6.75a6 6 0 0 0 0-8.49z"/>
+              <line x1="16" y1="8" x2="2" y2="22"/>
+            </svg>
+            Beheermodus ontgrendelen
+          </span>
+          <button type="button" class="btn btn--ghost btn--sm" id="btn-close-unlock" aria-label="Sluit ontgrendelpaneel">&times; Sluiten</button>
+        </div>
 
-      <p id="status" class="status" aria-live="polite">Bestanden ophalen uit GitHub...</p>
+        <form class="unlock-form" id="unlock-form" autocomplete="off">
+          <input
+            type="password"
+            id="secret-input"
+            class="input-field"
+            placeholder="Voer de geheime string in..."
+            aria-label="Geheime string"
+            autocomplete="off"
+          />
+          <button type="submit" class="btn btn--primary">Ontgrendel</button>
+        </form>
+        <p class="unlock-error" id="unlock-error" role="alert">Onjuiste geheime string. Probeer opnieuw.</p>
+      </section>
 
-      <nav aria-label="Repository bestanden">
-        <ul id="repo-links" class="doc-list"></ul>
-      </nav>
+      <!-- ACTIEVE PENVEER-BEHEERBALK (alleen zichtbaar na juiste geheime string) -->
+      <section class="admin-bar" id="admin-bar" aria-label="Penveer beheeropties">
+        <div class="admin-top">
+          <span class="admin-status">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20.24 3.76a6 6 0 0 0-8.49 0L5 10.5V19h8.5l6.74-6.75a6 6 0 0 0 0-8.49z"/>
+              <line x1="16" y1="8" x2="2" y2="22"/>
+            </svg>
+            Penveer-beheer actief
+          </span>
+
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <button type="button" class="btn btn--sm" id="btn-restore-hidden" disabled>Herstel verborgen (0)</button>
+            <button type="button" class="btn btn--primary btn--sm" id="btn-lock">Vergrendelen</button>
+          </div>
+        </div>
+
+        <div class="admin-controls">
+          <div class="mode-switch" role="radiogroup" aria-label="Verwijdermodus">
+            <label class="mode-option is-active" id="lbl-mode-local">
+              <input type="radio" name="deleteMode" value="local" checked />
+              <span>Verbergen uit overzicht (lokaal)</span>
+            </label>
+            <label class="mode-option" id="lbl-mode-github">
+              <input type="radio" name="deleteMode" value="github" />
+              <span>Definitief verwijderen uit GitHub</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Optioneel GitHub Token-veld (alleen zichtbaar in GitHub-verwijdermodus) -->
+        <div class="token-row" id="token-row">
+          <input
+            type="password"
+            id="gh-token-input"
+            class="input-field"
+            placeholder="GitHub Personal Access Token (contents: write)"
+            aria-label="GitHub Personal Access Token"
+            autocomplete="off"
+          />
+          <button type="button" class="btn btn--sm" id="btn-save-token">Bewaar in sessie</button>
+          <button type="button" class="btn btn--sm btn--ghost" id="btn-clear-token">Wis token</button>
+          <p class="token-note">
+            Het token blijft uitsluitend lokaal in <code>sessionStorage</code> van dit tabblad en wordt alleen direct naar <code>api.github.com</code> gestuurd bij het verwijderen.
+          </p>
+        </div>
+      </section>
+
+      <!-- WERKBALK: ZOEKEN, VERNIEUWEN, TELLER -->
+      <section class="toolbar" aria-label="Filteren en vernieuwen">
+        <div class="search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Zoek op bestandsnaam of extensie..."
+            aria-label="Zoek documenten op bestandsnaam"
+          />
+          <button type="button" class="search-clear" id="btn-clear-search" aria-label="Zoekveld wissen">&times;</button>
+        </div>
+
+        <button type="button" class="btn" id="btn-refresh" aria-label="Documentenlijst vernieuwen">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="23 4 23 10 17 10"/>
+            <polyline points="1 20 1 14 7 14"/>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+          </svg>
+          Lijst vernieuwen
+        </button>
+
+        <span class="doc-counter" id="doc-counter" aria-live="polite">Laden...</span>
+      </section>
+
+      <!-- DOCUMENTENLIJST CONTAINER -->
+      <section aria-label="Overzicht van documenten">
+        <div id="list-container"></div>
+      </section>
     </main>
 
-    <footer>
+    <!-- FOOTER -->
+    <footer class="footer">
       <span>Bron: <a href="https://github.com/goija/datananalyses" target="_blank" rel="noopener noreferrer">github.com/goija/datananalyses</a></span>
-      <span id="last-updated"></span>
+      <span style="font-family:var(--mono); font-size:12px;">goija/datananalyses</span>
     </footer>
   </div>
 
+  <!-- EIGEN BEVESTIGINGSMODAL VOOR VERWIJDEREN -->
+  <div class="modal-backdrop" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <h2 class="modal-title" id="modal-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A31C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+          <path d="M10 11v6M14 11v6"/>
+          <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+        </svg>
+        Document verwijderen
+      </h2>
+      <div class="modal-mode-tag" id="modal-mode-tag">Lokaal verbergen</div>
+      <div class="modal-body" id="modal-body">
+        Weet je zeker dat je dit document wilt verwijderen?
+        <span class="modal-filename" id="modal-filename"></span>
+        <span id="modal-detail"></span>
+      </div>
+      <div class="modal-error" id="modal-error" role="alert"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="btn-modal-cancel">Annuleren</button>
+        <button type="button" class="btn btn--primary" id="btn-modal-confirm">Bevestig verwijderen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST FEEDBACK -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
     (() => {
-      const OWNER = 'goija';
-      const REPO = 'datananalyses';
-      const EXCLUDE = new Set(['index.html', 'README.md']);
-      const CACHE_KEY = `gh_files_${OWNER}_${REPO}`;
-      const CACHE_TTL = 5 * 60 * 1000; // 5 minuten
+      // =========================================================================
+      // CONFIGURATIE — PAS HIER DE GEHEIME STRING AAN
+      // =========================================================================
+      // Vervang "penveer6174" door je eigen geheime string om de beheermodus
+      // achter het penveer-icoon te beveiligen.
+      const GEHEIME_STRING = "penveer6174";
 
-      const listEl = document.getElementById('repo-links');
-      const statusEl = document.getElementById('status');
-      const filterInput = document.getElementById('filter-input');
-      const refreshBtn = document.getElementById('refresh-btn');
-      const lastUpdatedEl = document.getElementById('last-updated');
+      const REPO_OWNER = "goija";
+      const REPO_NAME = "datananalyses";
+      const GITHUB_API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents`;
+      const SITE_BASE_URL = "https://datananalyses.vercel.app";
 
-      let allFiles = [];
+      // Opslagsleutels
+      const STORAGE_HIDDEN = "datananalyses_hidden_files";
+      const STORAGE_FONT = "datananalyses_font_scale";
+      const SESSION_TOKEN = "datananalyses_gh_token";
 
-      // Lettergrootte-regeling (standaard 19px)
-      let currentFont = 19;
-      const setFont = (px) => {
-        currentFont = Math.min(26, Math.max(15, px));
-        document.documentElement.style.setProperty('--base-font', `${currentFont}px`);
+      // Bestanden die altijd uit het overzicht worden gefilterd
+      const IGNORED_FILES = new Set(["index.html", "vercel.json", "CNAME", "LICENSE"]);
+
+      // =========================================================================
+      // APPLICATIESTATUS
+      // =========================================================================
+      const state = {
+        files: [],            // Alle geldige bestanden uit GitHub
+        loading: true,
+        error: null,
+        query: "",
+        fontScale: 1,         // 0.88 .. 1.32
+        unlocked: false,      // Beheermodus (standaard vergrendeld!)
+        unlockOpen: false,    // Of het wachtwoordpaneel open is
+        deleteMode: "local",  // "local" | "github"
+        hiddenFiles: new Set(),
+        pendingDelete: null,  // File-object in bevestigingsmodal
+        deleting: false
       };
-      document.getElementById('font-dec').addEventListener('click', () => setFont(currentFont - 2));
-      document.getElementById('font-reset').addEventListener('click', () => setFont(19));
-      document.getElementById('font-inc').addEventListener('click', () => setFont(currentFont + 2));
 
-      const formatSize = (bytes) => {
-        if (typeof bytes !== 'number') return '';
-        return bytes < 1024 ? `${bytes} B` : `${(bytes / 1024).toFixed(1)} KB`;
-      };
+      // =========================================================================
+      // DOM-ELEMENTEN
+      // =========================================================================
+      const btnFontDown = document.getElementById("btn-font-down");
+      const btnFontReset = document.getElementById("btn-font-reset");
+      const btnFontUp = document.getElementById("btn-font-up");
 
-      const renderList = (files) => {
-        listEl.innerHTML = '';
+      const btnQuill = document.getElementById("btn-quill");
+      const unlockPanel = document.getElementById("unlock-panel");
+      const btnCloseUnlock = document.getElementById("btn-close-unlock");
+      const unlockForm = document.getElementById("unlock-form");
+      const secretInput = document.getElementById("secret-input");
+      const unlockError = document.getElementById("unlock-error");
 
-        if (files.length === 0) {
-          statusEl.textContent = 'Geen overeenkomende documenten gevonden.';
+      const adminBar = document.getElementById("admin-bar");
+      const btnRestoreHidden = document.getElementById("btn-restore-hidden");
+      const btnLock = document.getElementById("btn-lock");
+      const lblModeLocal = document.getElementById("lbl-mode-local");
+      const lblModeGithub = document.getElementById("lbl-mode-github");
+      const tokenRow = document.getElementById("token-row");
+      const ghTokenInput = document.getElementById("gh-token-input");
+      const btnSaveToken = document.getElementById("btn-save-token");
+      const btnClearToken = document.getElementById("btn-clear-token");
+
+      const searchInput = document.getElementById("search-input");
+      const btnClearSearch = document.getElementById("btn-clear-search");
+      const btnRefresh = document.getElementById("btn-refresh");
+      const docCounter = document.getElementById("doc-counter");
+      const listContainer = document.getElementById("list-container");
+
+      const confirmModal = document.getElementById("confirm-modal");
+      const modalModeTag = document.getElementById("modal-mode-tag");
+      const modalFilename = document.getElementById("modal-filename");
+      const modalDetail = document.getElementById("modal-detail");
+      const modalError = document.getElementById("modal-error");
+      const btnModalCancel = document.getElementById("btn-modal-cancel");
+      const btnModalConfirm = document.getElementById("btn-modal-confirm");
+
+      const toastEl = document.getElementById("toast");
+      let toastTimer = null;
+
+      // =========================================================================
+      // HULPFUNCTIES
+      // =========================================================================
+      function showToast(msg, isRed = false) {
+        toastEl.textContent = msg;
+        toastEl.className = `toast visible ${isRed ? "toast--red" : ""}`;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toastEl.classList.remove("visible");
+        }, 3200);
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function formatBytes(bytes) {
+        if (!Number.isFinite(bytes) || bytes < 0) return "—";
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1).replace(".", ",")} KB`;
+        return `${(bytes / (1024 * 1024)).toFixed(2).replace(".", ",")} MB`;
+      }
+
+      function splitFileName(name) {
+        const lastDot = name.lastIndexOf(".");
+        if (lastDot <= 0) return { base: name, ext: "" };
+        return {
+          base: name.slice(0, lastDot),
+          ext: name.slice(lastDot + 1)
+        };
+      }
+
+      function loadHiddenFiles() {
+        try {
+          const raw = localStorage.getItem(STORAGE_HIDDEN);
+          if (!raw) return new Set();
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? new Set(parsed) : new Set();
+        } catch {
+          return new Set();
+        }
+      }
+
+      function saveHiddenFiles() {
+        try {
+          localStorage.setItem(STORAGE_HIDDEN, JSON.stringify([...state.hiddenFiles]));
+        } catch {
+          // Negeer als opslag niet beschikbaar is
+        }
+        updateRestoreButton();
+      }
+
+      function updateRestoreButton() {
+        const n = state.hiddenFiles.size;
+        btnRestoreHidden.textContent = `Herstel verborgen (${n})`;
+        btnRestoreHidden.disabled = n === 0;
+      }
+
+      // =========================================================================
+      // LETTERGROOTTE (A- / A / A+) MET LOCALSTORAGE
+      // =========================================================================
+      function applyFontScale(scale) {
+        const clamped = Math.max(0.85, Math.min(1.35, Math.round(scale * 100) / 100));
+        state.fontScale = clamped;
+        document.documentElement.style.setProperty("--doc-scale", String(clamped));
+        btnFontDown.classList.toggle("active", clamped < 0.99);
+        btnFontReset.classList.toggle("active", clamped >= 0.99 && clamped <= 1.01);
+        btnFontUp.classList.toggle("active", clamped > 1.01);
+        try {
+          localStorage.setItem(STORAGE_FONT, String(clamped));
+        } catch {
+          // Negeer opslagfout
+        }
+      }
+
+      btnFontDown.addEventListener("click", () => applyFontScale(state.fontScale - 0.1));
+      btnFontReset.addEventListener("click", () => applyFontScale(1));
+      btnFontUp.addEventListener("click", () => applyFontScale(state.fontScale + 0.1));
+
+      // =========================================================================
+      // PENVEER BEHEERMODUS (ONTGRENDELEN & VERGRENDELEN)
+      // =========================================================================
+      function setUnlockPanelVisible(show) {
+        state.unlockOpen = show;
+        unlockPanel.classList.toggle("visible", show && !state.unlocked);
+        btnQuill.setAttribute("aria-expanded", String(show || state.unlocked));
+        unlockError.classList.remove("visible");
+        if (show && !state.unlocked) {
+          secretInput.value = "";
+          setTimeout(() => secretInput.focus(), 20);
+        }
+      }
+
+      function unlockAdmin() {
+        state.unlocked = true;
+        state.unlockOpen = false;
+        unlockPanel.classList.remove("visible");
+        adminBar.classList.add("visible");
+        btnQuill.classList.add("is-unlocked");
+        btnQuill.setAttribute("aria-label", "Penveer-beheermodus actief");
+        btnQuill.setAttribute("aria-expanded", "true");
+        secretInput.value = "";
+        updateRestoreButton();
+        renderList();
+        showToast("Penveer-beheermodus ontgrendeld");
+      }
+
+      function lockAdmin() {
+        state.unlocked = false;
+        state.unlockOpen = false;
+        adminBar.classList.remove("visible");
+        unlockPanel.classList.remove("visible");
+        btnQuill.classList.remove("is-unlocked");
+        btnQuill.setAttribute("aria-label", "Penveer-beheermodus openen");
+        btnQuill.setAttribute("aria-expanded", "false");
+        closeConfirmModal();
+        renderList();
+        showToast("Beheermodus vergrendeld");
+      }
+
+      btnQuill.addEventListener("click", () => {
+        if (state.unlocked) {
+          // Focus de beheerbalk als deze al ontgrendeld is
+          adminBar.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          return;
+        }
+        setUnlockPanelVisible(!state.unlockOpen);
+      });
+
+      btnCloseUnlock.addEventListener("click", () => setUnlockPanelVisible(false));
+      btnLock.addEventListener("click", lockAdmin);
+
+      unlockForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const entered = secretInput.value.trim();
+        if (entered === GEHEIME_STRING) {
+          unlockAdmin();
+        } else {
+          unlockError.classList.add("visible");
+          secretInput.classList.remove("shake");
+          void secretInput.offsetWidth; // Forceer reflow voor herhaalde animatie
+          secretInput.classList.add("shake");
+          secretInput.select();
+        }
+      });
+
+      // Verwijdermodus schakelaar (lokaal vs. GitHub DELETE)
+      document.querySelectorAll('input[name="deleteMode"]').forEach(radio => {
+        radio.addEventListener("change", (e) => {
+          state.deleteMode = e.target.value;
+          lblModeLocal.classList.toggle("is-active", state.deleteMode === "local");
+          lblModeGithub.classList.toggle("is-active", state.deleteMode === "github");
+          tokenRow.classList.toggle("visible", state.deleteMode === "github");
+        });
+      });
+
+      btnSaveToken.addEventListener("click", () => {
+        const t = ghTokenInput.value.trim();
+        if (!t) {
+          showToast("Vul eerst een GitHub-token in.", true);
+          return;
+        }
+        try {
+          sessionStorage.setItem(SESSION_TOKEN, t);
+          showToast("GitHub-token opgeslagen voor deze sessie.");
+        } catch {
+          showToast("Kon token niet in sessie opslaan.", true);
+        }
+      });
+
+      btnClearToken.addEventListener("click", () => {
+        ghTokenInput.value = "";
+        try {
+          sessionStorage.removeItem(SESSION_TOKEN);
+        } catch {
+          // Negeer
+        }
+        showToast("GitHub-token gewist.");
+      });
+
+      btnRestoreHidden.addEventListener("click", () => {
+        const count = state.hiddenFiles.size;
+        state.hiddenFiles.clear();
+        saveHiddenFiles();
+        renderList();
+        showToast(`${count} verborgen document(en) hersteld.`);
+      });
+
+      // =========================================================================
+      // GITHUB API: DOCUMENTEN OPHALEN & VERWIJDEREN
+      // =========================================================================
+      async function fetchDocuments() {
+        state.loading = true;
+        state.error = null;
+        btnRefresh.disabled = true;
+        renderList();
+
+        try {
+          const headers = { Accept: "application/vnd.github.v3+json" };
+          const savedToken = sessionStorage.getItem(SESSION_TOKEN);
+          if (savedToken) {
+            headers.Authorization = `Bearer ${savedToken}`;
+          }
+
+          const resp = await fetch(`${GITHUB_API_BASE}/`, { headers });
+          if (!resp.ok) {
+            if (resp.status === 403) {
+              throw new Error("De GitHub API-limiet (rate limit) is tijdelijk bereikt. Probeer het later opnieuw of voer in beheermodus een GitHub-token in.");
+            }
+            throw new Error(`Kon bestanden niet ophalen (HTTP ${resp.status}).`);
+          }
+
+          const data = await resp.json();
+          if (!Array.isArray(data)) {
+            throw new Error("Onverwacht antwoord van de GitHub API.");
+          }
+
+          // Filter bestanden: geen mappen, geen verborgen dotfiles, geen index.html/config
+          state.files = data
+            .filter(item =>
+              item &&
+              item.type === "file" &&
+              !item.name.startsWith(".") &&
+              !IGNORED_FILES.has(item.name)
+            )
+            .sort((a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" }));
+        } catch (err) {
+          state.error = err && err.message ? err.message : "Netwerkfout bij het laden van de bestanden.";
+        } finally {
+          state.loading = false;
+          btnRefresh.disabled = false;
+          renderList();
+        }
+      }
+
+      async function deleteFromGitHub(file) {
+        const token = ghTokenInput.value.trim() || sessionStorage.getItem(SESSION_TOKEN) || "";
+        if (!token) {
+          throw new Error("Vul eerst een geldig GitHub Personal Access Token (contents: write) in binnen de Penveer-beheerbalk.");
+        }
+
+        const encodedPath = file.path.split("/").map(encodeURIComponent).join("/");
+        const url = `${GITHUB_API_BASE}/${encodedPath}`;
+
+        const resp = await fetch(url, {
+          method: "DELETE",
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: `Verwijder ${file.name} via Datananalyses-overzicht`,
+            sha: file.sha
+          })
+        });
+
+        if (!resp.ok) {
+          let detail = `HTTP ${resp.status}`;
+          try {
+            const errJson = await resp.json();
+            if (errJson && errJson.message) detail = errJson.message;
+          } catch {
+            // Geen JSON-body
+          }
+          throw new Error(`GitHub-verwijdering mislukt: ${detail}`);
+        }
+      }
+
+      // =========================================================================
+      // RENDERING VAN DE DOCUMENTENLIJST
+      // =========================================================================
+      function getVisibleFiles() {
+        const q = state.query.trim().toLowerCase();
+        return state.files.filter(f => {
+          if (state.hiddenFiles.has(f.name)) return false;
+          if (!q) return true;
+          return f.name.toLowerCase().includes(q);
+        });
+      }
+
+      function renderList() {
+        if (state.loading) {
+          docCounter.textContent = "Laden...";
+          listContainer.innerHTML = `
+            <div class="state-box">
+              <span class="spinner" aria-hidden="true"></span>
+              Documenten ophalen uit <strong>${REPO_OWNER}/${REPO_NAME}</strong>...
+            </div>
+          `;
           return;
         }
 
-        statusEl.textContent = `${files.length} document${files.length === 1 ? '' : 'en'} weergegeven.`;
+        if (state.error) {
+          docCounter.textContent = "Fout";
+          listContainer.innerHTML = `
+            <div class="state-box state-box--error">
+              <p><strong>Ophalen mislukt</strong></p>
+              <p>${escapeHtml(state.error)}</p>
+              <button type="button" class="btn btn--primary" id="btn-retry">Opnieuw proberen</button>
+            </div>
+          `;
+          document.getElementById("btn-retry").addEventListener("click", fetchDocuments);
+          return;
+        }
 
-        const fragment = document.createDocumentFragment();
-        files.forEach((file) => {
-          const isHtml = file.name.toLowerCase().endsWith('.html');
-          const cleanName = file.name.replace(/\.(md|html)$/i, '');
+        const totalUnfiltered = state.files.filter(f => !state.hiddenFiles.has(f.name)).length;
+        const visible = getVisibleFiles();
 
-          const li = document.createElement('li');
-          li.className = 'doc-item';
+        docCounter.textContent = state.query.trim()
+          ? `${visible.length} van ${totalUnfiltered} documenten`
+          : `${visible.length} ${visible.length === 1 ? "document" : "documenten"}`;
 
-          const a = document.createElement('a');
-          a.className = 'doc-link';
-          a.href = isHtml ? `./${encodeURIComponent(file.name)}` : file.html_url;
-          if (!isHtml) {
-            a.target = '_blank';
-            a.rel = 'noopener noreferrer';
-          }
+        if (visible.length === 0) {
+          const msg = state.query.trim()
+            ? `Geen documenten gevonden voor "${escapeHtml(state.query.trim())}".`
+            : "Er zijn momenteel geen zichtbare documenten in dit overzicht.";
+          listContainer.innerHTML = `<div class="state-box"><p style="margin:0;">${msg}</p></div>`;
+          return;
+        }
 
-          const titleSpan = document.createElement('span');
-          titleSpan.className = 'doc-title';
-          titleSpan.textContent = cleanName;
+        const ul = document.createElement("ul");
+        ul.className = "doc-list";
 
-          const metaSpan = document.createElement('span');
-          metaSpan.className = 'doc-meta';
+        for (const file of visible) {
+          const { base, ext } = splitFileName(file.name);
+          const encodedName = encodeURIComponent(file.name);
+          const liveUrl = `${SITE_BASE_URL}/${encodedName}`;
+          const isHtml = ext.toLowerCase() === "html";
 
-          const sizeSpan = document.createElement('span');
-          sizeSpan.textContent = formatSize(file.size);
+          const li = document.createElement("li");
+          li.className = "doc-item";
 
-          const badge = document.createElement('span');
-          badge.className = `badge ${isHtml ? 'badge-html' : 'badge-md'}`;
-          badge.textContent = isHtml ? 'HTML' : 'MD';
+          // BELANGRIJK: De verwijderknop wordt ALLEEN in de DOM geplaatst wanneer state.unlocked === true
+          const deleteBtnMarkup = state.unlocked
+            ? `
+              <button
+                type="button"
+                class="delete-btn"
+                data-delete-name="${escapeHtml(file.name)}"
+                aria-label="Verwijder ${escapeHtml(file.name)}"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  <path d="M10 11v6M14 11v6"/>
+                </svg>
+                Verwijder
+              </button>
+            `
+            : "";
 
-          metaSpan.appendChild(sizeSpan);
-          metaSpan.appendChild(badge);
+          li.innerHTML = `
+            <div class="doc-main">
+              <div class="doc-title-row">
+                <a class="doc-link" href="${liveUrl}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(file.name)}">
+                  ${escapeHtml(base)}
+                </a>
+                ${ext ? `<span class="ext-badge ${isHtml ? "ext-badge--html" : ""}">${escapeHtml(ext)}</span>` : ""}
+              </div>
+              <div class="doc-meta">
+                <span>${escapeHtml(formatBytes(file.size))}</span>
+                <span>&bull;</span>
+                <span>${escapeHtml(file.name)}</span>
+              </div>
+            </div>
+            <div class="doc-actions">
+              <a class="gh-link" href="${escapeHtml(file.html_url)}" target="_blank" rel="noopener noreferrer" title="Bekijk bronbestand op GitHub">
+                GitHub
+              </a>
+              ${deleteBtnMarkup}
+            </div>
+          `;
 
-          a.appendChild(titleSpan);
-          a.appendChild(metaSpan);
-          li.appendChild(a);
-          fragment.appendChild(li);
-        });
+          ul.appendChild(li);
+        }
 
-        listEl.appendChild(fragment);
-      };
+        listContainer.innerHTML = "";
+        listContainer.appendChild(ul);
 
-      const applyFilter = () => {
-        const term = filterInput.value.trim().toLowerCase();
-        const filtered = term
-          ? allFiles.filter((f) => f.name.toLowerCase().includes(term))
-          : allFiles;
-        renderList(filtered);
-      };
+        // Koppel verwijderknoppen indien ontgrendeld
+        if (state.unlocked) {
+          ul.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+              const name = btn.dataset.deleteName;
+              const fileObj = state.files.find(f => f.name === name);
+              if (fileObj) openConfirmModal(fileObj);
+            });
+          });
+        }
+      }
 
-      const loadFiles = async (forceRefresh = false) => {
-        statusEl.textContent = 'Bestanden ophalen uit GitHub...';
-        listEl.innerHTML = '';
+      // =========================================================================
+      // EIGEN BEVESTIGINGSMODAL
+      // =========================================================================
+      function openConfirmModal(file) {
+        state.pendingDelete = file;
+        state.deleting = false;
+        modalError.classList.remove("visible");
+        modalError.textContent = "";
+        btnModalConfirm.disabled = false;
+        btnModalCancel.disabled = false;
+        btnModalConfirm.textContent = "Bevestig verwijderen";
+
+        modalFilename.textContent = file.name;
+        if (state.deleteMode === "github") {
+          modalModeTag.textContent = "Definitief verwijderen uit GitHub (DELETE API)";
+          modalDetail.textContent = "Dit maakt een commit aan die het bestand permanent verwijdert uit goija/datananalyses.";
+        } else {
+          modalModeTag.textContent = "Lokaal verbergen uit overzicht";
+          modalDetail.textContent = "Het bestand wordt direct uit dit overzicht verborgen (opgeslagen in localStorage) en kan later worden hersteld.";
+        }
+
+        confirmModal.classList.add("visible");
+        btnModalCancel.focus();
+      }
+
+      function closeConfirmModal() {
+        if (state.deleting) return;
+        state.pendingDelete = null;
+        confirmModal.classList.remove("visible");
+      }
+
+      btnModalCancel.addEventListener("click", closeConfirmModal);
+      confirmModal.addEventListener("click", (e) => {
+        if (e.target === confirmModal) closeConfirmModal();
+      });
+
+      btnModalConfirm.addEventListener("click", async () => {
+        const file = state.pendingDelete;
+        if (!file || state.deleting) return;
+
+        if (state.deleteMode === "local") {
+          state.hiddenFiles.add(file.name);
+          saveHiddenFiles();
+          closeConfirmModal();
+          renderList();
+          showToast(`"${file.name}" verborgen uit het overzicht.`);
+          return;
+        }
+
+        // GitHub DELETE-modus
+        state.deleting = true;
+        btnModalConfirm.disabled = true;
+        btnModalCancel.disabled = true;
+        btnModalConfirm.textContent = "Verwijderen...";
+        modalError.classList.remove("visible");
 
         try {
-          if (!forceRefresh) {
-            const cached = sessionStorage.getItem(CACHE_KEY);
-            if (cached) {
-              const { ts, data } = JSON.parse(cached);
-              if (Date.now() - ts < CACHE_TTL) {
-                allFiles = data;
-                lastUpdatedEl.textContent = `Bijgewerkt: ${new Date(ts).toLocaleTimeString('nl-NL')}`;
-                applyFilter();
-                return;
-              }
-            }
-          }
-
-          const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/`);
-          if (!res.ok) {
-            throw new Error(`GitHub API gaf status ${res.status}`);
-          }
-
-          const items = await res.json();
-          allFiles = items
-            .filter((item) =>
-              item.type === 'file' &&
-              /\.(md|html)$/i.test(item.name) &&
-              !EXCLUDE.has(item.name)
-            )
-            .sort((a, b) => a.name.localeCompare(b.name, 'nl'));
-
-          const now = Date.now();
-          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: now, data: allFiles }));
-          lastUpdatedEl.textContent = `Bijgewerkt: ${new Date(now).toLocaleTimeString('nl-NL')}`;
-          applyFilter();
+          await deleteFromGitHub(file);
+          state.files = state.files.filter(f => f.name !== file.name);
+          state.hiddenFiles.delete(file.name);
+          saveHiddenFiles();
+          state.deleting = false;
+          closeConfirmModal();
+          renderList();
+          showToast(`"${file.name}" definitief verwijderd uit GitHub.`, true);
         } catch (err) {
-          statusEl.textContent = '';
-          listEl.innerHTML = `
-            <li class="error-box">
-              Kon de bestandenlijst niet laden (${err.message}).
-              Bekijk de bestanden direct op <a href="https://github.com/${OWNER}/${REPO}" target="_blank" rel="noopener noreferrer">GitHub</a>.
-            </li>
-          `;
+          state.deleting = false;
+          btnModalConfirm.disabled = false;
+          btnModalCancel.disabled = false;
+          btnModalConfirm.textContent = "Bevestig verwijderen";
+          modalError.textContent = err && err.message ? err.message : "Er ging iets mis bij het verwijderen.";
+          modalError.classList.add("visible");
         }
-      };
+      });
 
-      filterInput.addEventListener('input', applyFilter);
-      refreshBtn.addEventListener('click', () => loadFiles(true));
+      // =========================================================================
+      // ZOEKEN, VERNIEUWEN & TOETSENBORD
+      // =========================================================================
+      searchInput.addEventListener("input", () => {
+        state.query = searchInput.value;
+        btnClearSearch.classList.toggle("visible", state.query.length > 0);
+        renderList();
+      });
 
-      loadFiles();
+      btnClearSearch.addEventListener("click", () => {
+        searchInput.value = "";
+        state.query = "";
+        btnClearSearch.classList.remove("visible");
+        renderList();
+        searchInput.focus();
+      });
+
+      btnRefresh.addEventListener("click", fetchDocuments);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          if (confirmModal.classList.contains("visible")) {
+            closeConfirmModal();
+          } else if (state.unlockOpen && !state.unlocked) {
+            setUnlockPanelVisible(false);
+          }
+        }
+      });
+
+      // =========================================================================
+      // INITIALISATIE
+      // =========================================================================
+      window.addEventListener("load", () => {
+        state.hiddenFiles = loadHiddenFiles();
+        updateRestoreButton();
+
+        try {
+          const savedScale = parseFloat(localStorage.getItem(STORAGE_FONT));
+          if (Number.isFinite(savedScale)) applyFontScale(savedScale);
+          else applyFontScale(1);
+
+          const savedToken = sessionStorage.getItem(SESSION_TOKEN);
+          if (savedToken) ghTokenInput.value = savedToken;
+        } catch {
+          applyFontScale(1);
+        }
+
+        fetchDocuments();
+      });
     })();
   </script>
 </body>
