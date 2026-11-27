@@ -75,77 +75,32 @@
     .quill-dot { width: 7px; height: 7px; border-radius: 50%; background: #FFFFFF; display: none; }
     .quill-btn.is-unlocked .quill-dot { display: inline-block; }
 
-    /* =========================================================================
-       PROFESSIONELE MENUBALK (DROPDOWN MENU ITEMS)
-       ========================================================================= */
+    /* PROFESSIONELE MENUBALK */
     .menubar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 6px;
-      background: var(--paper);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius);
-      padding: 6px 10px;
-      margin-bottom: 14px;
-      position: relative;
-      z-index: 40;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+      background: var(--paper); border: 1px solid var(--border-strong);
+      border-radius: var(--radius); padding: 6px 10px; margin-bottom: 14px;
+      position: relative; z-index: 40;
     }
-
     .menu-item { position: relative; }
     .menu-trigger {
-      appearance: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 11px;
-      border-radius: var(--radius-sm);
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
+      appearance: none; display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 11px; border-radius: var(--radius-sm); border: 1px solid transparent;
+      background: transparent; color: var(--text); font-family: var(--sans);
+      font-size: 13px; font-weight: 600; cursor: pointer;
     }
-    .menu-trigger:hover, .menu-item.open .menu-trigger {
-      background: var(--bg);
-      border-color: var(--red-border);
-      color: var(--red);
-    }
-
+    .menu-trigger:hover, .menu-item.open .menu-trigger { background: var(--bg); border-color: var(--red-border); color: var(--red); }
     .menu-dropdown {
-      display: none;
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      min-width: 250px;
-      background: var(--bg);
-      border: 1px solid var(--border-strong);
-      border-top: 3px solid var(--red);
-      border-radius: var(--radius-sm);
-      box-shadow: var(--shadow-md);
-      padding: 6px;
-      z-index: 60;
+      display: none; position: absolute; top: calc(100% + 4px); left: 0; min-width: 250px;
+      background: var(--bg); border: 1px solid var(--border-strong); border-top: 3px solid var(--red);
+      border-radius: var(--radius-sm); box-shadow: var(--shadow-md); padding: 6px; z-index: 60;
     }
     .menu-item.open .menu-dropdown { display: block; }
-
     .menu-action {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 7px 10px;
-      border: none;
-      border-radius: 5px;
-      background: transparent;
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 12.5px;
-      font-weight: 550;
-      text-align: left;
-      cursor: pointer;
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 7px 10px; border: none; border-radius: 5px; background: transparent;
+      color: var(--text); font-family: var(--sans); font-size: 12.5px; font-weight: 550;
+      text-align: left; cursor: pointer;
     }
     .menu-action:hover:not(:disabled) { background: var(--red-soft); color: var(--red); }
     .menu-action:disabled { opacity: 0.45; cursor: not-allowed; }
@@ -175,7 +130,6 @@
     .input-field { flex: 1; min-width: 150px; }
     .input-field:focus, .select-field:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(163, 28, 28, 0.12); }
 
-    /* DUBBELING-SCHAKELAAR */
     .dedup-toggle {
       display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px;
       border-radius: var(--radius-sm); border: 1px solid var(--border-strong);
@@ -218,7 +172,7 @@
     .token-row.visible { display: flex; }
 
     /* WORKSPACE */
-    .workspace { display: grid; grid-template-columns: 295px minmax(0, 1fr); gap: 18px; align-items: start; }
+    .workspace { display: grid; grid-template-columns: 310px minmax(0, 1fr); gap: 18px; align-items: start; }
     @media (max-width: 920px) { .workspace { grid-template-columns: 1fr; } }
 
     .sidebar { background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; }
@@ -266,6 +220,7 @@
     .badge { font-family: var(--mono); font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 5px; border: 1px solid var(--border-strong); background: var(--bg); color: var(--muted); display: inline-flex; align-items: center; gap: 4px; }
     .badge--num { background: var(--text); border-color: var(--text); color: #FFFFFF; }
     .badge--folder { background: var(--info-soft); border-color: var(--info-border); color: var(--info); font-family: var(--sans); }
+    .badge--path { background: var(--paper); border-color: var(--border-strong); color: var(--muted); font-family: var(--mono); }
     .badge--pod { background: var(--pod-soft); border-color: var(--pod-border); color: var(--pod); font-family: var(--sans); }
     .badge--temp { background: var(--warn-soft); border-color: var(--warn-border); color: var(--warn); font-family: var(--sans); }
     .badge--archived { background: var(--ok-soft); border-color: var(--ok-border); color: var(--ok); font-family: var(--sans); }
@@ -340,7 +295,7 @@
     <header class="header">
       <div class="brand">
         <h1>Professioneel Archief- &amp; POD-Systeem</h1>
-        <p>Gestructureerd archiefbeheer, PDF-zwartlak, PODs (.ttl + .acl + PUT) &amp; veerpen voor <code>goija/nummer</code></p>
+        <p>Gestructureerd archiefbeheer (incl. alle submappen), PDF-zwartlak, PODs (.ttl + .acl + PUT) &amp; veerpen voor <code>goija/nummer</code></p>
       </div>
 
       <div class="header-actions">
@@ -361,21 +316,19 @@
 
     <!-- PROFESSIONELE MENUBALK -->
     <nav class="menubar" aria-label="Archiefbeheer menu">
-      <!-- MENU 1: UPLOAD & ARCHIVEER -->
       <div class="menu-item">
         <button type="button" class="menu-trigger">Upload &amp; Archiveer &#9662;</button>
         <div class="menu-dropdown">
           <button type="button" class="menu-action" id="m-upload"><span>+ Document uploaden (naar Tijdelijk)</span><span class="menu-hint">Veerpen</span></button>
           <button type="button" class="menu-action" id="m-scan"><span>Scan alle headers &amp; inhoud</span><span class="menu-hint">Veerpen</span></button>
           <button type="button" class="menu-action" id="m-dedup-scan"><span>Scan op dubbelingen (SHA-256)</span><span class="menu-hint">Veerpen</span></button>
-          <button type="button" class="menu-action" id="m-auto-archive"><span>Auto-archiveer op nummer</span><span class="menu-hint">Veerpen</span></button>
+          <button type="button" class="menu-action" id="m-auto-archive"><span>Auto-archiveer op structuur</span><span class="menu-hint">Veerpen</span></button>
           <div class="menu-sep"></div>
           <button type="button" class="menu-action" id="m-verify-all"><span>Verifieer alle Veerpen-zegels</span></button>
-          <button type="button" class="menu-action" id="m-refresh"><span>Vernieuw documentenlijst</span></button>
+          <button type="button" class="menu-action" id="m-refresh"><span>Vernieuw alle mappen &amp; submappen</span></button>
         </div>
       </div>
 
-      <!-- MENU 2: MAPPEN & PODs -->
       <div class="menu-item">
         <button type="button" class="menu-trigger">Mappen &amp; PODs &#9662;</button>
         <div class="menu-dropdown">
@@ -386,7 +339,6 @@
         </div>
       </div>
 
-      <!-- MENU 3: WIS-KNOPPEN & OPSCHONEN -->
       <div class="menu-item">
         <button type="button" class="menu-trigger">Wis-opties &#9662;</button>
         <div class="menu-dropdown">
@@ -395,12 +347,11 @@
           <button type="button" class="menu-action" id="m-clear-watch"><span>Wis notificatie-trefwoorden</span></button>
           <button type="button" class="menu-action" id="m-clear-selection"><span>Wis document-selectie</span></button>
           <div class="menu-sep"></div>
-          <button type="button" class="menu-action" id="m-restore-hidden"><span>Herstel verborgen documenten</span><span class="menu-hint">Veerpen</span></button>
+          <button type="button" class="menu-action" id="m-restore-hidden"><span>Herstel gewiste/verborgen documenten</span><span class="menu-hint">Veerpen</span></button>
           <button type="button" class="menu-action menu-action--danger" id="m-clear-cache"><span>Wis lokale tekstcache</span><span class="menu-hint">Veerpen</span></button>
         </div>
       </div>
 
-      <!-- MENU 4: ANALYSE, AUDIT & KOPPELINGEN -->
       <div class="menu-item">
         <button type="button" class="menu-trigger">Analyse &amp; Koppelingen &#9662;</button>
         <div class="menu-dropdown">
@@ -421,7 +372,7 @@
         <button type="button" class="btn btn--sm" id="btn-filter-alerts">Toon meldingen</button>
       </div>
 
-      <!-- BULK-ACTIEBALK (BIJ SELECTIE) -->
+      <!-- BULK-ACTIEBALK -->
       <div class="bulk-bar" id="bulk-bar">
         <span><strong id="bulk-count">0</strong> document(en) geselecteerd</span>
         <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
@@ -433,23 +384,27 @@
         </div>
       </div>
 
-      <!-- VEERPEN ONTGRENDEL-PANEEL -->
-      <section class="unlock-panel" id="unlock-panel">
+      <!-- VEERPEN ONTGRENDELMECHANISME -->
+      <section class="unlock-panel" id="unlock-panel" aria-label="Veerpen ontgrendelen">
         <div class="unlock-head">
-          <span class="unlock-title">Veerpen ontgrendelen (mappen, PODs, headers, export &amp; audit)</span>
-          <button type="button" class="btn btn--ghost btn--sm" id="btn-close-unlock">&times; Sluiten</button>
+          <span class="unlock-title">Veerpen-mechanisme — Keten ontgrendelen</span>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <span class="badge" id="unlock-attempts-badge">0 / 5 pogingen</span>
+            <button type="button" class="btn btn--ghost btn--sm" id="btn-close-unlock">&times; Sluiten</button>
+          </div>
         </div>
         <form class="unlock-form" id="unlock-form" autocomplete="off">
-          <input type="password" id="secret-input" class="input-field" placeholder="Geheime string..." autocomplete="off" />
-          <button type="submit" class="btn btn--primary">Ontgrendel</button>
+          <input type="password" id="secret-input" class="input-field" placeholder="Voer tijdelijke keten-string in..." autocomplete="off" spellcheck="false" />
+          <button type="button" class="btn btn--sm" id="btn-toggle-secret" title="Toon/verberg invoer">Toon</button>
+          <button type="submit" class="btn btn--primary" id="btn-submit-unlock">Ontgrendel Veerpen</button>
         </form>
-        <p class="unlock-error" id="unlock-error">Onjuiste geheime string.</p>
+        <p class="unlock-error" id="unlock-error"></p>
       </section>
 
       <!-- ACTIEVE VEERPEN-BEHEERBALK -->
       <section class="admin-bar" id="admin-bar">
         <div class="admin-top">
-          <span class="admin-status">Veerpen Beheer actief — Privacy, Zwartlak &amp; Verwijdermodus</span>
+          <span class="admin-status">Veerpen actief — Keten geopend (Wis-knoppen, Privacy, Zwartlak &amp; Auto-lock 15 min)</span>
           <button type="button" class="btn btn--primary btn--sm" id="btn-lock">Vergrendelen</button>
         </div>
 
@@ -471,8 +426,8 @@
 
         <div class="admin-controls">
           <div class="mode-switch">
-            <label class="mode-option is-active" id="lbl-mode-local"><input type="radio" name="deleteMode" value="local" checked /><span>Lokaal beheer</span></label>
-            <label class="mode-option" id="lbl-mode-github"><input type="radio" name="deleteMode" value="github" /><span>GitHub API (definitief verwijderen)</span></label>
+            <label class="mode-option is-active" id="lbl-mode-local"><input type="radio" name="deleteMode" value="local" checked /><span>Lokaal wissen (verbergen)</span></label>
+            <label class="mode-option" id="lbl-mode-github"><input type="radio" name="deleteMode" value="github" /><span>GitHub API (definitief wissen)</span></label>
           </div>
         </div>
 
@@ -492,12 +447,17 @@
           </div>
 
           <div class="sidebar-section">
-            <div class="sidebar-head"><span>Mappenstructuur</span></div>
+            <div class="sidebar-head"><span>Logische mappenstructuur</span></div>
             <ul class="nav-list" id="nav-folders"></ul>
             <div class="folder-add-row" id="folder-add-box" style="display:none;">
               <input type="text" id="new-folder-input" class="input-field" placeholder="Map of Map/Submap..." />
               <button type="button" class="btn btn--sm" id="btn-create-folder" title="Map aanmaken">+</button>
             </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-head"><span>Bron-submappen (GitHub)</span></div>
+            <ul class="nav-list" id="nav-subpaths"></ul>
           </div>
 
           <div class="sidebar-section">
@@ -514,7 +474,7 @@
         <section>
           <div class="toolbar">
             <div class="search-wrap">
-              <input type="search" id="search-input" class="search-input" placeholder="Zoek op nummer, map, POD, trefwoord of bestandsnaam..." />
+              <input type="search" id="search-input" class="search-input" placeholder="Zoek op nummer, map, submap, POD, trefwoord of bestandsnaam..." />
               <button type="button" class="btn btn--sm" id="btn-clear-search" title="Zoekveld wissen">Wis</button>
             </div>
             <label class="dedup-toggle" id="dedup-toggle-wrap" title="Verberg dubbele bestanden op basis van hash, Message-ID of dossiernummer + datum + onderwerp">
@@ -523,6 +483,7 @@
               <span id="dedup-badge" style="font-family:var(--mono); font-size:11px;"></span>
             </label>
             <select id="sort-select" class="select-field">
+              <option value="folder">Sorteer op map &amp; nummer</option>
               <option value="number">Sorteer op nummer</option>
               <option value="name">Sorteer op naam (A-Z)</option>
               <option value="date">Sorteer op datum</option>
@@ -547,12 +508,12 @@
     </main>
 
     <footer class="footer">
-      <span>Bron: <a href="https://github.com/goija/nummer" target="_blank" rel="noopener noreferrer">github.com/goija/nummer</a></span>
-      <span style="font-family:var(--mono);">Archiefbeheer + PDF-Zwartlak + Solid PODs (.ttl/.acl/PUT) + Dubbeling-uitsluiting + Audit</span>
+      <span>Bron: <a href="https://github.com/goija/nummer" target="_blank" rel="noopener noreferrer">github.com/goija/nummer</a> (incl. submappen)</span>
+      <span style="font-family:var(--mono);">Archiefbeheer + Veerpen SHA-256 + PDF-Zwartlak + Solid PODs (.ttl/.acl/PUT) + Audit</span>
     </footer>
   </div>
 
-  <!-- MODAL: VIEWER (EML & PDF MET ZWARTLAK-MODUS) -->
+  <!-- MODAL: VIEWER -->
   <div class="modal-backdrop" id="viewer-modal" role="dialog" aria-modal="true">
     <div class="modal-card modal-card--wide">
       <div class="modal-title">
@@ -563,7 +524,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ZELF-ARCHIVERENDE PODS -->
+  <!-- MODAL: PODS -->
   <div class="modal-backdrop" id="pod-modal" role="dialog" aria-modal="true">
     <div class="modal-card modal-card--wide">
       <div class="modal-title"><span>Zelf-archiverende PODs (Solid / RDF + ACL + HTTP PUT)</span><button type="button" class="btn btn--sm" id="btn-pod-close">&times; Sluiten</button></div>
@@ -582,7 +543,6 @@
             <button type="button" class="btn btn--pod btn--sm" id="btn-create-pod">+ POD aanmaken</button>
           </div>
         </div>
-
         <div class="sys-card">
           <div class="sys-card-head"><span>Solid / POD Authenticatie (voor HTTP PUT)</span></div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -591,13 +551,12 @@
             <button type="button" class="btn btn--sm btn--ghost" id="btn-clear-solid-token">Wis</button>
           </div>
         </div>
-
         <div id="pod-list-container"></div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: ARCHIVEER & EXPORTEER CENTRUM -->
+  <!-- MODAL: EXPORT -->
   <div class="modal-backdrop" id="export-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
       <div class="modal-title"><span>Archiveer- &amp; Exporteercentrum</span><button type="button" class="btn btn--sm" id="btn-export-close">&times; Sluiten</button></div>
@@ -628,7 +587,7 @@
     </div>
   </div>
 
-  <!-- MODAL: SYSTEEMKOPPELINGEN, AUDIT, CONTROLE, META, ANALYSE, SIGN, VERIFY -->
+  <!-- MODALS: SYSTEEM, AUDIT, WIS-CONTROLE, META, ANALYSE, SIGN, VERIFY -->
   <div class="modal-backdrop" id="systems-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
       <div class="modal-title"><span>Systeemkoppelingen &amp; E-mailactivatie</span><button type="button" class="btn btn--sm" id="btn-systems-close">&times; Sluiten</button></div>
@@ -654,8 +613,11 @@
         <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
           <select id="audit-filter" class="select-field">
             <option value="all">Alle acties</option>
+            <option value="VEERPEN_ONTGRENDELD">Veerpen ontgrendeld</option>
+            <option value="VEERPEN_VERGRENDELD">Veerpen vergrendeld</option>
+            <option value="VEERPEN_MISLUKT">Mislukte pogingen</option>
             <option value="DUBBELING_UITGESLOTEN">Dubbeling uitgesloten</option>
-            <option value="VERWIJDERD_NA_CONTROLE">Verwijderd na controle</option>
+            <option value="VERWIJDERD_NA_CONTROLE">Gewist na controle</option>
             <option value="MAP_WIJZIGING">Mapwijzigingen</option>
             <option value="POD_BEHEER">POD-beheer &amp; PUT</option>
             <option value="ARCHIEF_VERPLAATSING">Archiefverplaatsingen</option>
@@ -679,19 +641,19 @@
 
   <div class="modal-backdrop" id="control-delete-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
-      <h2 class="modal-title" id="cd-title">Controle vóór verwijderen</h2>
+      <h2 class="modal-title" id="cd-title">Controle vóór wissen</h2>
       <div class="modal-body">
         <div class="audit-box" id="cd-summary"></div>
         <span class="hash-box" id="cd-target-name"></span>
         <label class="audit-check"><input type="checkbox" id="cd-check-1" /><span>Ik heb de inhoud, headers en koppelingen gecontroleerd.</span></label>
-        <label class="audit-check"><input type="checkbox" id="cd-check-2" /><span id="cd-check-2-label">Ik bevestig dat dit item verwijderd mag worden.</span></label>
+        <label class="audit-check"><input type="checkbox" id="cd-check-2" /><span id="cd-check-2-label">Ik bevestig dat dit item gewist mag worden.</span></label>
         <label class="field-label" for="cd-confirm-input">Typ ter bevestiging de exacte naam over:</label>
         <input type="text" id="cd-confirm-input" class="input-field" style="width:100%;" autocomplete="off" />
       </div>
       <div class="modal-error" id="cd-error"></div>
       <div class="modal-footer">
         <button type="button" class="btn" id="btn-cd-cancel">Annuleren</button>
-        <button type="button" class="btn btn--primary" id="btn-cd-confirm" disabled>Uitvoeren na controle</button>
+        <button type="button" class="btn btn--primary" id="btn-cd-confirm" disabled>Wissen uitvoeren</button>
       </div>
     </div>
   </div>
@@ -776,7 +738,7 @@
         <div id="verify-details"></div>
         <div id="verify-secret-box" style="display:none; margin-top:10px;">
           <div style="display:flex; gap:8px;">
-            <input type="password" id="verify-secret-input" class="input-field" placeholder="Geheime string..." />
+            <input type="password" id="verify-secret-input" class="input-field" placeholder="Keten-string..." />
             <button type="button" class="btn btn--primary btn--sm" id="btn-run-hmac-verify">Controleer</button>
           </div>
         </div>
@@ -792,14 +754,34 @@
 
   <script>
     (() => {
-      const GEHEIME_STRING = "penveer6174";
+      // =======================================================================
+      // VEERPEN ONTGRENDELMECHANISME CONFIGURATIE
+      // =======================================================================
+      const VEERPEN_CONFIG = {
+        tempString: "keten-2026-temp", // Tijdelijke string om de keten te openen
+        customHash: "",                // Optioneel: 64-tekens SHA-256 hex-hash om tempString te vervangen
+        maxAttempts: 5,
+        lockoutMs: 30_000,             // 30 seconden blokkade na 5 foute pogingen
+        inactivityMs: 15 * 60_000      // 15 minuten automatische vergrendeling
+      };
+
+      const veerpenGate = { attempts: 0, lockedUntil: 0, idleTimer: null };
+
       const REPO_OWNER = "goija";
       const REPO_NAME = "nummer";
       const SITE_BASE_URL = "https://nummer-jet.vercel.app";
       const TEMP_FOLDER = "Tijdelijk / Nog te archiveren";
+      const DEFAULT_FOLDERS = [
+        TEMP_FOLDER,
+        "01. WOO & Gemeente Tholen",
+        "02. Processtukken & Bezwaar",
+        "03. Correspondentie",
+        "04. Visserijrechten, Kadaster & Historie",
+        "05. Onderleggers & Stuiting"
+      ];
       const GITHUB_API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents`;
       const IGNORED_FILES = new Set(["index.html", "vercel.json", "CNAME", "LICENSE"]);
-      const TEXT_EXTS = new Set(["html", "htm", "txt", "md", "eml", "json", "csv", "xml", "log", "ttl", "ini"]);
+      const TEXT_EXTS = new Set(["html", "htm", "txt", "md", "eml", "json", "csv", "xml", "log", "ttl", "ini", ""]);
 
       const KEYS = {
         hidden: `pro_hidden_${REPO_NAME}`, sigs: `pro_sigs_${REPO_NAME}`, meta: `pro_meta_${REPO_NAME}`,
@@ -810,12 +792,12 @@
 
       const state = {
         files: [], localFiles: [], textCache: {}, selected: new Set(), loading: true, error: null,
-        query: "", watchKeywords: "", dateFrom: "", dateTo: "", sortBy: "number",
+        query: "", watchKeywords: "", dateFrom: "", dateTo: "", sortBy: "folder",
         excludeDuplicates: true, duplicateMap: new Map(),
         activeFilter: { type: "all", value: "" }, fontScale: 1,
         unlocked: false, activeSecret: "", unlockOpen: false, deleteMode: "local",
         hiddenFiles: new Set(),
-        folders: [TEMP_FOLDER, "Algemeen", "Onderleggers"],
+        folders: [...DEFAULT_FOLDERS],
         pods: [{ id: "pod-hoofdarchief", name: "Hoofdarchief-POD", webid: "https://solid-virid.vercel.app/pod/hoofdarchief/", ownerWebId: "https://solid-virid.vercel.app/profile/card#me", publicRead: false, retention: "Permanent", desc: "Standaard archief-capsule", createdAt: new Date().toISOString() }],
         meta: {}, signatures: {}, verifyStatus: {}, auditLog: [],
         systems: { emailActive: false, emailEndpoint: "", localEndpoint: "http://127.0.0.1:3000/sync" },
@@ -825,6 +807,10 @@
 
       const $ = (id) => document.getElementById(id);
       let toastTimer = null;
+
+      function fileKey(file) { return file.path || file.name; }
+      function encodePath(path) { return String(path || "").split("/").map(encodeURIComponent).join("/"); }
+      function getParentDir(path) { const idx = String(path || "").lastIndexOf("/"); return idx > 0 ? path.slice(0, idx) : "(hoofdmap)"; }
 
       function showToast(msg, variant = "") {
         $("toast").textContent = msg;
@@ -839,7 +825,122 @@
       function loadJson(k, fb) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch { return fb; } }
 
       // =======================================================================
-      // DUBBELING-UITSLUITING (DRIETRAPS: HASH -> MESSAGE-ID -> METADATA)
+      // VEERPEN SHA-256 GATE, RATE-LIMIT & AUTO-LOCK
+      // =======================================================================
+      async function computeGateHash(input) {
+        const bytes = new TextEncoder().encode(input);
+        const digest = await crypto.subtle.digest("SHA-256", bytes);
+        return [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, "0")).join("");
+      }
+
+      async function verifyVeerpenSecret(candidate) {
+        const expectedHash = VEERPEN_CONFIG.customHash
+          ? VEERPEN_CONFIG.customHash.toLowerCase()
+          : await computeGateHash(VEERPEN_CONFIG.tempString);
+        return (await computeGateHash(candidate)) === expectedHash;
+      }
+
+      function updateAttemptsUI() {
+        const badge = $("unlock-attempts-badge");
+        if (badge) badge.textContent = `${veerpenGate.attempts} / ${VEERPEN_CONFIG.maxAttempts} pogingen`;
+      }
+
+      function resetVeerpenIdleTimer() {
+        clearTimeout(veerpenGate.idleTimer);
+        if (!state.unlocked) return;
+        veerpenGate.idleTimer = setTimeout(() => {
+          lockVeerpen("Automatisch vergrendeld na 15 min inactiviteit.");
+        }, VEERPEN_CONFIG.inactivityMs);
+      }
+
+      function unlockVeerpen(secret) {
+        state.unlocked = true;
+        state.activeSecret = secret;
+        state.unlockOpen = false;
+        veerpenGate.attempts = 0;
+        veerpenGate.lockedUntil = 0;
+
+        $("unlock-panel").classList.remove("visible");
+        $("unlock-error").classList.remove("visible");
+        $("admin-bar").classList.add("visible");
+        $("btn-quill").classList.add("is-unlocked");
+        $("btn-quill").setAttribute("aria-expanded", "true");
+        $("quill-label").textContent = "Veerpen actief";
+        $("secret-input").value = "";
+
+        updateAttemptsUI();
+        resetVeerpenIdleTimer();
+        logAudit("VEERPEN_ONTGRENDELD", "Keten", "Veerpen ontgrendeld; Wis-knoppen en beheer actief.");
+        renderAll();
+        showToast("Veerpen ontgrendeld — Wis-knoppen actief.", "ok");
+      }
+
+      function lockVeerpen(reason = "Veerpen vergrendeld.") {
+        clearTimeout(veerpenGate.idleTimer);
+        state.unlocked = false;
+        state.activeSecret = "";
+        state.selected.clear();
+
+        $("admin-bar").classList.remove("visible");
+        $("btn-quill").classList.remove("is-unlocked");
+        $("btn-quill").setAttribute("aria-expanded", "false");
+        $("quill-label").textContent = "Veerpen";
+        document.querySelectorAll(".modal-backdrop").forEach(m => m.classList.remove("visible"));
+
+        logAudit("VEERPEN_VERGRENDELD", "Keten", reason);
+        renderAll();
+        showToast(reason);
+      }
+
+      // =======================================================================
+      // LOGISCHE STRUCTUUR & AUTOMATISCHE CLASSIFICATIE (INCL. SUBMAPPEN)
+      // =======================================================================
+      function detectFromFile(name, fullPath = "") {
+        const path = fullPath || name;
+        const lowPath = path.toLowerCase();
+        const { base } = splitFileName(name);
+
+        const numMatch = base.match(/\b(1514282[-a-z0-9]*)\b/i)
+          || base.match(/\b(266\d{6})\b/)
+          || base.match(/\b(20\d{2}[-_.]\d{1,5})\b/)
+          || base.match(/\b([A-Z]{2,5}[-_\s]?\d{1,6})\b/i)
+          || base.match(/(?:^|[-_\s])(\d{2,9})(?:$|[-_\s])/);
+
+        let dateStr = "";
+        const isoDate = base.match(/\b(20\d{2}[-_.]\d{2}[-_.]\d{2})\b/);
+        if (isoDate) dateStr = isoDate[1].replace(/[_.]/g, "-");
+        else if (/27nov2026/i.test(base)) dateStr = "2026-11-27";
+
+        let folder = TEMP_FOLDER;
+        let role = "hoofddocument";
+        let status = "gearchiveerd";
+
+        if (lowPath.includes("onderleggers/") || /(stuiting|onderlegger|bijlage|bewijs)/i.test(lowPath)) {
+          folder = "05. Onderleggers & Stuiting";
+          role = "onderlegger";
+        } else if (/(woo|tholen|1514282|ontvangstbevestiging)/i.test(lowPath)) {
+          folder = "01. WOO & Gemeente Tholen";
+        } else if (/(correspondentie|sels|goija@protonmail)/i.test(lowPath)) {
+          folder = "03. Correspondentie";
+        } else if (/(visserij|oosterschelde|molenplaat|reimerswaal|kadaster|bblgrond|getuigenverklaring)/i.test(lowPath)) {
+          folder = "04. Visserijrechten, Kadaster & Historie";
+        } else if (lowPath.includes("nummer/datum/") || /(processtuk|bezwaar|2665|2667|f873ba20)/i.test(lowPath)) {
+          folder = "02. Processtukken & Bezwaar";
+        } else {
+          status = "tijdelijk";
+        }
+
+        const num = numMatch ? numMatch[1].replace(/[_\s]+/g, "-").toUpperCase() : "";
+        return {
+          number: num, role, status, folder, podId: "", retention: "Permanent",
+          notes: fullPath && fullPath !== name ? `Bronpad: ${fullPath}` : "",
+          date: dateStr, subject: base.replace(/[-_]+/g, " ").trim(),
+          sender: "", rawHeaders: {}, sha256: ""
+        };
+      }
+
+      // =======================================================================
+      // DUBBELING-UITSLUITING (HASH -> MESSAGE-ID -> METADATA)
       // =======================================================================
       const STATUS_RANK = { "gearchiveerd": 3, "in-behandeling": 2, "tijdelijk": 1 };
 
@@ -856,21 +957,21 @@
 
       function getMessageIdFromHeaders(rawHeaders = {}) {
         for (const [k, v] of Object.entries(rawHeaders || {})) {
-          if (k.toLowerCase() === "message-id" && v) {
-            return String(v).replace(/^<|>$/g, "").trim().toLowerCase();
-          }
+          if (k.toLowerCase() === "message-id" && v) return String(v).replace(/^<|>$/g, "").trim().toLowerCase();
         }
         return "";
       }
 
       function getFileContentHash(file) {
-        const m = state.meta[file.name] || {};
-        const sig = state.signatures[file.name];
+        const k = fileKey(file);
+        const m = state.meta[k] || {};
+        const sig = state.signatures[k];
         return m.sha256 || sig?.sha256 || file.sha || "";
       }
 
       function buildMetadataKey(file) {
-        const m = state.meta[file.name] || detectFromFileName(file.name);
+        const k = fileKey(file);
+        const m = state.meta[k] || detectFromFile(file.name, file.path);
         const num = normalizeDedupText(m.number || "");
         const date = String(m.date || "").slice(0, 10);
         const { base, ext } = splitFileName(file.name);
@@ -880,34 +981,29 @@
       }
 
       function pickPrimaryFile(a, b) {
-        const sigA = Boolean(state.signatures[a.name]);
-        const sigB = Boolean(state.signatures[b.name]);
+        const ka = fileKey(a), kb = fileKey(b);
+        const sigA = Boolean(state.signatures[ka]), sigB = Boolean(state.signatures[kb]);
         if (sigA !== sigB) return sigA ? a : b;
-
-        const ma = state.meta[a.name] || {};
-        const mb = state.meta[b.name] || {};
-        const rankA = STATUS_RANK[ma.status] || 0;
-        const rankB = STATUS_RANK[mb.status] || 0;
+        const rankA = STATUS_RANK[state.meta[ka]?.status] || 0;
+        const rankB = STATUS_RANK[state.meta[kb]?.status] || 0;
         if (rankA !== rankB) return rankA > rankB ? a : b;
-
-        // Voorkeur voor niet-kopie bestandsnaam (kortere, schone naam)
         const aIsCopy = /\(\d+\)|kopie/i.test(a.name);
         const bIsCopy = /\(\d+\)|kopie/i.test(b.name);
         if (aIsCopy !== bIsCopy) return aIsCopy ? b : a;
-
         return a.name.length <= b.name.length ? a : b;
       }
 
       function analyzeDuplicates(files) {
         const keyToWinner = new Map();
-        const excludedMap = new Map(); // file.name -> { reason, primaryName }
+        const excludedMap = new Map();
 
         for (const file of files) {
-          const m = state.meta[file.name] || {};
+          const k = fileKey(file);
+          const m = state.meta[k] || {};
           const keys = [];
 
           const hash = getFileContentHash(file);
-          if (hash) keys.push({ key: `hash:${hash}`, reason: m.sha256 || state.signatures[file.name]?.sha256 ? "SHA-256 (identieke inhoud)" : "Git-SHA (identieke inhoud)" });
+          if (hash) keys.push({ key: `hash:${hash}`, reason: m.sha256 || state.signatures[k]?.sha256 ? "SHA-256 (identieke inhoud)" : "Git-SHA (identieke inhoud)" });
 
           const msgId = getMessageIdFromHeaders(m.rawHeaders);
           if (msgId) keys.push({ key: `msg:${msgId}`, reason: "Header Message-ID" });
@@ -915,51 +1011,37 @@
           const metaKey = buildMetadataKey(file);
           if (metaKey) keys.push({ key: `meta:${metaKey}`, reason: "Dossiernummer + datum + naam" });
 
-          let match = null;
-          let matchReason = "";
+          let match = null, matchReason = "";
           for (const item of keys) {
-            if (keyToWinner.has(item.key)) {
-              match = keyToWinner.get(item.key);
-              matchReason = item.reason;
-              break;
-            }
+            if (keyToWinner.has(item.key)) { match = keyToWinner.get(item.key); matchReason = item.reason; break; }
           }
 
           if (!match) {
             for (const item of keys) keyToWinner.set(item.key, file);
-            if (!keys.length) keyToWinner.set(`id:${file.name}`, file);
-          } else if (match.name !== file.name) {
+            if (!keys.length) keyToWinner.set(`id:${k}`, file);
+          } else if (fileKey(match) !== k) {
             const winner = pickPrimaryFile(match, file);
             const loser = winner === file ? match : file;
-
-            excludedMap.set(loser.name, { reason: matchReason, primaryName: winner.name });
-
-            for (const [k, v] of keyToWinner.entries()) {
-              if (v === loser) keyToWinner.set(k, winner);
-            }
+            excludedMap.set(fileKey(loser), { reason: matchReason, primaryName: winner.name, primaryKey: fileKey(winner) });
+            for (const [mk, mv] of keyToWinner.entries()) if (mv === loser) keyToWinner.set(mk, winner);
             for (const item of keys) keyToWinner.set(item.key, winner);
           }
         }
 
-        const uniqueFiles = files.filter(f => !excludedMap.has(f.name));
+        const uniqueFiles = files.filter(f => !excludedMap.has(fileKey(f)));
         return { uniqueFiles, excludedMap };
       }
 
       async function checkIncomingDuplicate(fileName, buffer, existingFiles) {
         const incomingSha = await sha256Hex(buffer);
-        const tempObj = { name: fileName, size: buffer.byteLength, isLocal: true };
+        const tempObj = { name: fileName, path: fileName, size: buffer.byteLength, isLocal: true };
         const incomingMetaKey = buildMetadataKey(tempObj);
-
         for (const existing of existingFiles) {
-          const exMeta = state.meta[existing.name] || {};
-          const exSha = exMeta.sha256 || state.signatures[existing.name]?.sha256 || "";
-          if (exSha && exSha === incomingSha) {
-            return { isDuplicate: true, reason: "SHA-256 (identieke inhoud)", primary: existing, sha256: incomingSha };
-          }
+          const ek = fileKey(existing);
+          const exSha = state.meta[ek]?.sha256 || state.signatures[ek]?.sha256 || "";
+          if (exSha && exSha === incomingSha) return { isDuplicate: true, reason: "SHA-256 (identieke inhoud)", primary: existing, sha256: incomingSha };
           const exMetaKey = buildMetadataKey(existing);
-          if (incomingMetaKey && exMetaKey && incomingMetaKey === exMetaKey) {
-            return { isDuplicate: true, reason: "Bestandsnaam / dossiermetadata", primary: existing, sha256: incomingSha };
-          }
+          if (incomingMetaKey && exMetaKey && incomingMetaKey === exMetaKey) return { isDuplicate: true, reason: "Bestandsnaam / dossiermetadata", primary: existing, sha256: incomingSha };
         }
         return { isDuplicate: false, reason: "", primary: null, sha256: incomingSha };
       }
@@ -981,15 +1063,16 @@
 
       function requireUnlock() {
         if (state.unlocked) return true;
-        showToast("Ontgrendel eerst de Veerpen met de geheime string.", "red");
+        showToast("Ontgrendel eerst de Veerpen met de tijdelijke keten-string.", "red");
         state.unlockOpen = true;
         $("unlock-panel").classList.add("visible");
+        $("btn-quill").setAttribute("aria-expanded", "true");
         $("secret-input").focus();
         return false;
       }
 
       // =======================================================================
-      // PRIVACY & ZWARTLAK-ENGINE (INCL. PDF-TEKSTEXTRACTIE)
+      // PRIVACY & ZWARTLAK-ENGINE
       // =======================================================================
       const PII_RX = {
         email: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,
@@ -1009,17 +1092,8 @@
         return list;
       }
 
-      function redactHtml(s) {
-        let out = escapeHtml(s);
-        for (const rx of getActivePiiRegexes()) out = out.replace(rx, '<span class="pii-blackout">████████</span>');
-        return out;
-      }
-
-      function redactPlain(s) {
-        let out = String(s ?? "");
-        for (const rx of getActivePiiRegexes()) out = out.replace(rx, "████████");
-        return out;
-      }
+      function redactHtml(s) { let out = escapeHtml(s); for (const rx of getActivePiiRegexes()) out = out.replace(rx, '<span class="pii-blackout">████████</span>'); return out; }
+      function redactPlain(s) { let out = String(s ?? ""); for (const rx of getActivePiiRegexes()) out = out.replace(rx, "████████"); return out; }
 
       function extractReadablePdfText(arrayBuffer) {
         const raw = new TextDecoder("latin1").decode(arrayBuffer);
@@ -1058,18 +1132,19 @@
       }
 
       // =======================================================================
-      // PDF & EML VIEWER (MET PDF PERSOONSGEGEVENS ZWART TOT NADER ORDER)
+      // PDF & EML VIEWER
       // =======================================================================
       async function openViewerModal(file) {
         if (!file) return;
+        const k = fileKey(file);
         const lowExt = splitFileName(file.name).ext.toLowerCase();
-        $("viewer-title").textContent = redactPlain(file.name);
+        $("viewer-title").textContent = redactPlain(k);
         $("viewer-content").innerHTML = `<div class="state-box">Laden...</div>`;
         $("viewer-modal").classList.add("visible");
 
         try {
           if (lowExt === "pdf") {
-            let pdfUrl = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`;
+            let pdfUrl = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodePath(k)}`;
             let extractedText = "";
             try {
               const buf = await getFileArrayBuffer(file);
@@ -1087,8 +1162,7 @@
                 </div>
                 <div class="eml-box">
                   <div class="eml-body">${extractedText ? redactHtml(extractedText) : "Geen ongecomprimeerde tekstlaag gevonden in deze PDF. Gebruik de visuele PDF met interactieve zwartlak-laag."}</div>
-                </div>
-              `;
+                </div>`;
               $("btn-pdf-visual").addEventListener("click", renderPdfVisualWithOverlay);
             };
 
@@ -1105,33 +1179,19 @@
                 <div class="pdf-stage">
                   <iframe class="pdf-frame" src="${pdfUrl}"></iframe>
                   <canvas class="pdf-redact-canvas" id="pdf-redact-canvas"></canvas>
-                </div>
-              `;
-              const canvas = $("pdf-redact-canvas");
-              const ctx = canvas.getContext("2d");
-              const resize = () => { canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; };
-              resize();
+                </div>`;
+              const canvas = $("pdf-redact-canvas"), ctx = canvas.getContext("2d");
+              canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
               let drawing = false, sx = 0, sy = 0, drawMode = true;
-
-              canvas.addEventListener("mousedown", e => {
-                if (!drawMode) return;
-                const r = canvas.getBoundingClientRect();
-                sx = e.clientX - r.left; sy = e.clientY - r.top; drawing = true;
-              });
+              canvas.addEventListener("mousedown", e => { if (!drawMode) return; const r = canvas.getBoundingClientRect(); sx = e.clientX - r.left; sy = e.clientY - r.top; drawing = true; });
               canvas.addEventListener("mouseup", e => {
-                if (!drawing) return;
-                drawing = false;
+                if (!drawing) return; drawing = false;
                 const r = canvas.getBoundingClientRect();
-                const ex = e.clientX - r.left, ey = e.clientY - r.top;
                 ctx.fillStyle = "#000000";
-                ctx.fillRect(Math.min(sx, ex), Math.min(sy, ey), Math.abs(ex - sx), Math.abs(ey - sy));
+                ctx.fillRect(Math.min(sx, e.clientX - r.left), Math.min(sy, e.clientY - r.top), Math.abs(e.clientX - r.left - sx), Math.abs(e.clientY - r.top - sy));
               });
               $("btn-pdf-clear-redact").addEventListener("click", () => ctx.clearRect(0, 0, canvas.width, canvas.height));
-              $("btn-pdf-toggle-draw").addEventListener("click", () => {
-                drawMode = !drawMode;
-                canvas.classList.toggle("passthrough", !drawMode);
-                $("btn-pdf-toggle-draw").textContent = drawMode ? "Teken zwartlak: AAN" : "Scroll PDF (lakken UIT)";
-              });
+              $("btn-pdf-toggle-draw").addEventListener("click", () => { drawMode = !drawMode; canvas.classList.toggle("passthrough", !drawMode); $("btn-pdf-toggle-draw").textContent = drawMode ? "Teken zwartlak: AAN" : "Scroll PDF (lakken UIT)"; });
               $("btn-pdf-back-text").addEventListener("click", renderPdfSafeText);
             };
 
@@ -1142,11 +1202,11 @@
 
           if (lowExt === "eml" || TEXT_EXTS.has(lowExt)) {
             const txt = new TextDecoder("utf-8", { fatal: false }).decode(await getFileArrayBuffer(file));
-            state.textCache[file.name] = txt;
+            state.textCache[k] = txt;
             $("viewer-content").innerHTML = `<div class="eml-box"><div class="eml-body">${redactHtml(txt)}</div></div>`;
             return;
           }
-          const url = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`;
+          const url = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodePath(k)}`;
           $("viewer-content").innerHTML = `<div class="state-box"><a class="btn btn--primary" href="${url}" target="_blank" rel="noopener noreferrer">Open bestand</a></div>`;
         } catch (err) { $("viewer-content").innerHTML = `<div class="state-box state-box--error">${escapeHtml(err.message)}</div>`; }
       }
@@ -1156,14 +1216,14 @@
       // PODS (.ttl + .acl + HTTP PUT)
       // =======================================================================
       function buildTurtleForPod(pod) {
-        const docs = getAllFiles().filter(f => state.meta[f.name]?.podId === pod.id);
+        const docs = getAllFiles().filter(f => state.meta[fileKey(f)]?.podId === pod.id);
         const baseUri = (pod.webid || `https://solid-virid.vercel.app/pod/${pod.id}/`).replace(/\/?$/, "/");
         let ttl = `@prefix ldp: <http://www.w3.org/ns/ldp#> .\n@prefix dcterms: <http://purl.org/dc/terms/> .\n@prefix sec: <https://w3id.org/security#> .\n\n`;
         ttl += `<${baseUri}>\n  a ldp:BasicContainer ;\n  dcterms:title "${pod.name.replace(/"/g, '\\"')}" ;\n  dcterms:created "${pod.createdAt}" .\n\n`;
         for (const f of docs) {
-          const m = state.meta[f.name] || {}, sig = state.signatures[f.name];
+          const k = fileKey(f), m = state.meta[k] || {}, sig = state.signatures[k];
           const digest = sig?.sha256 || m.sha256 || "";
-          ttl += `<${baseUri}${encodeURIComponent(f.name)}>\n  a ldp:Resource ;\n  dcterms:title "${redactPlain(m.subject || f.name).replace(/"/g, '\\"')}" ;\n`;
+          ttl += `<${baseUri}${encodePath(k)}>\n  a ldp:Resource ;\n  dcterms:title "${redactPlain(m.subject || f.name).replace(/"/g, '\\"')}" ;\n`;
           if (digest) ttl += `  sec:digestValue "${digest}" ;\n`;
           ttl += `  dcterms:isPartOf <${baseUri}> .\n\n`;
         }
@@ -1196,12 +1256,12 @@
       function renderPodModal() {
         const all = getAllFiles();
         $("pod-list-container").innerHTML = state.pods.map(pod => {
-          const cnt = all.filter(f => state.meta[f.name]?.podId === pod.id).length;
+          const cnt = all.filter(f => state.meta[fileKey(f)]?.podId === pod.id).length;
           return `<div class="sys-card"><div class="sys-card-head"><span>${escapeHtml(pod.name)} <span class="badge badge--pod">${cnt} doc(s)</span></span>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
               <button type="button" class="btn btn--sm" data-export-pod="${escapeHtml(pod.id)}">.ttl + .acl</button>
               <button type="button" class="btn btn--pod btn--sm" data-put-pod="${escapeHtml(pod.id)}">Upload PUT</button>
-              <button type="button" class="btn btn--primary btn--sm" data-del-pod="${escapeHtml(pod.id)}">Verwijder</button>
+              <button type="button" class="btn btn--primary btn--sm" data-del-pod="${escapeHtml(pod.id)}">Wis</button>
             </div></div><div style="font-size:12px; color:var(--muted); font-family:var(--mono);">${escapeHtml(pod.webid)}</div></div>`;
         }).join("") || `<div class="state-box">Geen PODs.</div>`;
 
@@ -1224,20 +1284,20 @@
       }
 
       // =======================================================================
-      // CONTROLEMECHANISME VÓÓR VERWIJDEREN
+      // CONTROLEMECHANISME VÓÓR WISSEN
       // =======================================================================
       function openControlDeleteModal(type, target) {
         if (!requireUnlock()) return;
-        if (type === "folder" && target === TEMP_FOLDER) return showToast(`"${TEMP_FOLDER}" kan niet worden verwijderd.`, "red");
+        if (type === "folder" && target === TEMP_FOLDER) return showToast(`"${TEMP_FOLDER}" kan niet worden gewist.`, "red");
         state.pendingControlDelete = { type, target };
         const name = type === "folder" ? target : target.name;
         $("cd-target-name").textContent = name;
         $("cd-check-1").checked = false; $("cd-check-2").checked = false; $("cd-confirm-input").value = "";
         $("cd-error").classList.remove("visible"); $("btn-cd-confirm").disabled = true;
-        $("cd-title").textContent = `Controle vóór ${type} verwijderen`;
+        $("cd-title").textContent = `Controle vóór ${type === "file" ? "document" : type} wissen`;
         $("cd-summary").innerHTML = type === "folder"
           ? `Documenten in deze map verhuizen veilig naar <em>${escapeHtml(TEMP_FOLDER)}</em>.`
-          : `Bevestig alle controles om <strong>${escapeHtml(name)}</strong> te verwijderen.`;
+          : `Modus: <strong>${state.deleteMode === "github" ? "GitHub API (definitief)" : "Lokaal verbergen"}</strong>. Bevestig om <strong>${escapeHtml(name)}</strong> te wissen.`;
         $("control-delete-modal").classList.add("visible");
       }
 
@@ -1253,66 +1313,59 @@
         if (p.type === "folder") {
           for (const k of Object.keys(state.meta)) if (state.meta[k].folder === p.target) { state.meta[k].folder = TEMP_FOLDER; state.meta[k].status = "tijdelijk"; }
           state.folders = state.folders.filter(f => f !== p.target);
-          logAudit("VERWIJDERD_NA_CONTROLE", p.target, "Map verwijderd na controle.");
+          logAudit("VERWIJDERD_NA_CONTROLE", p.target, "Map gewist na controle.");
         } else if (p.type === "pod") {
           for (const k of Object.keys(state.meta)) if (state.meta[k].podId === p.target.id) state.meta[k].podId = "";
           state.pods = state.pods.filter(x => x.id !== p.target.id);
-          logAudit("VERWIJDERD_NA_CONTROLE", p.target.name, "POD verwijderd na controle.");
+          logAudit("VERWIJDERD_NA_CONTROLE", p.target.name, "POD gewist na controle.");
           renderPodModal();
         } else {
-          const f = p.target;
-          if (f.isLocal) state.localFiles = state.localFiles.filter(x => x.name !== f.name);
-          else if (state.deleteMode === "local") state.hiddenFiles.add(f.name);
+          const f = p.target, k = fileKey(f);
+          if (f.isLocal) state.localFiles = state.localFiles.filter(x => fileKey(x) !== k);
+          else if (state.deleteMode === "local") state.hiddenFiles.add(k);
           else {
             const token = $("gh-token-input").value.trim() || sessionStorage.getItem(KEYS.token) || "";
             if (!token) { $("cd-error").textContent = "GitHub-token vereist."; $("cd-error").classList.add("visible"); return; }
-            const r = await fetch(`${GITHUB_API_BASE}/${encodeURIComponent(f.name)}`, {
+            const r = await fetch(`${GITHUB_API_BASE}/${encodePath(k)}`, {
               method: "DELETE", headers: { Accept: "application/vnd.github.v3+json", Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-              body: JSON.stringify({ message: `Verwijder ${f.name}`, sha: f.sha })
+              body: JSON.stringify({ message: `Wis ${k}`, sha: f.sha })
             });
             if (!r.ok) { $("cd-error").textContent = `HTTP ${r.status}`; $("cd-error").classList.add("visible"); return; }
-            state.files = state.files.filter(x => x.name !== f.name);
+            state.files = state.files.filter(x => fileKey(x) !== k);
           }
-          state.selected.delete(f.name);
-          logAudit("VERWIJDERD_NA_CONTROLE", f.name, `Document verwijderd (${state.deleteMode}).`);
+          state.selected.delete(k);
+          logAudit("VERWIJDERD_NA_CONTROLE", k, `Document gewist (${state.deleteMode}).`);
         }
-        $("control-delete-modal").classList.remove("visible"); renderAll(); showToast("Verwijderd na controle.", "ok");
+        $("control-delete-modal").classList.remove("visible"); renderAll(); showToast("Gewist na controle.", "ok");
       });
 
       // =======================================================================
-      // CORE DATA, CRYPTO & RENDERING
+      // RECURSIEVE GITHUB FETCH (ALLE SUBMAPPEN) & CRYPTO
       // =======================================================================
-      function detectFromFileName(name) {
-        const { base } = splitFileName(name);
-        const numMatch = base.match(/\b(20\d{2}[-_.]\d{1,5})\b/) || base.match(/\b([A-Z]{2,5}[-_\s]?\d{1,6})\b/i) || base.match(/(?:^|[-_\s])(\d{2,8})(?:$|[-_\s])/);
-        const dateMatch = base.match(/\b(20\d{2}[-_.]\d{2}[-_.]\d{2})\b/);
-        const isOnderlegger = /(onderlegger|bijlage|bewijs|bon|factuur|scan|kopie)/i.test(base);
-        const num = numMatch ? numMatch[1].replace(/[_\s]+/g, "-").toUpperCase() : "";
-        return { number: num, role: isOnderlegger ? "onderlegger" : "hoofddocument", status: num ? "in-behandeling" : "tijdelijk", folder: num ? (isOnderlegger ? "Onderleggers" : "Algemeen") : TEMP_FOLDER, podId: "", retention: "7 jaar", notes: "", date: dateMatch ? dateMatch[1].replace(/[_.]/g, "-") : "", subject: base.replace(/[-_]+/g, " ").trim(), sender: "", rawHeaders: {}, sha256: "" };
-      }
-
       async function getFileArrayBuffer(file) {
         if (file.isLocal && file.buffer) return file.buffer;
-        for (const u of [file.download_url, `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`].filter(Boolean)) {
+        const k = fileKey(file);
+        for (const u of [file.download_url, `${SITE_BASE_URL}/${encodePath(k)}`].filter(Boolean)) {
           try { const r = await fetch(u, { cache: "no-store" }); if (r.ok) return await r.arrayBuffer(); } catch {}
         }
         throw new Error("Kon bestand niet ophalen.");
       }
 
       async function scanFileHeaders(file, force = false) {
-        if (!force && state.meta[file.name] && Object.keys(state.meta[file.name].rawHeaders || {}).length) return state.meta[file.name];
-        let parsed = detectFromFileName(file.name);
+        const k = fileKey(file);
+        if (!force && state.meta[k] && Object.keys(state.meta[k].rawHeaders || {}).length) return state.meta[k];
+        let parsed = detectFromFile(file.name, file.path);
         try {
           const buf = await getFileArrayBuffer(file);
           parsed.sha256 = await sha256Hex(buf);
           if (TEXT_EXTS.has(splitFileName(file.name).ext.toLowerCase())) {
             const text = new TextDecoder("utf-8", { fatal: false }).decode(buf.slice(0, 65536));
-            state.textCache[file.name] = text;
+            state.textCache[k] = text;
             const raw = {};
             for (const line of text.split(/\r?\n/).slice(0, 80)) {
               const m = line.match(/^([A-Za-zÀ-ÿ0-9\-_ ]{2,32}):\s*(.{1,240})$/);
               if (!m || m[1].startsWith("http")) continue;
-              const k = m[1].trim(), v = m[2].trim(), lk = k.toLowerCase(); raw[k] = v;
+              const hk = m[1].trim(), v = m[2].trim(), lk = hk.toLowerCase(); raw[hk] = v;
               if (/^(kenmerk|dossier|zaaknummer|nummer|factuurnummer)$/.test(lk)) parsed.number = v.toUpperCase();
               else if (/^(onderwerp|subject|betreft|titel)$/.test(lk)) parsed.subject = v;
               else if (/^(afzender|from|bron|auteur)$/.test(lk)) parsed.sender = v;
@@ -1321,9 +1374,9 @@
             parsed.rawHeaders = raw;
           }
         } catch {}
-        state.meta[file.name] = { ...parsed, ...(state.meta[file.name] || {}), rawHeaders: parsed.rawHeaders, sha256: parsed.sha256 || state.meta[file.name]?.sha256 || "" };
-        ensureFolderExists(state.meta[file.name].folder); persistAll();
-        return state.meta[file.name];
+        state.meta[k] = { ...parsed, ...(state.meta[k] || {}), rawHeaders: parsed.rawHeaders, sha256: parsed.sha256 || state.meta[k]?.sha256 || "" };
+        ensureFolderExists(state.meta[k].folder); persistAll();
+        return state.meta[k];
       }
 
       function ensureFolderExists(p) {
@@ -1355,9 +1408,29 @@
       function getWatchList() { return state.watchKeywords.split(",").map(s => s.trim().toLowerCase()).filter(Boolean); }
       function getMatchedKeywords(f) {
         const list = getWatchList(); if (!list.length) return [];
-        const m = state.meta[f.name] || {};
-        const hay = `${f.name} ${m.number || ""} ${m.subject || ""} ${m.folder || ""} ${state.textCache[f.name] || ""}`.toLowerCase();
+        const k = fileKey(f), m = state.meta[k] || {};
+        const hay = `${k} ${m.number || ""} ${m.subject || ""} ${m.folder || ""} ${state.textCache[k] || ""}`.toLowerCase();
         return list.filter(kw => hay.includes(kw));
+      }
+
+      async function fetchDirRecursive(dirPath, headers) {
+        const url = dirPath ? `${GITHUB_API_BASE}/${encodePath(dirPath)}` : `${GITHUB_API_BASE}/`;
+        const r = await fetch(url, { headers });
+        if (!r.ok) throw new Error(`GitHub API HTTP ${r.status} op /${dirPath}`);
+        const items = await r.json();
+        if (!Array.isArray(items)) return [];
+
+        const collected = [];
+        for (const item of items) {
+          if (!item || item.name.startsWith(".")) continue;
+          if (item.type === "dir") {
+            const subFiles = await fetchDirRecursive(item.path, headers);
+            collected.push(...subFiles);
+          } else if (item.type === "file" && !IGNORED_FILES.has(item.name)) {
+            collected.push(item);
+          }
+        }
+        return collected;
       }
 
       async function fetchDocuments() {
@@ -1365,11 +1438,14 @@
         try {
           const headers = { Accept: "application/vnd.github.v3+json" };
           const token = sessionStorage.getItem(KEYS.token); if (token) headers.Authorization = `Bearer ${token}`;
-          const r = await fetch(`${GITHUB_API_BASE}/`, { headers });
-          if (!r.ok) throw new Error(`GitHub API HTTP ${r.status}`);
-          const data = await r.json();
-          state.files = (Array.isArray(data) ? data : []).filter(i => i && i.type === "file" && !i.name.startsWith(".") && !IGNORED_FILES.has(i.name));
-          for (const f of state.files) if (!state.meta[f.name]) { state.meta[f.name] = detectFromFileName(f.name); ensureFolderExists(state.meta[f.name].folder); }
+          state.files = await fetchDirRecursive("", headers);
+          for (const f of state.files) {
+            const k = fileKey(f);
+            if (!state.meta[k]) {
+              state.meta[k] = detectFromFile(f.name, f.path);
+              ensureFolderExists(state.meta[k].folder);
+            }
+          }
           persistAll();
         } catch (err) { state.error = err.message; }
         finally { state.loading = false; renderAll(); }
@@ -1377,9 +1453,9 @@
 
       function getAllFiles() {
         const map = new Map();
-        for (const f of state.files) map.set(f.name, f);
-        for (const f of state.localFiles) map.set(f.name, f);
-        return [...map.values()].filter(f => !state.hiddenFiles.has(f.name));
+        for (const f of state.files) map.set(fileKey(f), f);
+        for (const f of state.localFiles) map.set(fileKey(f), f);
+        return [...map.values()].filter(f => !state.hiddenFiles.has(fileKey(f)));
       }
 
       function updateBulkBar() {
@@ -1394,28 +1470,34 @@
         const baseList = state.excludeDuplicates ? uniqueFiles : all;
         $("nav-views").innerHTML = [
           { type: "all", label: "Alle documenten", count: baseList.length },
-          { type: "temp", label: "Tijdelijk (te archiveren)", count: baseList.filter(f => (state.meta[f.name]?.folder || TEMP_FOLDER) === TEMP_FOLDER).length },
-          { type: "archived", label: "Definitief gearchiveerd", count: baseList.filter(f => state.meta[f.name]?.status === "gearchiveerd").length },
+          { type: "temp", label: "Tijdelijk (te archiveren)", count: baseList.filter(f => (state.meta[fileKey(f)]?.folder || TEMP_FOLDER) === TEMP_FOLDER).length },
+          { type: "archived", label: "Definitief gearchiveerd", count: baseList.filter(f => state.meta[fileKey(f)]?.status === "gearchiveerd").length },
           { type: "duplicates", label: "Dubbelingen (uitgesloten)", count: excludedMap.size },
           { type: "alerts", label: "Notificatie-treffers", count: baseList.filter(f => getMatchedKeywords(f).length > 0).length }
         ].map(v => `<li><button type="button" class="nav-btn ${state.activeFilter.type === v.type ? "is-active" : ""}" data-ft="${v.type}" data-fv=""><span>${v.label}</span><span class="nav-count">${v.count}</span></button></li>`).join("");
 
         $("folder-add-box").style.display = state.unlocked ? "flex" : "none";
         $("nav-folders").innerHTML = state.folders.map(folder => {
-          const cnt = baseList.filter(f => (state.meta[f.name]?.folder || TEMP_FOLDER) === folder).length;
+          const cnt = baseList.filter(f => (state.meta[fileKey(f)]?.folder || TEMP_FOLDER) === folder).length;
           const act = state.activeFilter.type === "folder" && state.activeFilter.value === folder;
-          const del = state.unlocked && folder !== TEMP_FOLDER ? `<button type="button" class="btn btn--ghost btn--xs" data-del-folder="${escapeHtml(folder)}" title="Verwijder map na controle">&times;</button>` : "";
+          const del = state.unlocked && folder !== TEMP_FOLDER ? `<button type="button" class="btn btn--ghost btn--xs" data-del-folder="${escapeHtml(folder)}" title="Wis map na controle">&times;</button>` : "";
           return `<li class="nav-row"><button type="button" class="nav-btn ${act ? "is-active" : ""}" data-ft="folder" data-fv="${escapeHtml(folder)}"><span>${escapeHtml(folder)}</span><span class="nav-count">${cnt}</span></button>${del}</li>`;
         }).join("");
 
+        const subMap = new Map();
+        for (const f of baseList) { const d = getParentDir(fileKey(f)); subMap.set(d, (subMap.get(d) || 0) + 1); }
+        $("nav-subpaths").innerHTML = [...subMap.entries()].sort((a, b) => a[0].localeCompare(b[0], "nl")).map(([d, c]) =>
+          `<li><button type="button" class="nav-btn ${state.activeFilter.type === "subpath" && state.activeFilter.value === d ? "is-active" : ""}" data-ft="subpath" data-fv="${escapeHtml(d)}"><span style="font-family:var(--mono); font-size:12px;">${escapeHtml(d)}</span><span class="nav-count">${c}</span></button></li>`
+        ).join("");
+
         $("nav-pods").innerHTML = state.pods.map(pod => {
-          const cnt = baseList.filter(f => state.meta[f.name]?.podId === pod.id).length;
+          const cnt = baseList.filter(f => state.meta[fileKey(f)]?.podId === pod.id).length;
           const act = state.activeFilter.type === "pod" && state.activeFilter.value === pod.id;
           return `<li><button type="button" class="nav-btn ${act ? "is-active" : ""}" data-ft="pod" data-fv="${escapeHtml(pod.id)}"><span>${escapeHtml(pod.name)}</span><span class="nav-count">${cnt}</span></button></li>`;
         }).join("");
 
         const numMap = new Map();
-        for (const f of baseList) { const n = state.meta[f.name]?.number; if (n) numMap.set(n, (numMap.get(n) || 0) + 1); }
+        for (const f of baseList) { const n = state.meta[fileKey(f)]?.number; if (n) numMap.set(n, (numMap.get(n) || 0) + 1); }
         $("nav-numbers").innerHTML = [...numMap.entries()].sort((a, b) => a[0].localeCompare(b[0], "nl", { numeric: true })).map(([n, c]) =>
           `<li><button type="button" class="nav-btn ${state.activeFilter.type === "number" && state.activeFilter.value === n ? "is-active" : ""}" data-ft="number" data-fv="${escapeHtml(n)}"><span style="font-family:var(--mono);">${escapeHtml(n)}</span><span class="nav-count">${c}</span></button></li>`
         ).join("") || `<li style="font-size:12px; color:var(--muted); padding:4px 8px;">Nog geen nummers</li>`;
@@ -1430,7 +1512,6 @@
         const { uniqueFiles, excludedMap } = analyzeDuplicates(all);
         state.duplicateMap = excludedMap;
 
-        // Werk dubbeling-schakelaar bij
         const dupCount = excludedMap.size;
         $("dedup-badge").textContent = dupCount > 0 ? `(${dupCount})` : "";
         $("dedup-toggle-wrap").classList.toggle("has-dups", state.excludeDuplicates && dupCount > 0);
@@ -1442,33 +1523,45 @@
         $("notify-bar").classList.toggle("visible", hits.length > 0);
         if (hits.length) $("notify-text").innerHTML = `<strong>Notificatie:</strong> ${hits.length} document(en) matchen je trefwoorden.`;
 
-        if (state.loading) { $("doc-counter").textContent = "Laden..."; $("list-container").innerHTML = `<div class="state-box">Laden uit <strong>${REPO_OWNER}/${REPO_NAME}</strong>...</div>`; return; }
+        if (state.loading) { $("doc-counter").textContent = "Laden..."; $("list-container").innerHTML = `<div class="state-box">Laden uit <strong>${REPO_OWNER}/${REPO_NAME}</strong> (incl. alle submappen)...</div>`; return; }
         if (state.error && !all.length) { $("list-container").innerHTML = `<div class="state-box state-box--error">${escapeHtml(state.error)}</div>`; return; }
 
         const q = state.query.trim().toLowerCase();
         const pool = state.activeFilter.type === "duplicates"
-          ? all.filter(f => excludedMap.has(f.name))
+          ? all.filter(f => excludedMap.has(fileKey(f)))
           : (state.excludeDuplicates ? uniqueFiles : all);
 
         let visible = pool.filter(f => {
-          const m = state.meta[f.name] || detectFromFileName(f.name);
+          const k = fileKey(f);
+          const m = state.meta[k] || detectFromFile(f.name, f.path);
           const folder = m.folder || TEMP_FOLDER;
           if (state.activeFilter.type === "temp" && folder !== TEMP_FOLDER) return false;
           if (state.activeFilter.type === "archived" && m.status !== "gearchiveerd") return false;
           if (state.activeFilter.type === "alerts" && !getMatchedKeywords(f).length) return false;
           if (state.activeFilter.type === "folder" && folder !== state.activeFilter.value) return false;
+          if (state.activeFilter.type === "subpath" && getParentDir(k) !== state.activeFilter.value) return false;
           if (state.activeFilter.type === "pod" && m.podId !== state.activeFilter.value) return false;
           if (state.activeFilter.type === "number" && m.number !== state.activeFilter.value) return false;
           if (state.dateFrom && (!m.date || m.date < state.dateFrom)) return false;
           if (state.dateTo && (!m.date || m.date > state.dateTo)) return false;
           if (!q) return true;
-          return `${f.name} ${m.number} ${folder} ${state.unlocked ? `${m.subject} ${m.sender}` : ""} ${state.textCache[f.name] || ""}`.toLowerCase().includes(q);
+          return `${k} ${m.number} ${folder} ${state.unlocked ? `${m.subject} ${m.sender}` : ""} ${state.textCache[k] || ""}`.toLowerCase().includes(q);
         });
 
         visible.sort((a, b) => {
-          const ma = state.meta[a.name] || {}, mb = state.meta[b.name] || {};
-          if (state.sortBy === "number") { const c = (ma.number || "ZZZZ").localeCompare(mb.number || "ZZZZ", "nl", { numeric: true }); if (c !== 0) return c; }
-          else if (state.sortBy === "date") { const c = (mb.date || "").localeCompare(ma.date || ""); if (c !== 0) return c; }
+          const ma = state.meta[fileKey(a)] || {}, mb = state.meta[fileKey(b)] || {};
+          if (state.sortBy === "folder") {
+            const fc = (ma.folder || "ZZZ").localeCompare(mb.folder || "ZZZ", "nl", { numeric: true });
+            if (fc !== 0) return fc;
+            const nc = (ma.number || "ZZZZ").localeCompare(mb.number || "ZZZZ", "nl", { numeric: true });
+            if (nc !== 0) return nc;
+          } else if (state.sortBy === "number") {
+            const c = (ma.number || "ZZZZ").localeCompare(mb.number || "ZZZZ", "nl", { numeric: true });
+            if (c !== 0) return c;
+          } else if (state.sortBy === "date") {
+            const c = (mb.date || "").localeCompare(ma.date || "");
+            if (c !== 0) return c;
+          }
           return a.name.localeCompare(b.name, "nl", { numeric: true });
         });
 
@@ -1483,13 +1576,15 @@
 
         const ul = document.createElement("ul"); ul.className = "doc-list";
         for (const file of visible) {
-          const m = state.meta[file.name] || detectFromFileName(file.name);
+          const k = fileKey(file);
+          const m = state.meta[k] || detectFromFile(file.name, file.path);
           const { base, ext } = splitFileName(file.name);
-          const sig = state.signatures[file.name], vStatus = state.verifyStatus[file.name];
+          const sig = state.signatures[k], vStatus = state.verifyStatus[k];
           const folder = m.folder || TEMP_FOLDER;
+          const subDir = getParentDir(k);
           const pod = state.pods.find(p => p.id === m.podId);
           const kws = getMatchedKeywords(file);
-          const dupInfo = excludedMap.get(file.name);
+          const dupInfo = excludedMap.get(k);
 
           const li = document.createElement("li");
           li.className = `doc-item ${vStatus === "ok" ? "is-verified" : vStatus === "invalid" ? "is-invalid" : ""} ${kws.length ? "is-alert" : ""} ${dupInfo ? "is-duplicate" : ""}`;
@@ -1497,26 +1592,27 @@
             <div class="doc-top">
               <div class="doc-main">
                 <div class="doc-title-row">
-                  ${state.unlocked ? `<input type="checkbox" class="doc-select" data-sel="${escapeHtml(file.name)}" ${state.selected.has(file.name) ? "checked" : ""} />` : ""}
+                  ${state.unlocked ? `<input type="checkbox" class="doc-select" data-sel="${escapeHtml(k)}" ${state.selected.has(k) ? "checked" : ""} />` : ""}
                   ${m.number ? `<span class="badge badge--num"># ${escapeHtml(m.number)}</span>` : ""}
-                  <a class="doc-link" href="#" data-view="${escapeHtml(file.name)}">${redactHtml(base)}</a>
+                  <a class="doc-link" href="#" data-view="${escapeHtml(k)}">${redactHtml(base)}</a>
                   ${ext ? `<span class="badge ${ext.toLowerCase() === "pdf" ? "badge--pdf" : ext.toLowerCase() === "eml" ? "badge--eml" : ""}">${escapeHtml(ext.toUpperCase())}</span>` : ""}
                   ${dupInfo ? `<span class="badge badge--dup" title="Overeenkomst op ${escapeHtml(dupInfo.reason)} met ${escapeHtml(dupInfo.primaryName)}">Dubbeling (${escapeHtml(dupInfo.reason)}) &rarr; ${redactHtml(dupInfo.primaryName)}</span>` : ""}
                   ${folder === TEMP_FOLDER ? `<span class="badge badge--temp">Tijdelijk</span>` : m.status === "gearchiveerd" ? `<span class="badge badge--archived">Gearchiveerd</span>` : ""}
                   <span class="badge badge--folder">${escapeHtml(folder)}</span>
+                  ${subDir !== "(hoofdmap)" ? `<span class="badge badge--path">${escapeHtml(subDir)}/</span>` : ""}
                   ${pod ? `<span class="badge badge--pod">POD: ${escapeHtml(pod.name)}</span>` : ""}
                   ${kws.length ? `<span class="badge badge--alert">Treffer</span>` : ""}
-                  ${sig ? `<button type="button" class="badge ${vStatus === "ok" ? "badge--ok" : vStatus === "invalid" ? "badge--invalid" : "badge--signed"}" data-verify="${escapeHtml(file.name)}">${vStatus === "ok" ? "Geverifieerd" : "Ondertekend"}</button>` : ""}
+                  ${sig ? `<button type="button" class="badge ${vStatus === "ok" ? "badge--ok" : vStatus === "invalid" ? "badge--invalid" : "badge--signed"}" data-verify="${escapeHtml(k)}">${vStatus === "ok" ? "Geverifieerd" : "Ondertekend"}</button>` : ""}
                 </div>
-                <div class="doc-meta"><span>${escapeHtml(formatBytes(file.size))}</span><span>&bull;</span><span>${redactHtml(file.name)}</span>${m.retention ? `<span>&bull;</span><span>Bewaar: ${escapeHtml(m.retention)}</span>` : ""}</div>
+                <div class="doc-meta"><span>${escapeHtml(formatBytes(file.size))}</span><span>&bull;</span><span>${redactHtml(k)}</span>${m.retention ? `<span>&bull;</span><span>Bewaar: ${escapeHtml(m.retention)}</span>` : ""}</div>
               </div>
               <div class="doc-actions">
-                <button type="button" class="btn btn--sm" data-view="${escapeHtml(file.name)}">Bekijk</button>
-                ${sig ? `<button type="button" class="btn btn--sm" data-verify="${escapeHtml(file.name)}">Verifieer</button>` : ""}
+                <button type="button" class="btn btn--sm" data-view="${escapeHtml(k)}">Bekijk</button>
+                ${sig ? `<button type="button" class="btn btn--sm" data-verify="${escapeHtml(k)}">Verifieer</button>` : ""}
                 ${state.unlocked ? `
-                  <button type="button" class="btn btn--sm" data-meta="${escapeHtml(file.name)}">Archiveer / POD</button>
-                  <button type="button" class="btn btn--sm" data-sign="${escapeHtml(file.name)}">${sig ? "Herteken" : "Onderteken"}</button>
-                  <button type="button" class="btn btn--primary btn--sm" data-del="${escapeHtml(file.name)}">Verwijder</button>
+                  <button type="button" class="btn btn--sm" data-meta="${escapeHtml(k)}">Archiveer / POD</button>
+                  <button type="button" class="btn btn--sm" data-sign="${escapeHtml(k)}">${sig ? "Herteken" : "Onderteken"}</button>
+                  <button type="button" class="btn btn--primary btn--sm" data-del="${escapeHtml(k)}">Wis</button>
                 ` : ""}
               </div>
             </div>
@@ -1530,7 +1626,7 @@
           ul.appendChild(li);
         }
         $("list-container").innerHTML = ""; $("list-container").appendChild(ul);
-        const findF = n => all.find(x => x.name === n);
+        const findF = key => all.find(x => fileKey(x) === key);
         ul.querySelectorAll("[data-view]").forEach(el => el.addEventListener("click", e => { e.preventDefault(); openViewerModal(findF(el.dataset.view)); }));
         ul.querySelectorAll("[data-verify]").forEach(b => b.addEventListener("click", () => openVerifyModal(findF(b.dataset.verify))));
         if (state.unlocked) {
@@ -1551,10 +1647,11 @@
         showToast("SHA-256 hashes berekenen...");
         const all = getAllFiles();
         for (const f of all) {
-          if (!state.meta[f.name]?.sha256) {
+          const k = fileKey(f);
+          if (!state.meta[k]?.sha256) {
             try {
               const hash = await sha256Hex(await getFileArrayBuffer(f));
-              state.meta[f.name] = { ...(state.meta[f.name] || detectFromFileName(f.name)), sha256: hash };
+              state.meta[k] = { ...(state.meta[k] || detectFromFile(f.name, f.path)), sha256: hash };
             } catch {}
           }
         }
@@ -1563,27 +1660,28 @@
         if (excludedMap.size > 0) {
           logAudit("DUBBELING_UITGESLOTEN", `${excludedMap.size} dubbeling(en)`, "Gedetecteerd tijdens SHA-256 scan.");
           showToast(`${excludedMap.size} dubbeling(en) gevonden en uitgesloten.`, "ok");
-        } else {
-          showToast("Geen dubbelingen gevonden.", "ok");
-        }
+        } else showToast("Geen dubbelingen gevonden.", "ok");
         renderAll();
       });
       $("m-auto-archive").addEventListener("click", () => {
         if (!requireUnlock()) return;
-        const { uniqueFiles } = analyzeDuplicates(getAllFiles());
-        const targetFiles = state.excludeDuplicates ? uniqueFiles : getAllFiles();
         let moved = 0;
-        for (const f of targetFiles) { const m = state.meta[f.name] || detectFromFileName(f.name); if (m.number) { m.folder = m.role === "onderlegger" ? `Nummer ${m.number}/Onderleggers` : `Nummer ${m.number}`; m.status = "gearchiveerd"; ensureFolderExists(m.folder); state.meta[f.name] = m; moved++; } }
-        if (moved) logAudit("ARCHIEF_VERPLAATSING", `${moved} doc(s)`, "Auto-gearchiveerd op nummer.");
-        renderAll(); showToast(`${moved} document(en) gearchiveerd.`, "ok");
+        for (const f of getAllFiles()) {
+          const k = fileKey(f);
+          const detected = detectFromFile(f.name, f.path);
+          state.meta[k] = { ...(state.meta[k] || {}), folder: detected.folder, status: detected.status, number: state.meta[k]?.number || detected.number };
+          ensureFolderExists(detected.folder);
+          moved++;
+        }
+        logAudit("ARCHIEF_VERPLAATSING", `${moved} doc(s)`, "Auto-georganiseerd in logische mappenstructuur.");
+        persistAll(); renderAll(); showToast(`${moved} document(en) georganiseerd.`, "ok");
       });
-      $("m-verify-all").addEventListener("click", async () => { let ok = 0, bad = 0; for (const f of getAllFiles().filter(x => state.signatures[x.name])) { if ((await verifyFile(f, state.activeSecret)).status === "ok") ok++; else bad++; } renderAll(); showToast(`Verificatie: ${ok} geldig, ${bad} ongeldig.`, bad ? "red" : "ok"); });
+      $("m-verify-all").addEventListener("click", async () => { let ok = 0, bad = 0; for (const f of getAllFiles().filter(x => state.signatures[fileKey(x)])) { if ((await verifyFile(f, state.activeSecret)).status === "ok") ok++; else bad++; } renderAll(); showToast(`Verificatie: ${ok} geldig, ${bad} ongeldig.`, bad ? "red" : "ok"); });
       $("m-refresh").addEventListener("click", fetchDocuments);
       $("m-new-folder").addEventListener("click", () => { if (requireUnlock()) $("new-folder-input").focus(); });
       $("m-manage-pods").addEventListener("click", () => { if (requireUnlock()) { renderPodModal(); $("pod-modal").classList.add("visible"); } });
       $("m-export-center").addEventListener("click", () => { if (requireUnlock()) $("export-modal").classList.add("visible"); });
 
-      // Wis-opties in menu + knoppen
       const clearSearch = () => { state.query = ""; $("search-input").value = ""; state.activeFilter = { type: "all", value: "" }; renderAll(); };
       const clearDates = () => { state.dateFrom = ""; state.dateTo = ""; $("date-from").value = ""; $("date-to").value = ""; renderAll(); };
       const clearWatch = () => { state.watchKeywords = ""; $("watch-keywords").value = ""; persistAll(); renderAll(); };
@@ -1598,22 +1696,22 @@
 
       $("btn-bulk-move").addEventListener("click", () => {
         const folder = $("bulk-folder-select").value;
-        for (const name of state.selected) { state.meta[name] = { ...(state.meta[name] || detectFromFileName(name)), folder, status: folder === TEMP_FOLDER ? "tijdelijk" : "gearchiveerd" }; }
+        for (const k of state.selected) { state.meta[k] = { ...(state.meta[k] || detectFromFile(k, k)), folder, status: folder === TEMP_FOLDER ? "tijdelijk" : "gearchiveerd" }; }
         logAudit("ARCHIEF_VERPLAATSING", `${state.selected.size} doc(s)`, `Bulk verplaatst naar "${folder}".`);
-        state.selected.clear(); renderAll(); showToast(`Verplaatst naar "${folder}".`, "ok");
+        state.selected.clear(); persistAll(); renderAll(); showToast(`Verplaatst naar "${folder}".`, "ok");
       });
       $("btn-bulk-pod").addEventListener("click", () => {
         const podId = $("bulk-pod-select").value;
-        for (const name of state.selected) { state.meta[name] = { ...(state.meta[name] || detectFromFileName(name)), podId }; }
+        for (const k of state.selected) { state.meta[k] = { ...(state.meta[k] || detectFromFile(k, k)), podId }; }
         logAudit("POD_BEHEER", `${state.selected.size} doc(s)`, `Bulk gekoppeld aan POD "${podId || "geen"}".`);
-        state.selected.clear(); renderAll(); showToast("POD-koppeling bijgewerkt.", "ok");
+        state.selected.clear(); persistAll(); renderAll(); showToast("POD-koppeling bijgewerkt.", "ok");
       });
 
       $("m-analysis").addEventListener("click", () => {
         const all = getAllFiles();
         const { uniqueFiles, excludedMap } = analyzeDuplicates(all);
-        const dupRows = [...excludedMap.entries()].map(([name, info]) =>
-          `<tr><td>${redactHtml(name)}</td><td>${redactHtml(info.primaryName)}</td><td><span class="badge badge--dup">${escapeHtml(info.reason)}</span></td></tr>`
+        const dupRows = [...excludedMap.entries()].map(([k, info]) =>
+          `<tr><td>${redactHtml(k)}</td><td>${redactHtml(info.primaryName)}</td><td><span class="badge badge--dup">${escapeHtml(info.reason)}</span></td></tr>`
         ).join("");
         $("analysis-content").innerHTML = `<div class="kpi-grid">
           <div class="kpi-card"><div class="kpi-val">${uniqueFiles.length}</div><div class="kpi-lbl">Unieke documenten</div></div>
@@ -1634,33 +1732,35 @@
       // =======================================================================
       async function openMetaModal(file) {
         if (!file || !state.unlocked) return;
+        const k = fileKey(file);
         state.pendingMetaFile = file;
-        $("meta-filename").textContent = redactPlain(file.name);
+        $("meta-filename").textContent = redactPlain(k);
         $("meta-pod").innerHTML = `<option value="">— Geen POD —</option>` + state.pods.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("");
         $("meta-modal").classList.add("visible");
         const m = await scanFileHeaders(file, false);
         $("meta-status").value = m.status || "tijdelijk"; $("meta-folder").value = m.folder || TEMP_FOLDER; $("meta-pod").value = m.podId || "";
-        $("meta-retention").value = m.retention || "7 jaar"; $("meta-number").value = m.number || "";
+        $("meta-retention").value = m.retention || "Permanent"; $("meta-number").value = m.number || "";
         $("meta-subject").value = redactPlain(m.subject || ""); $("meta-sender").value = redactPlain(m.sender || "");
         $("meta-date").value = m.date || ""; $("meta-notes").value = redactPlain(m.notes || "");
         const entries = Object.entries(m.rawHeaders || {});
-        $("meta-raw-headers").innerHTML = entries.length ? entries.map(([k, v]) => `<tr><th>${escapeHtml(k)}</th><td>${redactHtml(v)}</td></tr>`).join("") : `<tr><td colspan="2">Geen tekstheaders.</td></tr>`;
+        $("meta-raw-headers").innerHTML = entries.length ? entries.map(([hk, v]) => `<tr><th>${escapeHtml(hk)}</th><td>${redactHtml(v)}</td></tr>`).join("") : `<tr><td colspan="2">Geen tekstheaders.</td></tr>`;
       }
       $("btn-meta-rescan").addEventListener("click", async () => { if (state.pendingMetaFile) { await scanFileHeaders(state.pendingMetaFile, true); openMetaModal(state.pendingMetaFile); } });
       $("btn-meta-cancel").addEventListener("click", () => $("meta-modal").classList.remove("visible"));
       $("btn-meta-save").addEventListener("click", () => {
         if (!state.pendingMetaFile) return;
-        const name = state.pendingMetaFile.name, folder = $("meta-folder").value.trim() || TEMP_FOLDER;
+        const k = fileKey(state.pendingMetaFile), folder = $("meta-folder").value.trim() || TEMP_FOLDER;
         ensureFolderExists(folder);
-        state.meta[name] = { ...(state.meta[name] || {}), status: $("meta-status").value, folder, podId: $("meta-pod").value, retention: $("meta-retention").value, number: $("meta-number").value.trim().toUpperCase(), subject: $("meta-subject").value.trim(), sender: $("meta-sender").value.trim(), date: $("meta-date").value.trim(), notes: $("meta-notes").value.trim() };
-        logAudit("ARCHIEF_VERPLAATSING", name, `Map: "${folder}", Bewaar: "${$("meta-retention").value}".`);
-        $("meta-modal").classList.remove("visible"); renderAll(); showToast("Opgeslagen.", "ok");
+        state.meta[k] = { ...(state.meta[k] || {}), status: $("meta-status").value, folder, podId: $("meta-pod").value, retention: $("meta-retention").value, number: $("meta-number").value.trim().toUpperCase(), subject: $("meta-subject").value.trim(), sender: $("meta-sender").value.trim(), date: $("meta-date").value.trim(), notes: $("meta-notes").value.trim() };
+        logAudit("ARCHIEF_VERPLAATSING", k, `Map: "${folder}", Bewaar: "${$("meta-retention").value}".`);
+        persistAll(); $("meta-modal").classList.remove("visible"); renderAll(); showToast("Opgeslagen.", "ok");
       });
 
       async function openSignModal(file) {
         if (!file || !state.unlocked) return;
+        const k = fileKey(file);
         state.pendingSign = file; state.pendingSignHash = null;
-        $("sign-filename").textContent = redactPlain(file.name); $("sign-hash-preview").textContent = "Berekenen..."; $("btn-sign-confirm").disabled = true; resetSigPad();
+        $("sign-filename").textContent = redactPlain(k); $("sign-hash-preview").textContent = "Berekenen..."; $("btn-sign-confirm").disabled = true; resetSigPad();
         $("sign-modal").classList.add("visible");
         try { state.pendingSignHash = await sha256Hex(await getFileArrayBuffer(file)); $("sign-hash-preview").textContent = state.pendingSignHash; $("btn-sign-confirm").disabled = false; }
         catch (e) { $("sign-error").textContent = e.message; $("sign-error").classList.add("visible"); }
@@ -1668,27 +1768,27 @@
       $("btn-sign-cancel").addEventListener("click", () => $("sign-modal").classList.remove("visible"));
       $("btn-sign-confirm").addEventListener("click", async () => {
         const f = state.pendingSign; if (!f || !state.pendingSignHash || !state.unlocked) return;
-        const signer = $("signer-name-input").value.trim() || "Beheerder", signedAt = new Date().toISOString();
+        const k = fileKey(f), signer = $("signer-name-input").value.trim() || "Beheerder", signedAt = new Date().toISOString();
         const drawing = padHasInk ? sigPad.toDataURL("image/png") : "", drawingHash = drawing ? await sha256Hex(new TextEncoder().encode(drawing)) : "";
-        const hmac = await hmacSha256Hex(state.activeSecret, buildSignPayload({ name: f.name, sha256: state.pendingSignHash, signer, signedAt, drawingHash }));
-        state.signatures[f.name] = { sha256: state.pendingSignHash, hmac, signer, signedAt, drawing, drawingHash }; state.verifyStatus[f.name] = "ok";
-        state.meta[f.name] = { ...(state.meta[f.name] || detectFromFileName(f.name)), sha256: state.pendingSignHash };
-        logAudit("VEERPEN_ZEGEL", f.name, `Ondertekend door ${signer}.`);
+        const hmac = await hmacSha256Hex(state.activeSecret, buildSignPayload({ name: k, sha256: state.pendingSignHash, signer, signedAt, drawingHash }));
+        state.signatures[k] = { sha256: state.pendingSignHash, hmac, signer, signedAt, drawing, drawingHash }; state.verifyStatus[k] = "ok";
+        state.meta[k] = { ...(state.meta[k] || detectFromFile(f.name, f.path)), sha256: state.pendingSignHash };
+        logAudit("VEERPEN_ZEGEL", k, `Ondertekend door ${signer}.`);
         $("sign-modal").classList.remove("visible"); renderAll(); showToast("Ondertekend.", "ok");
       });
 
       async function verifyFile(f, sec = "") {
-        const sig = state.signatures[f.name]; if (!sig) return { status: "unsigned", message: "Geen handtekening." };
+        const k = fileKey(f), sig = state.signatures[k]; if (!sig) return { status: "unsigned", message: "Geen handtekening." };
         const liveSha = await sha256Hex(await getFileArrayBuffer(f));
-        if (liveSha !== sig.sha256) { state.verifyStatus[f.name] = "invalid"; return { status: "invalid", liveSha, message: "WAARSCHUWING: Inhoud gewijzigd." }; }
-        if (!sec) { state.verifyStatus[f.name] = "hash-only"; return { status: "hash-only", liveSha, message: "SHA-256 klopt. Voer geheime string in." }; }
-        const ok = (await hmacSha256Hex(sec, buildSignPayload({ name: f.name, sha256: liveSha, signer: sig.signer, signedAt: sig.signedAt, drawingHash: sig.drawingHash || "" }))) === sig.hmac;
-        state.verifyStatus[f.name] = ok ? "ok" : "invalid";
-        return { status: state.verifyStatus[f.name], liveSha, message: ok ? "GEVERIFIEERD." : "ONGELDIG: HMAC klopt niet." };
+        if (liveSha !== sig.sha256) { state.verifyStatus[k] = "invalid"; return { status: "invalid", liveSha, message: "WAARSCHUWING: Inhoud gewijzigd." }; }
+        if (!sec) { state.verifyStatus[k] = "hash-only"; return { status: "hash-only", liveSha, message: "SHA-256 klopt. Voer keten-string in." }; }
+        const ok = (await hmacSha256Hex(sec, buildSignPayload({ name: k, sha256: liveSha, signer: sig.signer, signedAt: sig.signedAt, drawingHash: sig.drawingHash || "" }))) === sig.hmac;
+        state.verifyStatus[k] = ok ? "ok" : "invalid";
+        return { status: state.verifyStatus[k], liveSha, message: ok ? "GEVERIFIEERD." : "ONGELDIG: HMAC klopt niet." };
       }
       async function openVerifyModal(f, sec = "") {
-        state.pendingVerifyFile = f; const sig = state.signatures[f.name];
-        $("verify-filename").textContent = redactPlain(f.name); $("verify-modal").classList.add("visible");
+        const k = fileKey(f); state.pendingVerifyFile = f; const sig = state.signatures[k];
+        $("verify-filename").textContent = redactPlain(k); $("verify-modal").classList.add("visible");
         const r = await verifyFile(f, sec || state.activeSecret); renderAll();
         $("verify-banner").className = `verify-banner verify-banner--${r.status === "ok" ? "ok" : r.status === "invalid" ? "invalid" : "warn"}`;
         $("verify-banner").textContent = r.message;
@@ -1697,7 +1797,7 @@
         $("verify-details").innerHTML = sig ? `<span class="hash-box">${redactHtml(sig.signer)} &bull; ${escapeHtml(new Date(sig.signedAt).toLocaleString("nl-NL"))}<br>SHA: ${escapeHtml(r.liveSha || "—")}</span>` : "";
       }
       $("btn-run-hmac-verify").addEventListener("click", () => openVerifyModal(state.pendingVerifyFile, $("verify-secret-input").value.trim()));
-      $("btn-remove-sig").addEventListener("click", () => { if (state.pendingVerifyFile && state.unlocked) { delete state.signatures[state.pendingVerifyFile.name]; persistAll(); $("verify-modal").classList.remove("visible"); renderAll(); } });
+      $("btn-remove-sig").addEventListener("click", () => { if (state.pendingVerifyFile && state.unlocked) { delete state.signatures[fileKey(state.pendingVerifyFile)]; persistAll(); $("verify-modal").classList.remove("visible"); renderAll(); } });
       $("btn-verify-close").addEventListener("click", () => $("verify-modal").classList.remove("visible"));
 
       function renderAudit() {
@@ -1730,7 +1830,7 @@
       });
       $("btn-exp-ttl").addEventListener("click", () => { downloadFile(`alle-pods-${REPO_NAME}.ttl`, state.pods.map(buildTurtleForPod).join("\n"), "text/turtle;charset=utf-8"); });
       $("btn-exp-acl").addEventListener("click", () => { state.pods.forEach((p, i) => setTimeout(() => downloadFile(`${p.id}.acl`, buildAclForPod(p), "text/turtle;charset=utf-8"), i * 160)); });
-      $("btn-exp-csv").addEventListener("click", () => { const rows = [["Bestand", "Nummer", "Status", "Map", "Bewaartermijn"], ...getAllFiles().map(f => { const m = state.meta[f.name] || {}; return [redactPlain(f.name), m.number || "", m.status || "tijdelijk", m.folder || TEMP_FOLDER, m.retention || "7 jaar"]; })]; downloadFile(`register-${REPO_NAME}.csv`, rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n"), "text/csv;charset=utf-8"); });
+      $("btn-exp-csv").addEventListener("click", () => { const rows = [["Pad", "Nummer", "Status", "Map", "Bewaartermijn"], ...getAllFiles().map(f => { const k = fileKey(f), m = state.meta[k] || {}; return [redactPlain(k), m.number || "", m.status || "tijdelijk", m.folder || TEMP_FOLDER, m.retention || "Permanent"]; })]; downloadFile(`register-${REPO_NAME}.csv`, rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n"), "text/csv;charset=utf-8"); });
       $("btn-exp-sync").addEventListener("click", async () => {
         const url = state.systems.localEndpoint || "http://127.0.0.1:3000/sync";
         try { const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ repo: `${REPO_OWNER}/${REPO_NAME}`, folders: state.folders, pods: state.pods, meta: state.meta, signatures: state.signatures, auditLog: state.auditLog }) }); if (!r.ok) throw new Error(`HTTP ${r.status}`); showToast("Gesynchroniseerd.", "ok"); } catch (e) { showToast(`Sync mislukt: ${e.message}`, "red"); }
@@ -1765,15 +1865,11 @@
           const check = await checkIncomingDuplicate(file.name, buffer, getAllFiles());
           if (check.isDuplicate) {
             logAudit("DUBBELING_UITGESLOTEN", file.name, `Overeenkomst (${check.reason}) met "${check.primary.name}".`);
-            const forceAdd = confirm(
-              `Dubbeling gedetecteerd (${check.reason}).\n` +
-              `Bestaand document: ${check.primary.name}\n\n` +
-              `Annuleren = uitsluiten (aanbevolen)\nOK = toch toevoegen aan "${TEMP_FOLDER}"`
-            );
+            const forceAdd = confirm(`Dubbeling gedetecteerd (${check.reason}).\nBestaand document: ${check.primary.name}\n\nAnnuleren = uitsluiten\nOK = toch toevoegen aan "${TEMP_FOLDER}"`);
             if (!forceAdd) { skipped++; continue; }
           }
-          const obj = { name: file.name, size: file.size, isLocal: true, buffer, blobUrl: URL.createObjectURL(new Blob([buffer], { type: file.type || "application/octet-stream" })) };
-          state.localFiles = state.localFiles.filter(f => f.name !== file.name); state.localFiles.push(obj);
+          const obj = { name: file.name, path: file.name, size: file.size, isLocal: true, buffer, blobUrl: URL.createObjectURL(new Blob([buffer], { type: file.type || "application/octet-stream" })) };
+          state.localFiles = state.localFiles.filter(f => fileKey(f) !== file.name); state.localFiles.push(obj);
           const m = await scanFileHeaders(obj, true); m.folder = TEMP_FOLDER; m.status = "tijdelijk"; m.sha256 = check.sha256; state.meta[file.name] = m;
           logAudit("ARCHIEF_VERPLAATSING", file.name, `Geüpload naar ${TEMP_FOLDER}.`);
           added++;
@@ -1784,20 +1880,75 @@
         else if (added) showToast(`Toegevoegd aan "${TEMP_FOLDER}".`, "ok");
       });
 
-      $("toggle-dedup").addEventListener("change", e => {
-        state.excludeDuplicates = e.target.checked;
-        persistAll();
-        renderAll();
+      $("toggle-dedup").addEventListener("change", e => { state.excludeDuplicates = e.target.checked; persistAll(); renderAll(); });
+
+      // =======================================================================
+      // VEERPEN EVENT-LISTENERS
+      // =======================================================================
+      $("btn-quill").addEventListener("click", () => {
+        if (state.unlocked) return $("admin-bar").scrollIntoView({ behavior: "smooth" });
+        state.unlockOpen = !state.unlockOpen;
+        $("unlock-panel").classList.toggle("visible", state.unlockOpen);
+        $("btn-quill").setAttribute("aria-expanded", String(state.unlockOpen));
+        if (state.unlockOpen) $("secret-input").focus();
       });
 
-      $("btn-quill").addEventListener("click", () => { if (state.unlocked) return $("admin-bar").scrollIntoView({ behavior: "smooth" }); state.unlockOpen = !state.unlockOpen; $("unlock-panel").classList.toggle("visible", state.unlockOpen); if (state.unlockOpen) $("secret-input").focus(); });
-      $("btn-close-unlock").addEventListener("click", () => { state.unlockOpen = false; $("unlock-panel").classList.remove("visible"); });
-      $("unlock-form").addEventListener("submit", e => {
-        e.preventDefault(); const v = $("secret-input").value.trim();
-        if (v === GEHEIME_STRING) { state.unlocked = true; state.activeSecret = v; state.unlockOpen = false; $("unlock-panel").classList.remove("visible"); $("admin-bar").classList.add("visible"); $("btn-quill").classList.add("is-unlocked"); $("quill-label").textContent = "Veerpen actief"; $("secret-input").value = ""; renderAll(); showToast("Veerpen ontgrendeld.", "ok"); }
-        else $("unlock-error").classList.add("visible");
+      $("btn-close-unlock").addEventListener("click", () => {
+        state.unlockOpen = false;
+        $("unlock-panel").classList.remove("visible");
+        $("btn-quill").setAttribute("aria-expanded", "false");
       });
-      $("btn-lock").addEventListener("click", () => { state.unlocked = false; state.activeSecret = ""; state.selected.clear(); $("admin-bar").classList.remove("visible"); $("btn-quill").classList.remove("is-unlocked"); $("quill-label").textContent = "Veerpen"; document.querySelectorAll(".modal-backdrop").forEach(m => m.classList.remove("visible")); renderAll(); });
+
+      $("btn-toggle-secret").addEventListener("click", () => {
+        const inp = $("secret-input");
+        const isPwd = inp.type === "password";
+        inp.type = isPwd ? "text" : "password";
+        $("btn-toggle-secret").textContent = isPwd ? "Verberg" : "Toon";
+      });
+
+      $("unlock-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const errEl = $("unlock-error");
+        const now = Date.now();
+
+        if (now < veerpenGate.lockedUntil) {
+          const secs = Math.ceil((veerpenGate.lockedUntil - now) / 1000);
+          errEl.textContent = `Te veel pogingen. Wacht nog ${secs} seconden.`;
+          errEl.classList.add("visible");
+          return;
+        }
+
+        const candidate = $("secret-input").value.trim();
+        if (!candidate) {
+          errEl.textContent = "Voer eerst een keten-string in.";
+          errEl.classList.add("visible");
+          return;
+        }
+
+        if (await verifyVeerpenSecret(candidate)) {
+          unlockVeerpen(candidate);
+        } else {
+          veerpenGate.attempts += 1;
+          updateAttemptsUI();
+          logAudit("VEERPEN_MISLUKT", "Keten", `Ongeldige poging (${veerpenGate.attempts}/${VEERPEN_CONFIG.maxAttempts}).`);
+
+          if (veerpenGate.attempts >= VEERPEN_CONFIG.maxAttempts) {
+            veerpenGate.lockedUntil = Date.now() + VEERPEN_CONFIG.lockoutMs;
+            veerpenGate.attempts = 0;
+            errEl.textContent = "Maximum aantal pogingen bereikt. 30 seconden geblokkeerd.";
+          } else {
+            errEl.textContent = "Onjuiste keten-string.";
+          }
+          errEl.classList.add("visible");
+          $("secret-input").select();
+        }
+      });
+
+      $("btn-lock").addEventListener("click", () => lockVeerpen("Handmatig vergrendeld."));
+
+      ["click", "keydown", "mousemove"].forEach(evt => {
+        window.addEventListener(evt, () => { if (state.unlocked) resetVeerpenIdleTimer(); }, { passive: true });
+      });
 
       document.querySelectorAll('input[name="deleteMode"]').forEach(r => r.addEventListener("change", e => { state.deleteMode = e.target.value; $("lbl-mode-local").classList.toggle("is-active", state.deleteMode === "local"); $("lbl-mode-github").classList.toggle("is-active", state.deleteMode === "github"); $("token-row").classList.toggle("visible", state.deleteMode === "github"); }));
       $("btn-save-token").addEventListener("click", () => { const t = $("gh-token-input").value.trim(); if (t) { sessionStorage.setItem(KEYS.token, t); showToast("Token bewaard.", "ok"); } });
@@ -1824,11 +1975,12 @@
         state.systems = { ...state.systems, ...loadJson(KEYS.systems, {}) };
         state.excludeDuplicates = loadJson(KEYS.dedup, true);
         $("toggle-dedup").checked = Boolean(state.excludeDuplicates);
-        const savedFolders = loadJson(KEYS.folders, null); if (Array.isArray(savedFolders) && savedFolders.length) state.folders = savedFolders;
+        const savedFolders = loadJson(KEYS.folders, null);
+        if (Array.isArray(savedFolders) && savedFolders.length) state.folders = savedFolders;
+        DEFAULT_FOLDERS.forEach(ensureFolderExists);
         const savedPods = loadJson(KEYS.pods, null); if (Array.isArray(savedPods) && savedPods.length) state.pods = savedPods;
-        ensureFolderExists(TEMP_FOLDER);
         state.watchKeywords = localStorage.getItem(KEYS.watch) || ""; $("watch-keywords").value = state.watchKeywords;
-        bindPiiControls(); updateSystemStatusUI();
+        bindPiiControls(); updateSystemStatusUI(); updateAttemptsUI();
         const sc = parseFloat(localStorage.getItem(KEYS.font)); if (Number.isFinite(sc)) applyFont(sc);
         const tk = sessionStorage.getItem(KEYS.token); if (tk) $("gh-token-input").value = tk;
         const stk = sessionStorage.getItem(KEYS.solidToken); if (stk && $("solid-token-input")) $("solid-token-input").value = stk;
