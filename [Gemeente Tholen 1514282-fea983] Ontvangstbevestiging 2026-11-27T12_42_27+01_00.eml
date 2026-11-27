@@ -1,0 +1,100 @@
+Return-Path: <mail-zaaksysteem@tholen.nl>
+X-Original-To: mjmmbout@proton.me
+Delivered-To: mjmmbout@proton.me
+Received: from mail-out.zaaksysteem.nl (mail-out.zaaksysteem.nl [149.210.141.108]) (using
+ TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+  key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA512) (No
+ client certificate requested) by mailinosl103.protonmail.ch (Postfix) with ESMTPS id
+ 4jbWjv3psTz4G for <mjmmbout@proton.me>; Fri, 27 Nov 2026 11:42:27 +0000 (UTC)
+Received: from ec2-52-19-26-247.eu-west-1.compute.amazonaws.com ([52.19.26.247]
+ helo=mail.zaaksysteem.nl) by mail-out.zaaksysteem.nl with esmtps
+  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95) (envelope-from
+ <mail-zaaksysteem@tholen.nl>) id 1xWuLN-00F2RA-2a for mjmmbout@proton.me; Fri, 27 Nov
+ 2026 12:42:21 +0100
+Authentication-Results: mail.protonmail.ch; dmarc=pass (p=reject dis=none)
+ header.from=tholen.nl
+Authentication-Results: mail.protonmail.ch; spf=pass smtp.mailfrom=tholen.nl
+Authentication-Results: mail.protonmail.ch; arc=none smtp.remote-ip=149.210.141.108
+Authentication-Results: mail.protonmail.ch; dkim=pass (2048-bit key) header.d=tholen.nl
+ header.i=@tholen.nl header.b="PtTludbg"
+Content-Type: multipart/mixed;boundary=---------------------f1b4d12ea6c7d2ec033a6950c5f3c709
+Content-Transfer-Encoding: binary
+Mime-Version: 1.0
+X-Mailer: MIME-tools 5.519 (Entity 5.519)
+X-Zs-Request: unknown
+To: mjmmbout@proton.me
+Subject: [Gemeente Tholen 1514282-fea983] Ontvangstbevestiging
+From: "Gemeente Tholen" <mail-zaaksysteem@tholen.nl>
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed; d=tholen.nl;
+ h=content-type:content-transfer-encoding:mime-version:to:subject:from; s=zaaksysteem1;
+ bh=FFd9IBmzMFxEAtbNQ+3QGxFLA/HseU4ua3eSVHJVs6o=;
+ b=PtTludbgrvkZhxRJ17zQ/NeyamPl+eQmJotR1guNtgH06TfFyG2fYhgz9IF6oWn0fmjzICcrVhWDGN9/1eN1+a9VWUCuAOhorN/KewaNIlbLlgq6+vEYl6O3aKYQa+0uYhgTGtHuZHnVu/m0pMubJ2IDxislxKDDvv0GBAN+WQVs5CB+jJcl59P1OcFIsbYz9AOl6/lMIVNhYINiSu31kuoZQ1mdjVE2j+H1BmxJlXmfXtGrjjS2MBOjDiOjR7uF8TJUTv5QK/R8kNKeJpTXs3m7j30EK7hZIHKMSsXtpcBzJ82gkwmbT90Iko6LkkXze7SskW+UMsSHwCW21uisog==
+Message-Id: <E1xWuLN-00F2RA-2a@mail-out.zaaksysteem.nl>
+Date: Fri, 27 Nov 2026 12:42:21 +0100
+X-Pm-Spam: 0yezJI6YSpyJec91ztFGcjIxoJyLCvXBZcQniisnOERJt9TTVOUdSRQUiwslOjLdFJEL
+ CN0lSXZ1BElETjIbpAuLTsV0MIRkLf1USkVMFRfSUiVUQOsltx4CMSXiwtJREWV9TQxUJF9FRiR6I0
+ wWydjFLLJCNJd0UFRG99NUkU01XQ9VIEFURVRiIswOliSwXURETEJ1XlTfNlORFJU1QQ91G6ICUzWd
+ BJSLCTE5RXR0ZNFkTUSiMsxOliSwXUB1GFh0XETf99GU0BEZVSwUiwslOjLddJTLCfEZUUFET6IyUy
+ Ww0wiXSfE9VT9kfLJlQFVfNlORFiVASOslzs0XXnIjNJlb30joILJCzy92YWZiQQuOjsX0NINny7pj
+ ImIjFlvdG6iIbIlmu49mYiIiwxfbWv2NccUmiisnOFUPJI6RCzTMLLJCQE9kU1XSBRJRUJ1RQT40is
+ AjOlITJotIj1C4MLJCT6ISQCN14JfLCiGVZddWfm5Wayb6IJQeyEk9UIpj7tlmIWYld5hX2iWUbOJi
+ ohR3c2YftluZm0V9Zd5Wlw9FZVdy8I2MDyTAMOICsh1mIWafxByM3v21XZVGsiojIWbpFNwbDti0cM
+ Ajy1AjNTMuEQicHtCJLYlWswNzXlcw99icmwjoILJCtslWYGd4V9ldFlWJbZRGpfdmbWbk9wiZWpiJ
+ ObRnmh9GbCdt9x0dWpWxabdm1twWYTZtU1hc2iGwbLJCwwN3XWYi0AuOj5DIMNIjzyMTNjN3YU2Nzs
+ DgMIBnfhB3cVbi9NlYXwjoILAjyyYTOzMzUY2Mj1zcNNAj4wJCL3X3NRjaX0F9ab91wzlGaGaulI6Z
+ ywC4MMIDz5ETNTMxkkwOD0TUOOcTs1JnIlbu91lYWijoIYxWslZWLXY1RVzcm1XBLXN33jRXaCa9J0
+ sfXynNIaQWi2IiOjY5ANhNmyTUNNQD55MjZDNhhY4NDiTIOfX0=
+X-Pm-Origin: external
+X-Pm-Transfer-Encryption: TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+X-Pm-Content-Encryption: on-delivery
+X-Pm-Spamscore: 4
+X-Pm-Spam-Action: inbox
+X-Pm-Forwarded-To: goija@protonmail.com
+
+-----------------------f1b4d12ea6c7d2ec033a6950c5f3c709
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
+
+Geachte mevrouw M.J.M.M. Goijarts-Bout,
+
+Bedankt voor uw e-mail over het volgende onderwerp: Inhoudelijke specifica=
+tie en sommatie afhandeling primair Woo-verzoek Zaak 1456324 (Bezwaar 1425=
+030) -  Visserijrechten, Molenplaat, Dossier-Zuurdeeg en leidingstraat.
+
+Uw vraag of mededeling is op dit moment in behandeling bij Concernzaken en=
+ is geregistreerd onder zaaknummer 1514282. In geval van correspondentie v=
+erzoeken wij u dit zaaknummer te gebruiken zodat wij u snel kunnen helpen.
+
+Wij proberen u zo snel mogelijk antwoord te geven. Als wij aanvullende inf=
+ormatie van u nodig hebben, zullen wij tussentijds contact met u opnemen. =
+Om te zorgen voor een correcte afhandeling, verwerken wij uw e-mail met uw=
+ persoonsgegevens in een geautomatiseerd systeem.
+
+Als u vragen heeft naar aanleiding van dit bericht kunt u tijdens kantooru=
+ren telefonisch contact met ons opnemen via telefoonnummer 14 0166 of per =
+e-mail via gemeente@tholen.nl.
+ =
+
+
+Met vriendelijke groet,
+ =
+
+
+Burgemeester en wethouders van Tholen,
+namens dezen,
+de behandelend ambtenaar
+
+Dit is een automatisch gegenereerd bericht
+
+
+Disclaimer E-mail Gemeente Tholen:
+
+De informatie in deze e-mail is uitsluitend bestemd voor de geadresseerde.
+Indien de lezer van deze mededeling niet de geadresseerde is, wordt u er h=
+ierbij op gewezen, dat u geen recht hebt kennis te nemen van de rest van d=
+eze e-mail, het te kopi=C3=ABren of te verstrekken aan andere personen dan=
+ de geadresseerde. Indien u deze e-mail abusievelijk hebt ontvangen, verzo=
+eken wij u de afzender op de hoogte te brengen en het bericht te vernietig=
+en. Meer informatie m.b.t. privacy vindt u op https://www.tholen.nl/algeme=
+en/privacy.
+-----------------------f1b4d12ea6c7d2ec033a6950c5f3c709--
