@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentenbeheerder — Headers, Nummers &amp; Veerpen</title>
+  <title>Documentenbeheerder — EML/PDF Viewer, Notificaties &amp; Analyse</title>
   <style>
     /* =========================================================================
        KRIJTWIT & ZEEUWS MEEKRAB-ROOD — KLEUREN & BASISVARIABELEN
@@ -51,7 +51,7 @@
     }
 
     .page {
-      max-width: 1240px;
+      max-width: 1280px;
       margin: 0 auto;
       padding: 22px 18px 56px;
       min-height: 100vh;
@@ -96,12 +96,7 @@
       letter-spacing: -0.025em;
     }
 
-    .brand p {
-      margin: 0;
-      font-size: 13.5px;
-      color: var(--muted);
-    }
-
+    .brand p { margin: 0; font-size: 13.5px; color: var(--muted); }
     .brand code {
       font-family: var(--mono);
       font-size: 0.92em;
@@ -112,12 +107,7 @@
       border: 1px solid var(--red-border);
     }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
     .font-controls {
       display: inline-flex;
@@ -140,7 +130,6 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     .font-btn:hover { background: var(--paper-hover); color: var(--red); }
     .font-btn.active { background: var(--bg); color: var(--red); box-shadow: var(--shadow-sm); }
 
@@ -149,7 +138,7 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      height: 38px;
+      height: 36px;
       padding: 0 12px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-strong);
@@ -161,11 +150,30 @@
       cursor: pointer;
       transition: all 0.16s ease;
     }
-
     .quill-btn:hover { border-color: var(--red); color: var(--red); background: var(--red-soft); }
     .quill-btn.is-unlocked { background: var(--red); border-color: var(--red); color: #FFFFFF; }
     .quill-dot { width: 7px; height: 7px; border-radius: 50%; background: #FFFFFF; display: none; }
     .quill-btn.is-unlocked .quill-dot { display: inline-block; }
+
+    /* =========================================================================
+       NOTIFICATIEBALK (TREFWOORDEN & DATA)
+       ========================================================================= */
+    .notify-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: var(--warn-soft);
+      border: 1px solid var(--warn-border);
+      border-left: 4px solid var(--red);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      font-size: 13px;
+    }
+    .notify-bar.visible { display: flex; }
+    .notify-bar strong { color: var(--red); }
 
     /* =========================================================================
        PANEEL & BEHEERBALK
@@ -176,100 +184,46 @@
       padding: 14px 16px;
       margin-bottom: 16px;
     }
-
-    .unlock-panel {
-      background: var(--paper);
-      border: 1px solid var(--border-strong);
-      border-left: 3.5px solid var(--red);
-    }
-
-    .admin-bar {
-      background: var(--red-soft);
-      border: 1px solid var(--red-border);
-      border-left: 4px solid var(--red);
-    }
-
+    .unlock-panel { background: var(--paper); border: 1px solid var(--border-strong); border-left: 3.5px solid var(--red); }
+    .admin-bar { background: var(--red-soft); border: 1px solid var(--red-border); border-left: 4px solid var(--red); }
     .unlock-panel.visible, .admin-bar.visible { display: block; }
 
-    .unlock-head, .admin-top {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .unlock-title, .admin-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--red);
-    }
-
-    .unlock-form, .admin-actions-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
+    .unlock-head, .admin-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+    .unlock-title, .admin-status { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; color: var(--red); }
+    .unlock-form, .admin-actions-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 
     .admin-controls {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      justify-content: space-between;
-      padding-top: 10px;
-      border-top: 1px solid var(--red-border);
+      display: flex; flex-wrap: wrap; align-items: center; gap: 10px; justify-content: space-between;
+      padding-top: 10px; border-top: 1px solid var(--red-border);
     }
 
     .mode-switch { display: inline-flex; flex-wrap: wrap; gap: 6px; }
     .mode-option {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--red-border);
-      background: var(--bg);
-      font-size: 12.5px;
-      font-weight: 600;
-      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px;
+      border-radius: var(--radius-sm); border: 1px solid var(--red-border); background: var(--bg);
+      font-size: 12.5px; font-weight: 600; cursor: pointer;
     }
     .mode-option input { accent-color: var(--red); margin: 0; }
     .mode-option.is-active { border-color: var(--red); color: var(--red); }
 
     .token-row {
-      display: none;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed var(--red-border);
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
+      display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--red-border);
+      gap: 8px; flex-wrap: wrap; align-items: center;
     }
     .token-row.visible { display: flex; }
     .token-note { width: 100%; font-size: 11.5px; color: var(--muted); margin: 0; }
 
     .input-field, .select-field {
-      padding: 8px 11px;
+      padding: 7px 10px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-strong);
       background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
-      font-size: 13.5px;
+      font-size: 13px;
     }
-
-    .input-field { flex: 1; min-width: 180px; }
-    .input-field:focus, .select-field:focus {
-      outline: none;
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(163, 28, 28, 0.12);
-    }
+    .input-field { flex: 1; min-width: 160px; }
+    .input-field:focus, .select-field:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(163, 28, 28, 0.12); }
 
     .unlock-error { margin: 7px 0 0; font-size: 12.5px; font-weight: 600; color: var(--red); display: none; }
     .unlock-error.visible { display: block; }
@@ -295,7 +249,6 @@
       white-space: nowrap;
       transition: all 0.14s ease;
     }
-
     .btn:hover:not(:disabled) { border-color: var(--red); color: var(--red); background: var(--red-soft); }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn--primary { background: var(--red); border-color: var(--red); color: #FFFFFF; }
@@ -305,7 +258,7 @@
     .btn--ghost:hover:not(:disabled) { background: var(--paper-hover); color: var(--text); border-color: transparent; }
 
     /* =========================================================================
-       TWEEKOLOMS WORKSPACE (MAPPENSTRUCTUUR + DOCUMENTEN)
+       WORKSPACE
        ========================================================================= */
     .workspace {
       display: grid;
@@ -313,10 +266,7 @@
       gap: 18px;
       align-items: start;
     }
-
-    @media (max-width: 860px) {
-      .workspace { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 880px) { .workspace { grid-template-columns: 1fr; } }
 
     .sidebar {
       background: var(--paper);
@@ -324,308 +274,150 @@
       border-radius: var(--radius);
       padding: 12px;
     }
-
     .sidebar-section { margin-bottom: 14px; }
     .sidebar-section:last-child { margin-bottom: 0; }
-
     .sidebar-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 6px;
-      font-size: 11.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--muted);
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 6px; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted);
     }
 
-    .nav-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
+    .nav-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
     .nav-btn {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 7px 9px;
-      border-radius: var(--radius-sm);
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 550;
-      text-align: left;
-      cursor: pointer;
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 7px 9px; border-radius: var(--radius-sm); border: 1px solid transparent;
+      background: transparent; color: var(--text); font-family: var(--sans);
+      font-size: 13px; font-weight: 550; text-align: left; cursor: pointer;
     }
-
     .nav-btn:hover { background: var(--paper-hover); }
-    .nav-btn.is-active {
-      background: var(--bg);
-      border-color: var(--red-border);
-      color: var(--red);
-      font-weight: 700;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .nav-count {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 0 6px;
-    }
-
-    .folder-add-row {
-      display: flex;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .folder-add-row .input-field {
-      min-width: 0;
-      padding: 6px 8px;
-      font-size: 12.5px;
-    }
+    .nav-btn.is-active { background: var(--bg); border-color: var(--red-border); color: var(--red); font-weight: 700; box-shadow: var(--shadow-sm); }
+    .nav-count { font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 0 6px; }
+    .folder-add-row { display: flex; gap: 6px; margin-top: 8px; }
+    .folder-add-row .input-field { min-width: 0; padding: 6px 8px; font-size: 12.5px; }
 
     /* =========================================================================
-       WERKBALK & DOCUMENTENLIJST
+       WERKBALK & TREFWOORD/DATUM FILTER
        ========================================================================= */
     .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-      background: var(--paper);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 12px;
-      margin-bottom: 14px;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 10px 12px; margin-bottom: 10px;
     }
+
+    .filter-strip {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 8px 12px; margin-bottom: 14px;
+      font-size: 12.5px;
+    }
+    .filter-strip label { font-weight: 600; color: var(--muted); font-size: 12px; }
 
     .search-wrap { position: relative; flex: 1; min-width: 200px; }
     .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
     .search-input {
-      width: 100%;
-      padding: 7px 30px 7px 32px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-strong);
-      background: var(--bg);
-      font-family: var(--sans);
-      font-size: 13.5px;
+      width: 100%; padding: 7px 12px 7px 32px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong); background: var(--bg); font-family: var(--sans); font-size: 13.5px;
     }
     .search-input:focus { outline: none; border-color: var(--red); }
 
     .doc-counter {
-      font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: var(--bg);
-      border: 1px solid var(--border);
+      font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--muted);
+      padding: 4px 9px; border-radius: 999px; background: var(--bg); border: 1px solid var(--border);
     }
 
-    .doc-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      font-size: calc(14.5px * var(--doc-scale));
-    }
-
+    /* =========================================================================
+       DOCUMENTENLIJST
+       ========================================================================= */
+    .doc-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: calc(14.5px * var(--doc-scale)); }
     .doc-item {
-      background: var(--paper);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px 14px;
-      transition: border-color 0.14s ease, background-color 0.14s ease;
+      background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 12px 14px; transition: border-color 0.14s ease, background-color 0.14s ease;
     }
-
     .doc-item:hover { border-color: var(--border-strong); background: var(--paper-hover); }
     .doc-item.is-verified { border-left: 3.5px solid var(--ok); }
     .doc-item.is-invalid { border-left: 3.5px solid var(--red); }
+    .doc-item.is-alert { box-shadow: inset 0 0 0 1.5px var(--red-border); }
 
-    .doc-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
+    .doc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .doc-main { min-width: 0; flex: 1; }
-
-    .doc-title-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 4px;
-    }
-
-    .doc-link {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1em;
-      word-break: break-word;
-    }
+    .doc-title-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
+    .doc-link { color: var(--text); text-decoration: none; font-weight: 700; font-size: 1em; word-break: break-word; }
     .doc-link:hover { color: var(--red); text-decoration: underline; }
 
     .badge {
-      font-family: var(--mono);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 1px 7px;
-      border-radius: 5px;
-      border: 1px solid var(--border-strong);
-      background: var(--bg);
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      font-family: var(--mono); font-size: 11px; font-weight: 700; padding: 1px 7px;
+      border-radius: 5px; border: 1px solid var(--border-strong); background: var(--bg);
+      color: var(--muted); display: inline-flex; align-items: center; gap: 4px;
     }
-
     .badge--num { background: var(--text); border-color: var(--text); color: #FFFFFF; }
     .badge--folder { background: var(--info-soft); border-color: var(--info-border); color: var(--info); font-family: var(--sans); }
     .badge--onderlegger { background: var(--warn-soft); border-color: var(--warn-border); color: var(--warn); font-family: var(--sans); }
-    .badge--html { background: var(--red-soft); border-color: var(--red-border); color: var(--red); }
+    .badge--pdf { background: var(--red-soft); border-color: var(--red-border); color: var(--red); }
+    .badge--eml { background: var(--info-soft); border-color: var(--info-border); color: var(--info); }
+    .badge--alert { background: var(--red); border-color: var(--red); color: #FFFFFF; font-family: var(--sans); }
     .badge--ok { background: var(--ok-soft); border-color: var(--ok-border); color: var(--ok); font-family: var(--sans); cursor: pointer; }
     .badge--invalid { background: var(--red-soft); border-color: var(--red-border); color: var(--red); font-family: var(--sans); cursor: pointer; }
     .badge--signed { background: var(--warn-soft); border-color: var(--warn-border); color: var(--warn); font-family: var(--sans); cursor: pointer; }
 
-    .doc-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      font-size: 12px;
-      color: var(--muted);
-      font-family: var(--mono);
-    }
+    .doc-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12px; color: var(--muted); font-family: var(--mono); }
 
-    /* Administratieve Header-samenvatting (alleen zichtbaar na Veerpen + string) */
     .admin-meta-strip {
-      margin-top: 9px;
-      padding: 8px 10px;
-      border-radius: var(--radius-sm);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 6px 12px;
-      font-size: 12px;
+      margin-top: 9px; padding: 8px 10px; border-radius: var(--radius-sm);
+      background: var(--bg); border: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px 12px; font-size: 12px;
     }
+    .meta-cell strong { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .meta-cell span { color: var(--text); word-break: break-word; }
 
-    .meta-cell strong {
-      display: block;
-      font-size: 10.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-    }
-
-    .meta-cell span {
-      color: var(--text);
-      word-break: break-word;
-    }
-
-    .doc-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .state-box {
-      background: var(--paper);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px 20px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
+    .doc-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .state-box { background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 20px; text-align: center; color: var(--muted); font-size: 14px; }
     .state-box--error { background: var(--red-soft); border-color: var(--red-border); color: var(--red); }
 
     /* =========================================================================
-       MODALS
+       MODALS (VIEWER, ANALYSE, HEADERS, SIGN, VERIFY)
        ========================================================================= */
     .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(30, 30, 30, 0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      z-index: 100;
+      position: fixed; inset: 0; background: rgba(30, 30, 30, 0.54);
+      display: none; align-items: center; justify-content: center; padding: 16px; z-index: 100;
     }
     .modal-backdrop.visible { display: flex; }
 
     .modal-card {
-      width: 100%;
-      max-width: 560px;
-      background: var(--bg);
-      border: 1px solid var(--border-strong);
-      border-top: 4px solid var(--red);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      box-shadow: var(--shadow-md);
-      max-height: 92vh;
-      overflow-y: auto;
+      width: 100%; max-width: 580px; background: var(--bg);
+      border: 1px solid var(--border-strong); border-top: 4px solid var(--red);
+      border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow-md);
+      max-height: 92vh; overflow-y: auto;
     }
+    .modal-card--wide { max-width: 920px; }
 
-    .modal-title { margin: 0 0 10px; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .modal-title { margin: 0 0 10px; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .modal-body { margin: 0 0 14px; font-size: 13.5px; color: var(--muted); }
     .field-label { display: block; font-size: 12px; font-weight: 700; color: var(--text); margin: 10px 0 4px; }
     .hash-box {
-      display: block;
-      margin: 4px 0 8px;
-      padding: 8px 10px;
-      border-radius: var(--radius-sm);
-      background: var(--paper);
-      border: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--text);
-      word-break: break-all;
+      display: block; margin: 4px 0 8px; padding: 8px 10px; border-radius: var(--radius-sm);
+      background: var(--paper); border: 1px solid var(--border); font-family: var(--mono);
+      font-size: 12px; color: var(--text); word-break: break-all;
     }
 
-    .header-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12.5px;
-      margin-top: 8px;
-    }
-    .header-table th, .header-table td {
-      text-align: left;
-      padding: 6px 8px;
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-    }
-    .header-table th {
-      width: 34%;
-      font-family: var(--mono);
-      color: var(--muted);
-      font-weight: 600;
-    }
+    /* Viewer styles */
+    .pdf-frame { width: 100%; height: 70vh; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--paper); }
+    .eml-box { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+    .eml-headers { background: var(--paper); padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12.5px; }
+    .eml-body { padding: 14px; background: var(--bg); color: var(--text); white-space: pre-wrap; font-family: var(--sans); font-size: 13.5px; max-height: 55vh; overflow-y: auto; }
+
+    /* Analyse-tool styles */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .kpi-card { background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+    .kpi-val { font-size: 22px; font-weight: 700; color: var(--red); font-family: var(--mono); }
+    .kpi-lbl { font-size: 11.5px; color: var(--muted); font-weight: 600; }
+
+    .bar-row { display: grid; grid-template-columns: 110px 1fr 44px; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12.5px; }
+    .bar-track { height: 10px; background: var(--paper-hover); border-radius: 999px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--red); border-radius: 999px; }
+
+    .header-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+    .header-table th, .header-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .header-table th { width: 34%; font-family: var(--mono); color: var(--muted); font-weight: 600; }
 
     .sig-pad-wrap { border: 1px dashed var(--border-strong); border-radius: var(--radius-sm); background: var(--paper); overflow: hidden; }
     .sig-pad { display: block; width: 100%; height: 115px; cursor: crosshair; touch-action: none; }
@@ -641,37 +433,18 @@
     .modal-footer { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
 
     .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      max-width: 390px;
-      background: var(--text);
-      color: #FFFFFF;
-      padding: 10px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-      font-weight: 600;
-      box-shadow: var(--shadow-md);
-      opacity: 0;
-      transform: translateY(10px);
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      z-index: 120;
+      position: fixed; bottom: 20px; right: 20px; max-width: 390px; background: var(--text); color: #FFFFFF;
+      padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600;
+      box-shadow: var(--shadow-md); opacity: 0; transform: translateY(10px); pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease; z-index: 120;
     }
     .toast.visible { opacity: 1; transform: translateY(0); }
     .toast--red { background: var(--red); }
     .toast--ok { background: var(--ok); }
 
     .footer {
-      margin-top: 28px;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 12.5px;
-      color: var(--muted);
+      margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 12.5px; color: var(--muted);
     }
     .footer a { color: var(--red); text-decoration: none; font-weight: 600; }
   </style>
@@ -682,10 +455,11 @@
     <header class="header">
       <div class="brand">
         <h1>Documentenbeheerder</h1>
-        <p>Nummerorganisatie, mappenstructuur &amp; veerpen-verificatie voor <code id="repo-label">goija/nummer</code></p>
+        <p>EML/PDF-viewer, notificaties, analyse &amp; veerpen voor <code id="repo-label">goija/nummer</code></p>
       </div>
 
       <div class="header-actions">
+        <button type="button" class="btn" id="btn-open-analysis">Analyse-tool</button>
         <div class="font-controls" role="group" aria-label="Lettergrootte">
           <button type="button" class="font-btn" id="btn-font-down">A&minus;</button>
           <button type="button" class="font-btn active" id="btn-font-reset">A</button>
@@ -705,6 +479,12 @@
     </header>
 
     <main>
+      <!-- NOTIFICATIEBALK (TREFWOORD-TREFFERS) -->
+      <div class="notify-bar" id="notify-bar" role="status">
+        <span id="notify-text"></span>
+        <button type="button" class="btn btn--sm" id="btn-filter-alerts">Toon alleen meldingen</button>
+      </div>
+
       <!-- VEERPEN ONTGRENDEL-PANEEL -->
       <section class="unlock-panel" id="unlock-panel">
         <div class="unlock-head">
@@ -723,9 +503,9 @@
         <div class="admin-top">
           <span class="admin-status">Veerpen actief — Headers, Beheer &amp; Verificatie</span>
           <div class="admin-actions-row">
-            <button type="button" class="btn btn--sm" id="btn-add-file">+ Document</button>
+            <button type="button" class="btn btn--sm" id="btn-add-file">+ Document (EML/PDF/...)</button>
             <input type="file" id="file-upload-input" hidden multiple />
-            <button type="button" class="btn btn--sm" id="btn-scan-all">Scan alle headers</button>
+            <button type="button" class="btn btn--sm" id="btn-scan-all">Scan alle headers &amp; inhoud</button>
             <button type="button" class="btn btn--sm" id="btn-auto-folders">Auto-organiseer op nummer</button>
             <button type="button" class="btn btn--sm" id="btn-verify-all">Verifieer zegels</button>
             <button type="button" class="btn btn--sm" id="btn-export-manifest">Exporteer manifest</button>
@@ -757,7 +537,7 @@
         </div>
       </section>
 
-      <!-- WORKSPACE: MAPPENSTRUCTUUR LINKS + DOCUMENTEN RECHTS -->
+      <!-- WORKSPACE -->
       <div class="workspace">
         <aside class="sidebar" aria-label="Mappenstructuur en nummerfilters">
           <div class="sidebar-section">
@@ -781,10 +561,11 @@
         </aside>
 
         <section>
+          <!-- WERKBALK -->
           <div class="toolbar">
             <div class="search-wrap">
               <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="search" id="search-input" class="search-input" placeholder="Zoek op nummer, map of bestandsnaam..." />
+              <input type="search" id="search-input" class="search-input" placeholder="Zoek op nummer, map, trefwoord of bestandsnaam..." />
             </div>
             <select id="sort-select" class="select-field" aria-label="Sorteren">
               <option value="number">Sorteer op nummer</option>
@@ -795,6 +576,17 @@
             <span class="doc-counter" id="doc-counter">Laden...</span>
           </div>
 
+          <!-- NOTIFICATIE-TREFWOORDEN & DATUMFILTER -->
+          <div class="filter-strip">
+            <label for="watch-keywords">Notificatie-trefwoorden:</label>
+            <input type="text" id="watch-keywords" class="input-field" style="min-width:190px;" placeholder="bijv. bezwaar, factuur, spoed..." />
+            <label for="date-from">Vanaf:</label>
+            <input type="date" id="date-from" class="select-field" />
+            <label for="date-to">Tot:</label>
+            <input type="date" id="date-to" class="select-field" />
+            <button type="button" class="btn btn--sm" id="btn-clear-dates">Wis data</button>
+          </div>
+
           <div id="list-container"></div>
         </section>
       </div>
@@ -802,39 +594,58 @@
 
     <footer class="footer">
       <span>Bron: <a id="footer-repo-link" href="https://github.com/goija/nummer" target="_blank" rel="noopener noreferrer">github.com/goija/nummer</a></span>
-      <span style="font-family:var(--mono);">Headers (Veerpen) + Nummerorganisatie + HMAC-SHA256</span>
+      <span style="font-family:var(--mono);">EML/PDF Viewer + Notificaties + Analyse + HMAC-SHA256</span>
     </footer>
   </div>
 
-  <!-- MODAL: HEADERS & ADMINISTRATIEVE METADATA (ALLEEN NA VEERPEN) -->
+  <!-- MODAL: EML & PDF VIEWER -->
+  <div class="modal-backdrop" id="viewer-modal" role="dialog" aria-modal="true">
+    <div class="modal-card modal-card--wide">
+      <div class="modal-title">
+        <span id="viewer-title">Document bekijken</span>
+        <button type="button" class="btn btn--sm" id="btn-viewer-close">&times; Sluiten</button>
+      </div>
+      <div class="modal-body" id="viewer-content">Laden...</div>
+    </div>
+  </div>
+
+  <!-- MODAL: ANALYSE-TOOL -->
+  <div class="modal-backdrop" id="analysis-modal" role="dialog" aria-modal="true">
+    <div class="modal-card modal-card--wide">
+      <div class="modal-title">
+        <span>Documenten- &amp; Data-analyse</span>
+        <button type="button" class="btn btn--sm" id="btn-analysis-close">&times; Sluiten</button>
+      </div>
+      <div class="modal-body" id="analysis-content"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn--sm" id="btn-export-csv">Exporteer analyse (.csv)</button>
+        <button type="button" class="btn btn--primary btn--sm" id="btn-analysis-ok">Sluiten</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HEADERS & MAPINDELING (ALLEEN NA VEERPEN) -->
   <div class="modal-backdrop" id="meta-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
       <h2 class="modal-title">Headers, Administratie &amp; Mapindeling</h2>
       <div class="modal-body">
         <span class="hash-box" id="meta-filename"></span>
-
         <label class="field-label" for="meta-number">Dossier- / Volgnummer</label>
-        <input type="text" id="meta-number" class="input-field" style="width:100%;" placeholder="Bijv. 2026-001 of NR-14" />
-
+        <input type="text" id="meta-number" class="input-field" style="width:100%;" />
         <label class="field-label" for="meta-role">Documenttype</label>
         <select id="meta-role" class="select-field" style="width:100%;">
           <option value="hoofddocument">Hoofddocument</option>
           <option value="onderlegger">Onderlegger / Bijlage</option>
         </select>
-
         <label class="field-label" for="meta-folder">Map (gebruik / voor submappen)</label>
-        <input type="text" id="meta-folder" class="input-field" style="width:100%;" list="folder-datalist" placeholder="Bijv. 2026/Dossier-001/Onderleggers" />
+        <input type="text" id="meta-folder" class="input-field" style="width:100%;" list="folder-datalist" />
         <datalist id="folder-datalist"></datalist>
-
         <label class="field-label" for="meta-subject">Onderwerp / Omschrijving</label>
         <input type="text" id="meta-subject" class="input-field" style="width:100%;" />
-
         <label class="field-label" for="meta-sender">Afzender / Bron</label>
         <input type="text" id="meta-sender" class="input-field" style="width:100%;" />
-
         <label class="field-label" for="meta-date">Datum</label>
         <input type="text" id="meta-date" class="input-field" style="width:100%;" placeholder="YYYY-MM-DD" />
-
         <span class="field-label">Uitgelezen ruwe headers (e-mailadressen inactief zwart)</span>
         <table class="header-table"><tbody id="meta-raw-headers"></tbody></table>
       </div>
@@ -846,7 +657,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ONDERTEKENEN (VEERPEN) -->
+  <!-- MODAL: ONDERTEKENEN -->
   <div class="modal-backdrop" id="sign-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
       <h2 class="modal-title">Document ondertekenen (Veerpen-zegel)</h2>
@@ -924,7 +735,7 @@
       const REPO_NAME = "nummer";
       const SITE_BASE_URL = "https://nummer-jet.vercel.app";
 
-      // Zet op false zodra e-mailadressen weer zichtbaar mogen zijn
+      // E-mailadressen inactief zwart tot nader order
       const EMAIL_INACTIEF_ZWART = true;
       const EMAIL_REGEX = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
 
@@ -936,15 +747,20 @@
       const STORAGE_SIGS = `docmgr_signatures_${REPO_NAME}`;
       const STORAGE_META = `docmgr_meta_${REPO_NAME}`;
       const STORAGE_FOLDERS = `docmgr_folders_${REPO_NAME}`;
+      const STORAGE_WATCH = `docmgr_watch_${REPO_NAME}`;
       const STORAGE_FONT = "docmgr_font_scale";
       const SESSION_TOKEN = "docmgr_gh_token";
 
       const state = {
         files: [],
         localFiles: [],
+        textCache: {},     // { [filename]: string } voor inhoudszoekopdrachten & EML-viewer
         loading: true,
         error: null,
         query: "",
+        watchKeywords: "",
+        dateFrom: "",
+        dateTo: "",
         sortBy: "number",
         activeFilter: { type: "all", value: "" },
         fontScale: 1,
@@ -964,9 +780,6 @@
         pendingDelete: null
       };
 
-      // =========================================================================
-      // HULPFUNCTIES & E-MAIL ZWARTLAKKEN
-      // =========================================================================
       const $ = (id) => document.getElementById(id);
       const navViews = $("nav-views");
       const navFolders = $("nav-folders");
@@ -992,10 +805,7 @@
       function escapeWithEmailBlackout(str) {
         const safe = escapeHtml(str);
         if (!EMAIL_INACTIEF_ZWART) return safe;
-        return safe.replace(
-          EMAIL_REGEX,
-          '<span class="email-blackout" aria-label="E-mailadres inactief">████████████</span>'
-        );
+        return safe.replace(EMAIL_REGEX, '<span class="email-blackout" aria-label="E-mailadres inactief">████████████</span>');
       }
 
       function maskEmailPlain(str) {
@@ -1025,10 +835,207 @@
           localStorage.setItem(STORAGE_SIGS, JSON.stringify(state.signatures));
           localStorage.setItem(STORAGE_META, JSON.stringify(state.meta));
           localStorage.setItem(STORAGE_FOLDERS, JSON.stringify(state.folders));
+          localStorage.setItem(STORAGE_WATCH, state.watchKeywords);
         } catch {}
         $("btn-restore-hidden").textContent = `Herstel verborgen (${state.hiddenFiles.size})`;
         $("btn-restore-hidden").disabled = state.hiddenFiles.size === 0;
       }
+
+      // =========================================================================
+      // EML- & PDF-VIEWER
+      // =========================================================================
+      function decodeQuotedPrintable(str) {
+        return str
+          .replace(/=\r?\n/g, "")
+          .replace(/=([A-Fa-f0-9]{2})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+      }
+
+      function parseEml(rawText) {
+        const splitIdx = rawText.search(/\r?\n\r?\n/);
+        const headerBlock = splitIdx > -1 ? rawText.slice(0, splitIdx) : rawText;
+        let body = splitIdx > -1 ? rawText.slice(splitIdx).replace(/^\r?\n\r?\n/, "") : "";
+
+        // Unfold RFC-5322 multiline headers
+        const unfolded = headerBlock.replace(/\r?\n[ \t]+/g, " ");
+        const headers = {};
+        for (const line of unfolded.split(/\r?\n/)) {
+          const m = line.match(/^([A-Za-z0-9\-]+):\s*(.*)$/);
+          if (m) headers[m[1]] = m[2].trim();
+        }
+
+        const cte = (headers["Content-Transfer-Encoding"] || "").toLowerCase();
+        if (cte.includes("quoted-printable")) {
+          body = decodeQuotedPrintable(body);
+        } else if (cte.includes("base64")) {
+          try { body = atob(body.replace(/\s+/g, "")); } catch {}
+        }
+        return { headers, body };
+      }
+
+      async function openViewerModal(file) {
+        if (!file) return;
+        const { ext } = splitFileName(file.name);
+        const lowExt = ext.toLowerCase();
+        $("viewer-title").textContent = maskEmailPlain(file.name);
+        $("viewer-content").innerHTML = `<div class="state-box">Bestand laden...</div>`;
+        $("viewer-modal").classList.add("visible");
+
+        try {
+          if (lowExt === "pdf") {
+            let pdfUrl = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`;
+            if (!file.isLocal) {
+              try {
+                const buf = await getFileArrayBuffer(file);
+                pdfUrl = URL.createObjectURL(new Blob([buf], { type: "application/pdf" }));
+              } catch {}
+            }
+            $("viewer-content").innerHTML = `<iframe class="pdf-frame" src="${pdfUrl}" title="PDF Viewer"></iframe>`;
+            return;
+          }
+
+          if (lowExt === "eml") {
+            const buf = await getFileArrayBuffer(file);
+            const rawText = new TextDecoder("utf-8", { fatal: false }).decode(buf);
+            state.textCache[file.name] = rawText;
+            const { headers, body } = parseEml(rawText);
+
+            const headerHtml = state.unlocked
+              ? `<div class="eml-headers">
+                   <strong>EML Headers (Veerpen actief — e-mailadressen inactief zwart):</strong>
+                   <table class="header-table">
+                     ${Object.entries(headers).map(([k, v]) => `<tr><th>${escapeHtml(k)}</th><td>${escapeWithEmailBlackout(v)}</td></tr>`).join("")}
+                   </table>
+                 </div>`
+              : `<div class="eml-headers" style="color:var(--muted);">EML-headers zijn verborgen. Ontgrendel de <strong>Veerpen</strong> met de geheime string om headers te bekijken.</div>`;
+
+            $("viewer-content").innerHTML = `
+              <div class="eml-box">
+                ${headerHtml}
+                <div class="eml-body">${escapeWithEmailBlackout(body || "(Geen leesbare tekstinhoud)")}</div>
+              </div>
+            `;
+            return;
+          }
+
+          if (TEXT_EXTS.has(lowExt)) {
+            const buf = await getFileArrayBuffer(file);
+            const txt = new TextDecoder("utf-8", { fatal: false }).decode(buf);
+            state.textCache[file.name] = txt;
+            $("viewer-content").innerHTML = `<div class="eml-box"><div class="eml-body">${escapeWithEmailBlackout(txt)}</div></div>`;
+            return;
+          }
+
+          const url = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`;
+          $("viewer-content").innerHTML = `<div class="state-box"><p>Voor dit bestandstype (.${escapeHtml(lowExt)}) is geen directe voorvertoning.</p><a class="btn btn--primary" href="${url}" target="_blank" rel="noopener noreferrer">Open bestand in nieuw tabblad</a></div>`;
+        } catch (err) {
+          $("viewer-content").innerHTML = `<div class="state-box state-box--error">Kon bestand niet openen: ${escapeHtml(err.message)}</div>`;
+        }
+      }
+
+      $("btn-viewer-close").addEventListener("click", () => $("viewer-modal").classList.remove("visible"));
+      $("viewer-modal").addEventListener("click", e => { if (e.target === $("viewer-modal")) $("viewer-modal").classList.remove("visible"); });
+
+      // =========================================================================
+      // NOTIFICATIE-TREFWOORDEN & DATUMFILTER
+      // =========================================================================
+      function getWatchList() {
+        return state.watchKeywords.split(",").map(s => s.trim().toLowerCase()).filter(Boolean);
+      }
+
+      function getMatchedKeywords(file) {
+        const list = getWatchList();
+        if (list.length === 0) return [];
+        const m = state.meta[file.name] || {};
+        const cachedText = state.textCache[file.name] || "";
+        const hay = `${file.name} ${m.number || ""} ${m.subject || ""} ${m.sender || ""} ${m.folder || ""} ${cachedText}`.toLowerCase();
+        return list.filter(kw => hay.includes(kw));
+      }
+
+      function updateNotifyBanner(allFiles) {
+        const list = getWatchList();
+        if (list.length === 0) {
+          $("notify-bar").classList.remove("visible");
+          return;
+        }
+        const hits = allFiles.filter(f => getMatchedKeywords(f).length > 0);
+        if (hits.length > 0) {
+          $("notify-text").innerHTML = `<strong>Notificatie:</strong> ${hits.length} document(en) komen overeen met je trefwoorden (<code>${escapeHtml(list.join(", "))}</code>).`;
+          $("notify-bar").classList.add("visible");
+        } else {
+          $("notify-bar").classList.remove("visible");
+        }
+      }
+
+      // =========================================================================
+      // ANALYSE-TOOL
+      // =========================================================================
+      function openAnalysisModal() {
+        const all = getAllFiles();
+        const total = all.length;
+        const onderleggers = all.filter(f => (state.meta[f.name]?.role) === "onderlegger").length;
+        const signed = all.filter(f => Boolean(state.signatures[f.name])).length;
+        const alerts = all.filter(f => getMatchedKeywords(f).length > 0).length;
+
+        const extCounts = {};
+        const yearCounts = {};
+        for (const f of all) {
+          const ext = (splitFileName(f.name).ext || "OVERIG").toUpperCase();
+          extCounts[ext] = (extCounts[ext] || 0) + 1;
+          const dt = state.meta[f.name]?.date || "";
+          const yr = dt.slice(0, 4) || "Onbekend";
+          yearCounts[yr] = (yearCounts[yr] || 0) + 1;
+        }
+
+        const renderBars = (obj) => {
+          const entries = Object.entries(obj).sort((a, b) => b[1] - a[1]);
+          const max = Math.max(1, ...entries.map(e => e[1]));
+          return entries.map(([k, v]) => `
+            <div class="bar-row">
+              <strong style="font-family:var(--mono);">${escapeHtml(k)}</strong>
+              <div class="bar-track"><div class="bar-fill" style="width:${Math.round((v / max) * 100)}%;"></div></div>
+              <span style="font-family:var(--mono); text-align:right;">${v}</span>
+            </div>
+          `).join("");
+        };
+
+        $("analysis-content").innerHTML = `
+          <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-val">${total}</div><div class="kpi-lbl">Totaal documenten</div></div>
+            <div class="kpi-card"><div class="kpi-val">${total - onderleggers} / ${onderleggers}</div><div class="kpi-lbl">Hoofd / Onderleggers</div></div>
+            <div class="kpi-card"><div class="kpi-val">${signed}</div><div class="kpi-lbl">Ondertekend (Veerpen)</div></div>
+            <div class="kpi-card"><div class="kpi-val">${alerts}</div><div class="kpi-lbl">Notificatie-treffers</div></div>
+          </div>
+          <span class="field-label">Verdeling per bestandstype (EML, PDF, HTML, ...)</span>
+          <div style="margin-bottom:14px;">${renderBars(extCounts)}</div>
+          <span class="field-label">Verdeling per datum / jaar</span>
+          <div>${renderBars(yearCounts)}</div>
+        `;
+        $("analysis-modal").classList.add("visible");
+      }
+
+      $("btn-open-analysis").addEventListener("click", openAnalysisModal);
+      $("btn-analysis-close").addEventListener("click", () => $("analysis-modal").classList.remove("visible"));
+      $("btn-analysis-ok").addEventListener("click", () => $("analysis-modal").classList.remove("visible"));
+      $("btn-export-csv").addEventListener("click", () => {
+        const rows = [["Bestandsnaam", "Nummer", "Type", "Map", "Datum", "Ondertekend", "Trefwoorden"]];
+        for (const f of getAllFiles()) {
+          const m = state.meta[f.name] || {};
+          rows.push([
+            maskEmailPlain(f.name),
+            m.number || "",
+            m.role || "hoofddocument",
+            m.folder || "Algemeen",
+            m.date || "",
+            state.signatures[f.name] ? "Ja" : "Nee",
+            getMatchedKeywords(f).join(";")
+          ]);
+        }
+        const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+        a.download = `analyse-${REPO_NAME}.csv`;
+        a.click();
+      });
 
       // =========================================================================
       // HEADERSYSTEEM-HERKENNER & NUMMER-EXTRACTOR
@@ -1036,12 +1043,10 @@
       function detectFromFileName(name) {
         const { base } = splitFileName(name);
         const lower = base.toLowerCase();
-
         const numMatch =
           base.match(/\b(20\d{2}[-_.]\d{1,5})\b/) ||
           base.match(/\b([A-Z]{2,5}[-_\s]?\d{1,6})\b/i) ||
           base.match(/(?:^|[-_\s])(\d{2,8})(?:$|[-_\s])/);
-
         const dateMatch = base.match(/\b(20\d{2}[-_.]\d{2}[-_.]\d{2})\b/);
         const isOnderlegger = /(onderlegger|bijlage|bewijs|bon|factuur|scan|kopie|appendix|att|annex)/i.test(lower);
 
@@ -1086,19 +1091,12 @@
           raw[key] = val;
 
           const lk = key.toLowerCase();
-          if (/^(kenmerk|dossier|dossiernummer|zaaknummer|nummer|factuurnummer|referentie|id|code)$/.test(lk)) {
-            baseMeta.number = val.toUpperCase();
-          } else if (/^(onderwerp|subject|betreft|titel|title)$/.test(lk)) {
-            baseMeta.subject = val;
-          } else if (/^(afzender|from|bron|auteur|author|organisatie)$/.test(lk)) {
-            baseMeta.sender = val;
-          } else if (/^(datum|date|verzonden)$/.test(lk)) {
-            baseMeta.date = val;
-          } else if (/^(bijlage|onderlegger|type|categorie)$/.test(lk) && /onderlegger|bijlage|bewijs/i.test(val)) {
-            baseMeta.role = "onderlegger";
-          }
+          if (/^(kenmerk|dossier|dossiernummer|zaaknummer|nummer|factuurnummer|referentie|id|code)$/.test(lk)) baseMeta.number = val.toUpperCase();
+          else if (/^(onderwerp|subject|betreft|titel|title)$/.test(lk)) baseMeta.subject = val;
+          else if (/^(afzender|from|bron|auteur|author|organisatie)$/.test(lk)) baseMeta.sender = val;
+          else if (/^(datum|date|verzonden)$/.test(lk)) baseMeta.date = val;
+          else if (/^(bijlage|onderlegger|type|categorie)$/.test(lk) && /onderlegger|bijlage|bewijs/i.test(val)) baseMeta.role = "onderlegger";
         }
-
         baseMeta.rawHeaders = raw;
         return baseMeta;
       }
@@ -1130,6 +1128,7 @@
           try {
             const buf = await getFileArrayBuffer(file);
             const text = new TextDecoder("utf-8", { fatal: false }).decode(buf.slice(0, 65536));
+            state.textCache[file.name] = text;
             parsed = parseHeadersFromText(file.name, text);
           } catch {}
         }
@@ -1159,14 +1158,11 @@
       }
 
       function autoOrganizeFolders() {
-        const all = getAllFiles();
         let moved = 0;
-        for (const f of all) {
+        for (const f of getAllFiles()) {
           const m = state.meta[f.name] || detectFromFileName(f.name);
           if (m.number) {
-            const targetFolder = m.role === "onderlegger"
-              ? `Nummer ${m.number}/Onderleggers`
-              : `Nummer ${m.number}`;
+            const targetFolder = m.role === "onderlegger" ? `Nummer ${m.number}/Onderleggers` : `Nummer ${m.number}`;
             m.folder = targetFolder;
             ensureFolderExists(targetFolder);
             state.meta[f.name] = m;
@@ -1175,38 +1171,25 @@
         }
         persistAll();
         renderAll();
-        showToast(`${moved} document(en) automatisch op nummer in mappen ingedeeld.`, "ok");
+        showToast(`${moved} document(en) automatisch op nummer ingedeeld.`, "ok");
       }
 
       // =========================================================================
-      // WEB CRYPTO: SHA-256 & HMAC-SHA256
+      // WEB CRYPTO & TEKENVELD
       // =========================================================================
-      function bufToHex(buffer) {
-        return [...new Uint8Array(buffer)].map(b => b.toString(16).padStart(2, "0")).join("");
-      }
-
-      async function sha256Hex(arrayBuffer) {
-        const digest = await crypto.subtle.digest("SHA-256", arrayBuffer);
-        return bufToHex(digest);
-      }
-
-      async function hmacSha256Hex(secret, message) {
+      function bufToHex(buffer) { return [...new Uint8Array(buffer)].map(b => b.toString(16).padStart(2, "0")).join(""); }
+      async function sha256Hex(ab) { return bufToHex(await crypto.subtle.digest("SHA-256", ab)); }
+      async function hmacSha256Hex(secret, msg) {
         const enc = new TextEncoder();
         const key = await crypto.subtle.importKey("raw", enc.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
-        return bufToHex(await crypto.subtle.sign("HMAC", key, enc.encode(message)));
+        return bufToHex(await crypto.subtle.sign("HMAC", key, enc.encode(msg)));
       }
-
       function buildSignPayload({ name, sha256, signer, signedAt, drawingHash }) {
         return `${name}|${sha256}|${signer}|${signedAt}|${drawingHash || ""}`;
       }
 
-      // =========================================================================
-      // VEERPEN TEKENVELD
-      // =========================================================================
-      const sigPad = $("sig-pad");
-      const padCtx = sigPad.getContext("2d");
+      const sigPad = $("sig-pad"), padCtx = sigPad.getContext("2d");
       let isDrawing = false, padHasInk = false;
-
       function resetSigPad() { padCtx.clearRect(0, 0, sigPad.width, sigPad.height); padHasInk = false; }
       function getPadPos(e) {
         const r = sigPad.getBoundingClientRect();
@@ -1220,7 +1203,7 @@
       $("btn-clear-pad").addEventListener("click", resetSigPad);
 
       // =========================================================================
-      // GITHUB API
+      // GITHUB API & RENDERING
       // =========================================================================
       async function fetchDocuments() {
         state.loading = true;
@@ -1230,7 +1213,6 @@
           const headers = { Accept: "application/vnd.github.v3+json" };
           const token = sessionStorage.getItem(SESSION_TOKEN);
           if (token) headers.Authorization = `Bearer ${token}`;
-
           const resp = await fetch(`${GITHUB_API_BASE}/`, { headers });
           if (!resp.ok) throw new Error(`GitHub API HTTP ${resp.status}`);
           const data = await resp.json();
@@ -1252,9 +1234,6 @@
         }
       }
 
-      // =========================================================================
-      // RENDERING (SIDEBAR + DOCUMENTENLIJST)
-      // =========================================================================
       function getAllFiles() {
         const map = new Map();
         for (const f of state.files) map.set(f.name, f);
@@ -1265,33 +1244,27 @@
       function renderSidebar(allFiles) {
         const onderleggersCount = allFiles.filter(f => (state.meta[f.name]?.role) === "onderlegger").length;
         const signedCount = allFiles.filter(f => Boolean(state.signatures[f.name])).length;
+        const alertCount = allFiles.filter(f => getMatchedKeywords(f).length > 0).length;
 
         const views = [
           { type: "all", value: "", label: "Alle documenten", count: allFiles.length },
+          { type: "alerts", value: "", label: "Notificatie-treffers", count: alertCount },
           { type: "onderleggers", value: "", label: "Onderleggers & bijlagen", count: onderleggersCount },
           { type: "signed", value: "", label: "Ondertekend (Veerpen)", count: signedCount }
         ];
 
         navViews.innerHTML = views.map(v => `
-          <li>
-            <button type="button" class="nav-btn ${state.activeFilter.type === v.type ? "is-active" : ""}" data-filter-type="${v.type}" data-filter-val="">
-              <span>${escapeHtml(v.label)}</span>
-              <span class="nav-count">${v.count}</span>
-            </button>
-          </li>
+          <li><button type="button" class="nav-btn ${state.activeFilter.type === v.type ? "is-active" : ""}" data-filter-type="${v.type}" data-filter-val="">
+            <span>${escapeHtml(v.label)}</span><span class="nav-count">${v.count}</span>
+          </button></li>
         `).join("");
 
         navFolders.innerHTML = state.folders.map(folder => {
           const count = allFiles.filter(f => (state.meta[f.name]?.folder || "Algemeen") === folder).length;
           const active = state.activeFilter.type === "folder" && state.activeFilter.value === folder;
-          return `
-            <li>
-              <button type="button" class="nav-btn ${active ? "is-active" : ""}" data-filter-type="folder" data-filter-val="${escapeHtml(folder)}">
-                <span>${escapeHtml(folder)}</span>
-                <span class="nav-count">${count}</span>
-              </button>
-            </li>
-          `;
+          return `<li><button type="button" class="nav-btn ${active ? "is-active" : ""}" data-filter-type="folder" data-filter-val="${escapeHtml(folder)}">
+            <span>${escapeHtml(folder)}</span><span class="nav-count">${count}</span>
+          </button></li>`;
         }).join("");
 
         const numMap = new Map();
@@ -1300,41 +1273,32 @@
           if (num) numMap.set(num, (numMap.get(num) || 0) + 1);
         }
         const sortedNums = [...numMap.entries()].sort((a, b) => a[0].localeCompare(b[0], "nl", { numeric: true }));
-
         navNumbers.innerHTML = sortedNums.length === 0
           ? `<li style="font-size:12px; color:var(--muted); padding:4px 8px;">Nog geen nummers herkend</li>`
           : sortedNums.map(([num, cnt]) => {
               const active = state.activeFilter.type === "number" && state.activeFilter.value === num;
-              return `
-                <li>
-                  <button type="button" class="nav-btn ${active ? "is-active" : ""}" data-filter-type="number" data-filter-val="${escapeHtml(num)}">
-                    <span style="font-family:var(--mono);">${escapeHtml(num)}</span>
-                    <span class="nav-count">${cnt}</span>
-                  </button>
-                </li>
-              `;
+              return `<li><button type="button" class="nav-btn ${active ? "is-active" : ""}" data-filter-type="number" data-filter-val="${escapeHtml(num)}">
+                <span style="font-family:var(--mono);">${escapeHtml(num)}</span><span class="nav-count">${cnt}</span>
+              </button></li>`;
             }).join("");
 
-        document.querySelectorAll(".nav-btn").forEach(btn => {
-          btn.addEventListener("click", () => {
-            state.activeFilter = { type: btn.dataset.filterType, value: btn.dataset.filterVal };
-            renderAll();
-          });
-        });
-
+        document.querySelectorAll(".nav-btn").forEach(btn => btn.addEventListener("click", () => {
+          state.activeFilter = { type: btn.dataset.filterType, value: btn.dataset.filterVal };
+          renderAll();
+        }));
         $("folder-datalist").innerHTML = state.folders.map(f => `<option value="${escapeHtml(f)}"></option>`).join("");
       }
 
       function renderAll() {
         const allFiles = getAllFiles();
         renderSidebar(allFiles);
+        updateNotifyBanner(allFiles);
 
         if (state.loading) {
           docCounter.textContent = "Laden...";
           listContainer.innerHTML = `<div class="state-box">Documenten ophalen uit <strong>${REPO_OWNER}/${REPO_NAME}</strong>...</div>`;
           return;
         }
-
         if (state.error && allFiles.length === 0) {
           docCounter.textContent = "Fout";
           listContainer.innerHTML = `<div class="state-box state-box--error"><p>${escapeHtml(state.error)}</p><button type="button" class="btn btn--primary" id="btn-retry">Opnieuw proberen</button></div>`;
@@ -1345,24 +1309,29 @@
         const q = state.query.trim().toLowerCase();
         let visible = allFiles.filter(f => {
           const m = state.meta[f.name] || detectFromFileName(f.name);
+          const matchedKws = getMatchedKeywords(f);
+          if (state.activeFilter.type === "alerts" && matchedKws.length === 0) return false;
           if (state.activeFilter.type === "onderleggers" && m.role !== "onderlegger") return false;
           if (state.activeFilter.type === "signed" && !state.signatures[f.name]) return false;
           if (state.activeFilter.type === "folder" && (m.folder || "Algemeen") !== state.activeFilter.value) return false;
           if (state.activeFilter.type === "number" && m.number !== state.activeFilter.value) return false;
+
+          // Datumfilter
+          if (state.dateFrom && (!m.date || m.date < state.dateFrom)) return false;
+          if (state.dateTo && (!m.date || m.date > state.dateTo)) return false;
+
           if (!q) return true;
+          const cached = state.textCache[f.name] || "";
           const hay = state.unlocked
-            ? `${f.name} ${m.number} ${m.subject} ${m.sender} ${m.folder} ${m.role} ${m.date}`.toLowerCase()
-            : `${f.name} ${m.number} ${m.folder} ${m.role}`.toLowerCase();
+            ? `${f.name} ${m.number} ${m.subject} ${m.sender} ${m.folder} ${m.role} ${m.date} ${cached}`.toLowerCase()
+            : `${f.name} ${m.number} ${m.folder} ${m.role} ${cached}`.toLowerCase();
           return hay.includes(q);
         });
 
         visible.sort((a, b) => {
-          const ma = state.meta[a.name] || {};
-          const mb = state.meta[b.name] || {};
+          const ma = state.meta[a.name] || {}, mb = state.meta[b.name] || {};
           if (state.sortBy === "number") {
-            const na = ma.number || "ZZZZ";
-            const nb = mb.number || "ZZZZ";
-            const cmp = na.localeCompare(nb, "nl", { numeric: true });
+            const cmp = (ma.number || "ZZZZ").localeCompare(mb.number || "ZZZZ", "nl", { numeric: true });
             if (cmp !== 0) return cmp;
             if (ma.role !== mb.role) return ma.role === "onderlegger" ? 1 : -1;
           } else if (state.sortBy === "date") {
@@ -1373,7 +1342,6 @@
         });
 
         docCounter.textContent = `${visible.length} van ${allFiles.length}`;
-
         if (visible.length === 0) {
           listContainer.innerHTML = `<div class="state-box">Geen documenten in deze selectie.</div>`;
           return;
@@ -1385,12 +1353,13 @@
         for (const file of visible) {
           const m = state.meta[file.name] || detectFromFileName(file.name);
           const { base, ext } = splitFileName(file.name);
-          const liveUrl = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`;
+          const lowExt = ext.toLowerCase();
           const sig = state.signatures[file.name];
           const vStatus = state.verifyStatus[file.name];
+          const matchedKws = getMatchedKeywords(file);
 
           const li = document.createElement("li");
-          li.className = `doc-item ${vStatus === "ok" ? "is-verified" : vStatus === "invalid" ? "is-invalid" : ""}`;
+          li.className = `doc-item ${vStatus === "ok" ? "is-verified" : vStatus === "invalid" ? "is-invalid" : ""} ${matchedKws.length ? "is-alert" : ""}`;
 
           let sigBadge = "";
           if (sig) {
@@ -1399,7 +1368,9 @@
             sigBadge = `<button type="button" class="badge ${cls}" data-verify="${escapeHtml(file.name)}">${lbl}</button>`;
           }
 
-          // Headers & administratieve strook ALLEEN tonen na Veerpen + geheime string
+          const extClass = lowExt === "pdf" ? "badge--pdf" : lowExt === "eml" ? "badge--eml" : "";
+
+          // Headers ALLEEN tonen na Veerpen + geheime string
           const headerStripMarkup = state.unlocked
             ? `
               <div class="admin-meta-strip">
@@ -1416,21 +1387,22 @@
               <div class="doc-main">
                 <div class="doc-title-row">
                   ${m.number ? `<span class="badge badge--num"># ${escapeHtml(m.number)}</span>` : ""}
-                  <a class="doc-link" href="${liveUrl}" target="_blank" rel="noopener noreferrer">${escapeWithEmailBlackout(base)}</a>
-                  ${ext ? `<span class="badge ${ext.toLowerCase() === "html" ? "badge--html" : ""}">${escapeHtml(ext.toUpperCase())}</span>` : ""}
+                  <a class="doc-link" href="#" data-view="${escapeHtml(file.name)}">${escapeWithEmailBlackout(base)}</a>
+                  ${ext ? `<span class="badge ${extClass}">${escapeHtml(ext.toUpperCase())}</span>` : ""}
                   ${m.role === "onderlegger" ? `<span class="badge badge--onderlegger">Onderlegger</span>` : ""}
                   <span class="badge badge--folder">${escapeHtml(m.folder || "Algemeen")}</span>
+                  ${matchedKws.length ? `<span class="badge badge--alert">Treffer: ${escapeHtml(matchedKws.join(", "))}</span>` : ""}
                   ${sigBadge}
                 </div>
                 <div class="doc-meta">
                   <span>${escapeHtml(formatBytes(file.size))}</span>
                   <span>&bull;</span>
                   <span>${escapeWithEmailBlackout(file.name)}</span>
-                  ${sig ? `<span>&bull;</span><span>SHA: ${escapeHtml(sig.sha256.slice(0, 10))}…</span>` : ""}
                 </div>
               </div>
 
               <div class="doc-actions">
+                <button type="button" class="btn btn--sm" data-view="${escapeHtml(file.name)}">Bekijk</button>
                 ${sig ? `<button type="button" class="btn btn--sm" data-verify="${escapeHtml(file.name)}">Verifieer</button>` : ""}
                 ${state.unlocked ? `
                   <button type="button" class="btn btn--sm" data-meta="${escapeHtml(file.name)}">Headers / Map</button>
@@ -1448,6 +1420,7 @@
         listContainer.appendChild(ul);
 
         const findF = (n) => allFiles.find(x => x.name === n);
+        ul.querySelectorAll("[data-view]").forEach(el => el.addEventListener("click", e => { e.preventDefault(); openViewerModal(findF(el.dataset.view)); }));
         ul.querySelectorAll("[data-verify]").forEach(b => b.addEventListener("click", () => openVerifyModal(findF(b.dataset.verify))));
         if (state.unlocked) {
           ul.querySelectorAll("[data-meta]").forEach(b => b.addEventListener("click", () => openMetaModal(findF(b.dataset.meta))));
@@ -1457,7 +1430,7 @@
       }
 
       // =========================================================================
-      // MODAL: HEADERS & MAPINDELING (ALLEEN TOEGANKELIJK MET VEERPEN)
+      // MODALS: HEADERS, ONDERTEKENEN, VERIFIËREN, VERWIJDEREN
       // =========================================================================
       async function openMetaModal(file) {
         if (!file || !state.unlocked) return;
@@ -1477,25 +1450,21 @@
         $("meta-date").value = m.date || "";
         const entries = Object.entries(m.rawHeaders || {});
         $("meta-raw-headers").innerHTML = entries.length === 0
-          ? `<tr><td colspan="2" style="color:var(--muted);">Geen tekstheaders gevonden (binair bestand of geen sleutel:waarde-regels).</td></tr>`
+          ? `<tr><td colspan="2" style="color:var(--muted);">Geen tekstheaders gevonden.</td></tr>`
           : entries.map(([k, v]) => `<tr><th>${escapeHtml(k)}</th><td>${escapeWithEmailBlackout(v)}</td></tr>`).join("");
       }
 
       $("btn-meta-rescan").addEventListener("click", async () => {
         if (!state.pendingMetaFile || !state.unlocked) return;
-        const m = await scanFileHeaders(state.pendingMetaFile, true);
-        fillMetaModal(m);
+        fillMetaModal(await scanFileHeaders(state.pendingMetaFile, true));
         renderAll();
-        showToast("Headers opnieuw uitgelezen.", "ok");
       });
-
       $("btn-meta-save").addEventListener("click", () => {
         if (!state.pendingMetaFile || !state.unlocked) return;
-        const name = state.pendingMetaFile.name;
         const folder = $("meta-folder").value.trim() || "Algemeen";
         ensureFolderExists(folder);
-        state.meta[name] = {
-          ...(state.meta[name] || {}),
+        state.meta[state.pendingMetaFile.name] = {
+          ...(state.meta[state.pendingMetaFile.name] || {}),
           number: $("meta-number").value.trim().toUpperCase(),
           role: $("meta-role").value,
           folder,
@@ -1506,14 +1475,10 @@
         persistAll();
         $("meta-modal").classList.remove("visible");
         renderAll();
-        showToast("Administratieve gegevens & map opgeslagen.", "ok");
+        showToast("Opgeslagen.", "ok");
       });
-
       $("btn-meta-cancel").addEventListener("click", () => $("meta-modal").classList.remove("visible"));
 
-      // =========================================================================
-      // MODAL: ONDERTEKENEN & VERIFIËREN
-      // =========================================================================
       async function openSignModal(file) {
         if (!file || !state.unlocked) return;
         state.pendingSign = file;
@@ -1525,9 +1490,8 @@
         resetSigPad();
         $("sign-modal").classList.add("visible");
         try {
-          const hash = await sha256Hex(await getFileArrayBuffer(file));
-          state.pendingSignHash = hash;
-          $("sign-hash-preview").textContent = hash;
+          state.pendingSignHash = await sha256Hex(await getFileArrayBuffer(file));
+          $("sign-hash-preview").textContent = state.pendingSignHash;
           $("btn-sign-confirm").disabled = false;
         } catch (err) {
           $("sign-error").textContent = err.message;
@@ -1543,15 +1507,13 @@
         const signedAt = new Date().toISOString();
         const drawing = padHasInk ? sigPad.toDataURL("image/png") : "";
         const drawingHash = drawing ? await sha256Hex(new TextEncoder().encode(drawing)) : "";
-        const payload = buildSignPayload({ name: file.name, sha256: state.pendingSignHash, signer, signedAt, drawingHash });
-        const hmac = await hmacSha256Hex(state.activeSecret, payload);
-
+        const hmac = await hmacSha256Hex(state.activeSecret, buildSignPayload({ name: file.name, sha256: state.pendingSignHash, signer, signedAt, drawingHash }));
         state.signatures[file.name] = { sha256: state.pendingSignHash, hmac, signer, signedAt, drawing, drawingHash };
         state.verifyStatus[file.name] = "ok";
         persistAll();
         $("sign-modal").classList.remove("visible");
         renderAll();
-        showToast(`"${file.name}" ondertekend met veerpen.`, "ok");
+        showToast("Ondertekend met veerpen.", "ok");
       });
 
       async function verifyFile(file, secret = "") {
@@ -1569,10 +1531,10 @@
         const expected = await hmacSha256Hex(secret, buildSignPayload({ name: file.name, sha256: liveSha, signer: sig.signer, signedAt: sig.signedAt, drawingHash: sig.drawingHash || "" }));
         if (expected === sig.hmac) {
           state.verifyStatus[file.name] = "ok";
-          return { status: "ok", liveSha, message: "GEVERIFIEERD: Inhoud (SHA-256) en HMAC-handtekening kloppen volledig." };
+          return { status: "ok", liveSha, message: "GEVERIFIEERD: Inhoud en HMAC-handtekening kloppen volledig." };
         }
         state.verifyStatus[file.name] = "invalid";
-        return { status: "invalid", liveSha, message: "ONGELDIG: HMAC-handtekening komt niet overeen met de geheime string." };
+        return { status: "invalid", liveSha, message: "ONGELDIG: HMAC-handtekening komt niet overeen." };
       }
 
       async function openVerifyModal(file, customSecret = "") {
@@ -1585,7 +1547,6 @@
         $("verify-secret-box").style.display = "none";
         $("btn-remove-sig").style.display = state.unlocked && sig ? "inline-flex" : "none";
         $("verify-modal").classList.add("visible");
-
         const res = await verifyFile(file, customSecret || state.activeSecret);
         renderAll();
         $("verify-banner").className = `verify-banner verify-banner--${res.status === "ok" ? "ok" : res.status === "invalid" ? "invalid" : "warn"}`;
@@ -1614,31 +1575,21 @@
       });
       $("btn-verify-close").addEventListener("click", () => $("verify-modal").classList.remove("visible"));
 
-      // =========================================================================
-      // VERWIJDEREN, UPLOADEN, MAPPEN & BEHEERACTIES
-      // =========================================================================
       function openDeleteModal(file) {
         if (!file || !state.unlocked) return;
         state.pendingDelete = file;
         $("modal-filename").textContent = maskEmailPlain(file.name);
-        $("modal-detail").textContent = file.isLocal
-          ? "Verwijdert het lokaal geladen bestand uit deze sessie."
-          : state.deleteMode === "github"
-            ? `Verwijdert het bestand definitief uit ${REPO_OWNER}/${REPO_NAME} via GitHub API.`
-            : "Verbergt het bestand lokaal uit het overzicht.";
+        $("modal-detail").textContent = file.isLocal ? "Verwijdert uit deze sessie." : state.deleteMode === "github" ? "Definitief verwijderen uit GitHub." : "Lokaal verbergen uit overzicht.";
         $("modal-error").classList.remove("visible");
         $("confirm-modal").classList.add("visible");
       }
-
       $("btn-modal-cancel").addEventListener("click", () => $("confirm-modal").classList.remove("visible"));
       $("btn-modal-confirm").addEventListener("click", async () => {
         const file = state.pendingDelete;
         if (!file || !state.unlocked) return;
-        if (file.isLocal) {
-          state.localFiles = state.localFiles.filter(f => f.name !== file.name);
-        } else if (state.deleteMode === "local") {
-          state.hiddenFiles.add(file.name);
-        } else {
+        if (file.isLocal) state.localFiles = state.localFiles.filter(f => f.name !== file.name);
+        else if (state.deleteMode === "local") state.hiddenFiles.add(file.name);
+        else {
           const token = $("gh-token-input").value.trim() || sessionStorage.getItem(SESSION_TOKEN) || "";
           if (!token) { $("modal-error").textContent = "GitHub-token vereist."; $("modal-error").classList.add("visible"); return; }
           const resp = await fetch(`${GITHUB_API_BASE}/${encodeURIComponent(file.name)}`, {
@@ -1652,9 +1603,11 @@
         persistAll();
         $("confirm-modal").classList.remove("visible");
         renderAll();
-        showToast(`"${file.name}" verwijderd.`);
       });
 
+      // =========================================================================
+      // EVENTS & INITIALISATIE
+      // =========================================================================
       $("btn-create-folder").addEventListener("click", () => {
         const val = $("new-folder-input").value.trim();
         if (!val) return;
@@ -1662,24 +1615,20 @@
         $("new-folder-input").value = "";
         persistAll();
         renderAll();
-        showToast(`Map "${val}" aangemaakt.`, "ok");
       });
 
       $("btn-scan-all").addEventListener("click", async () => {
         if (!state.unlocked) return;
-        const all = getAllFiles();
-        showToast(`Headers scannen van ${all.length} document(en)...`);
-        for (const f of all) await scanFileHeaders(f, true);
+        showToast("Headers en inhoud scannen...");
+        for (const f of getAllFiles()) await scanFileHeaders(f, true);
         renderAll();
-        showToast("Alle headers uitgelezen en nummers bijgewerkt.", "ok");
+        showToast("Scan voltooid.", "ok");
       });
 
       $("btn-auto-folders").addEventListener("click", autoOrganizeFolders);
-
       $("btn-verify-all").addEventListener("click", async () => {
-        const signed = getAllFiles().filter(f => state.signatures[f.name]);
         let ok = 0, bad = 0;
-        for (const f of signed) {
+        for (const f of getAllFiles().filter(x => state.signatures[x.name])) {
           const r = await verifyFile(f, state.activeSecret);
           if (r.status === "ok") ok++; else bad++;
         }
@@ -1699,27 +1648,18 @@
         }
         e.target.value = "";
         renderAll();
-        showToast("Document(en) toegevoegd en headers gescand.", "ok");
+        showToast("Document(en) toegevoegd.", "ok");
       });
 
       $("btn-export-manifest").addEventListener("click", () => {
-        const payload = {
-          repo: `${REPO_OWNER}/${REPO_NAME}`,
-          exportedAt: new Date().toISOString(),
-          folders: state.folders,
-          meta: state.meta,
-          signatures: state.signatures
-        };
         const a = document.createElement("a");
-        a.href = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
+        a.href = URL.createObjectURL(new Blob([JSON.stringify({ repo: `${REPO_OWNER}/${REPO_NAME}`, folders: state.folders, meta: state.meta, signatures: state.signatures }, null, 2)], { type: "application/json" }));
         a.download = `manifest-${REPO_NAME}.json`;
         a.click();
       });
-
       $("btn-import-manifest").addEventListener("click", () => $("manifest-import-input").click());
       $("manifest-import-input").addEventListener("change", async (e) => {
-        const f = e.target.files?.[0];
-        e.target.value = "";
+        const f = e.target.files?.[0]; e.target.value = "";
         if (!f) return;
         try {
           const p = JSON.parse(await f.text());
@@ -1728,13 +1668,9 @@
           if (p.signatures) state.signatures = { ...state.signatures, ...p.signatures };
           persistAll();
           renderAll();
-          showToast("Manifest geïmporteerd.", "ok");
         } catch { showToast("Ongeldig manifest.", "red"); }
       });
 
-      // =========================================================================
-      // VEERPEN ONTGRENDELEN, LETTERGROOTTE & ZOEKEN
-      // =========================================================================
       $("btn-quill").addEventListener("click", () => {
         if (state.unlocked) return $("admin-bar").scrollIntoView({ behavior: "smooth" });
         state.unlockOpen = !state.unlockOpen;
@@ -1746,31 +1682,20 @@
         e.preventDefault();
         const val = $("secret-input").value.trim();
         if (val === GEHEIME_STRING) {
-          state.unlocked = true;
-          state.activeSecret = val;
-          state.unlockOpen = false;
-          $("unlock-panel").classList.remove("visible");
-          $("admin-bar").classList.add("visible");
-          $("btn-quill").classList.add("is-unlocked");
-          $("quill-label").textContent = "Veerpen actief";
+          state.unlocked = true; state.activeSecret = val; state.unlockOpen = false;
+          $("unlock-panel").classList.remove("visible"); $("admin-bar").classList.add("visible");
+          $("btn-quill").classList.add("is-unlocked"); $("quill-label").textContent = "Veerpen actief";
           $("secret-input").value = "";
           renderAll();
           showToast("Veerpen ontgrendeld — headers zijn nu zichtbaar.", "ok");
-        } else {
-          $("unlock-error").classList.add("visible");
-        }
+        } else $("unlock-error").classList.add("visible");
       });
       $("btn-lock").addEventListener("click", () => {
-        state.unlocked = false;
-        state.activeSecret = "";
-        $("admin-bar").classList.remove("visible");
-        $("btn-quill").classList.remove("is-unlocked");
+        state.unlocked = false; state.activeSecret = "";
+        $("admin-bar").classList.remove("visible"); $("btn-quill").classList.remove("is-unlocked");
         $("quill-label").textContent = "Veerpen";
-        $("meta-modal").classList.remove("visible");
-        $("sign-modal").classList.remove("visible");
-        $("confirm-modal").classList.remove("visible");
+        $("meta-modal").classList.remove("visible"); $("sign-modal").classList.remove("visible"); $("confirm-modal").classList.remove("visible");
         renderAll();
-        showToast("Veerpen vergrendeld — headers verborgen.");
       });
 
       document.querySelectorAll('input[name="deleteMode"]').forEach(r => r.addEventListener("change", e => {
@@ -1780,14 +1705,16 @@
         $("token-row").classList.toggle("visible", state.deleteMode === "github");
       }));
 
-      $("btn-save-token").addEventListener("click", () => {
-        const t = $("gh-token-input").value.trim();
-        if (t) { sessionStorage.setItem(SESSION_TOKEN, t); showToast("Token opgeslagen in sessie.", "ok"); }
-      });
+      $("btn-save-token").addEventListener("click", () => { const t = $("gh-token-input").value.trim(); if (t) { sessionStorage.setItem(SESSION_TOKEN, t); showToast("Token bewaard.", "ok"); } });
       $("btn-clear-token").addEventListener("click", () => { $("gh-token-input").value = ""; sessionStorage.removeItem(SESSION_TOKEN); });
       $("btn-restore-hidden").addEventListener("click", () => { state.hiddenFiles.clear(); persistAll(); renderAll(); });
 
       $("search-input").addEventListener("input", e => { state.query = e.target.value; renderAll(); });
+      $("watch-keywords").addEventListener("input", e => { state.watchKeywords = e.target.value; persistAll(); renderAll(); });
+      $("date-from").addEventListener("change", e => { state.dateFrom = e.target.value; renderAll(); });
+      $("date-to").addEventListener("change", e => { state.dateTo = e.target.value; renderAll(); });
+      $("btn-clear-dates").addEventListener("click", () => { state.dateFrom = ""; state.dateTo = ""; $("date-from").value = ""; $("date-to").value = ""; renderAll(); });
+      $("btn-filter-alerts").addEventListener("click", () => { state.activeFilter = { type: "alerts", value: "" }; renderAll(); });
       $("sort-select").addEventListener("change", e => { state.sortBy = e.target.value; renderAll(); });
       $("btn-refresh").addEventListener("click", fetchDocuments);
 
@@ -1804,6 +1731,8 @@
         state.hiddenFiles = new Set(loadJson(STORAGE_HIDDEN, []));
         state.signatures = loadJson(STORAGE_SIGS, {});
         state.meta = loadJson(STORAGE_META, {});
+        state.watchKeywords = localStorage.getItem(STORAGE_WATCH) || "";
+        $("watch-keywords").value = state.watchKeywords;
         const savedFolders = loadJson(STORAGE_FOLDERS, null);
         if (Array.isArray(savedFolders) && savedFolders.length) state.folders = savedFolders;
         const sc = parseFloat(localStorage.getItem(STORAGE_FONT));
