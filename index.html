@@ -205,15 +205,11 @@
     .audit-check input { accent-color: var(--red); margin-top: 3px; }
     .pdf-frame { width: 100%; height: 70vh; border: 1px solid var(--border); border-radius: var(--radius-sm); }
     .eml-box { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
-    .eml-headers { background: var(--paper); padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12.5px; }
     .eml-body { padding: 14px; background: var(--bg); color: var(--text); white-space: pre-wrap; max-height: 55vh; overflow-y: auto; }
     .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 14px; }
     .kpi-card { background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
     .kpi-val { font-size: 22px; font-weight: 700; color: var(--red); font-family: var(--mono); }
     .kpi-lbl { font-size: 11.5px; color: var(--muted); font-weight: 600; }
-    .bar-row { display: grid; grid-template-columns: 110px 1fr 44px; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12.5px; }
-    .bar-track { height: 10px; background: var(--paper-hover); border-radius: 999px; overflow: hidden; }
-    .bar-fill { height: 100%; background: var(--red); border-radius: 999px; }
     .header-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
     .header-table th, .header-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
     .header-table th { font-family: var(--mono); color: var(--muted); font-weight: 600; }
@@ -243,7 +239,7 @@
     <header class="header">
       <div class="brand">
         <h1>Professioneel Archief- &amp; POD-Systeem</h1>
-        <p>Mappenbeheer, zelf-archiverende PODs, controle-verwijdering &amp; veerpen voor <code>goija/nummer</code></p>
+        <p>Mappenbeheer, zelf-archiverende PODs (.ttl + .acl), controle-verwijdering &amp; veerpen voor <code>goija/nummer</code></p>
       </div>
 
       <div class="header-actions">
@@ -387,7 +383,7 @@
 
     <footer class="footer">
       <span>Bron: <a href="https://github.com/goija/nummer" target="_blank" rel="noopener noreferrer">github.com/goija/nummer</a></span>
-      <span style="font-family:var(--mono);">Mappen + Solid PODs (.ttl) + Audit-logboek + HMAC-SHA256</span>
+      <span style="font-family:var(--mono);">Mappen + Solid PODs (.ttl + .acl) + Audit-logboek + HMAC-SHA256</span>
     </footer>
   </div>
 
@@ -395,7 +391,7 @@
   <div class="modal-backdrop" id="pod-modal" role="dialog" aria-modal="true">
     <div class="modal-card modal-card--wide">
       <div class="modal-title">
-        <span>Zelf-archiverende PODs (Solid / RDF Capsules)</span>
+        <span>Zelf-archiverende PODs (Solid / RDF + ACL Capsules)</span>
         <button type="button" class="btn btn--sm" id="btn-pod-close">&times; Sluiten</button>
       </div>
       <div class="modal-body">
@@ -403,11 +399,13 @@
           <div class="sys-card-head"><span>Nieuwe Archief-POD aanmaken</span></div>
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
             <input type="text" id="pod-name" class="input-field" placeholder="POD-naam (bijv. Dossier-2026-Pod)" />
-            <input type="url" id="pod-webid" class="input-field" placeholder="WebID / URI (bijv. https://solid-virid.vercel.app/pod/)" />
+            <input type="url" id="pod-webid" class="input-field" placeholder="Container URI (bijv. https://solid-virid.vercel.app/pod/)" />
+            <input type="url" id="pod-owner-webid" class="input-field" placeholder="Eigenaar WebID (voor .acl, bijv. .../card#me)" />
             <input type="text" id="pod-retention" class="input-field" placeholder="Bewaartermijn (bijv. 7 jaar / Permanent)" />
           </div>
           <input type="text" id="pod-desc" class="input-field" style="width:100%; margin-top:8px;" placeholder="Omschrijving van deze autonome archief-POD..." />
-          <div style="margin-top:8px; display:flex; justify-content:flex-end;">
+          <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <label class="pii-check"><input type="checkbox" id="pod-public-read" /> Publiek alleen-lezen toestaan in .acl (standaard privé)</label>
             <button type="button" class="btn btn--pod btn--sm" id="btn-create-pod">+ POD aanmaken</button>
           </div>
         </div>
@@ -437,9 +435,12 @@
         </div>
 
         <div class="sys-card">
-          <div class="sys-card-head"><span>2. W3C Solid POD Export (Turtle RDF .ttl)</span></div>
-          <p style="margin:0 0 8px; font-size:12.5px;">Genereert een gestandaardiseerd <code>.ttl</code>-archiefbestand met alle PODs, gekoppelde documenten en SHA-256 hashes.</p>
-          <button type="button" class="btn btn--pod btn--sm" id="btn-exp-ttl">Exporteer alle PODs als Turtle (.ttl)</button>
+          <div class="sys-card-head"><span>2. W3C Solid POD Export (Turtle RDF .ttl + .acl)</span></div>
+          <p style="margin:0 0 8px; font-size:12.5px;">Genereert gestandaardiseerde <code>.ttl</code>- en <code>.acl</code>-bestanden met PODs, gekoppelde documenten, SHA-256 hashes en toegangsrechten.</p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn btn--pod btn--sm" id="btn-exp-ttl">Exporteer alle PODs (.ttl)</button>
+            <button type="button" class="btn btn--sm" id="btn-exp-acl">Exporteer alle .acl-bestanden</button>
+          </div>
         </div>
 
         <div class="sys-card">
@@ -505,7 +506,7 @@
     </div>
   </div>
 
-  <!-- MODAL: CONTROLE VÓÓR VERWIJDEREN (MAP, DOCUMENT OF POD) -->
+  <!-- MODAL: CONTROLE VÓÓR VERWIJDEREN -->
   <div class="modal-backdrop" id="control-delete-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
       <h2 class="modal-title" id="cd-title">Controle vóór verwijderen</h2>
@@ -657,7 +658,16 @@
         hiddenFiles: new Set(),
         folders: [TEMP_FOLDER, "Algemeen", "Onderleggers"],
         pods: [
-          { id: "pod-hoofdarchief", name: "Hoofdarchief-POD", webid: "https://solid-virid.vercel.app/pod/hoofdarchief/", retention: "Permanent", desc: "Standaard autonome archief-capsule", createdAt: new Date().toISOString() }
+          {
+            id: "pod-hoofdarchief",
+            name: "Hoofdarchief-POD",
+            webid: "https://solid-virid.vercel.app/pod/hoofdarchief/",
+            ownerWebId: "https://solid-virid.vercel.app/profile/card#me",
+            publicRead: false,
+            retention: "Permanent",
+            desc: "Standaard autonome archief-capsule",
+            createdAt: new Date().toISOString()
+          }
         ],
         meta: {}, signatures: {}, verifyStatus: {}, auditLog: [],
         systems: { emailActive: false, emailEndpoint: "", localEndpoint: "http://127.0.0.1:3000/sync" },
@@ -752,7 +762,7 @@
       }
 
       // =======================================================================
-      // ZELF-ARCHIVERENDE PODS (SOLID / TURTLE RDF)
+      // ZELF-ARCHIVERENDE PODS (W3C TURTLE RDF .ttl + WEB ACCESS CONTROL .acl)
       // =======================================================================
       function buildTurtleForPod(pod) {
         const docs = getAllFiles().filter(f => state.meta[f.name]?.podId === pod.id);
@@ -780,6 +790,31 @@
         return ttl;
       }
 
+      function buildAclForPod(pod) {
+        const baseUri = (pod.webid || `https://solid-virid.vercel.app/pod/${pod.id}/`).replace(/\/?$/, "/");
+        const ownerWebId = pod.ownerWebId || `${baseUri}profile/card#me`;
+        let acl = `@prefix acl: <http://www.w3.org/ns/auth/acl#> .\n`;
+        acl += `@prefix foaf: <http://xmlns.com/foaf/0.1/> .\n\n`;
+        acl += `# Eigenaar: volledige controle over container en onderliggende documenten\n`;
+        acl += `<#owner>\n`;
+        acl += `  a acl:Authorization ;\n`;
+        acl += `  acl:agent <${ownerWebId}> ;\n`;
+        acl += `  acl:accessTo <${baseUri}> ;\n`;
+        acl += `  acl:default <${baseUri}> ;\n`;
+        acl += `  acl:mode acl:Read, acl:Write, acl:Control .\n`;
+
+        if (pod.publicRead) {
+          acl += `\n# Publiek alleen-lezen\n`;
+          acl += `<#public>\n`;
+          acl += `  a acl:Authorization ;\n`;
+          acl += `  acl:agentClass foaf:Agent ;\n`;
+          acl += `  acl:accessTo <${baseUri}> ;\n`;
+          acl += `  acl:default <${baseUri}> ;\n`;
+          acl += `  acl:mode acl:Read .\n`;
+        }
+        return acl;
+      }
+
       function downloadFile(filename, content, mime) {
         const a = document.createElement("a");
         a.href = URL.createObjectURL(new Blob([content], { type: mime }));
@@ -795,9 +830,9 @@
               return `
                 <div class="sys-card">
                   <div class="sys-card-head">
-                    <span>${escapeHtml(pod.name)} <span class="badge badge--pod">${cnt} doc(s)</span></span>
+                    <span>${escapeHtml(pod.name)} <span class="badge badge--pod">${cnt} doc(s)</span> <span class="badge">${pod.publicRead ? "Publiek lezen" : "Privé (.acl)"}</span></span>
                     <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                      <button type="button" class="btn btn--sm" data-export-pod="${escapeHtml(pod.id)}">Exporteer .ttl</button>
+                      <button type="button" class="btn btn--sm" data-export-pod="${escapeHtml(pod.id)}">Exporteer .ttl + .acl</button>
                       <button type="button" class="btn btn--primary btn--sm" data-del-pod="${escapeHtml(pod.id)}">Verwijder POD</button>
                     </div>
                   </div>
@@ -812,8 +847,9 @@
           const pod = state.pods.find(p => p.id === b.dataset.exportPod);
           if (!pod) return;
           downloadFile(`${pod.id}.ttl`, buildTurtleForPod(pod), "text/turtle;charset=utf-8");
-          logAudit("EXPORT", pod.name, "POD geëxporteerd als W3C Turtle RDF (.ttl).");
-          showToast(`POD "${pod.name}" geëxporteerd als .ttl`, "ok");
+          setTimeout(() => downloadFile(`${pod.id}.acl`, buildAclForPod(pod), "text/turtle;charset=utf-8"), 160);
+          logAudit("EXPORT", pod.name, "POD geëxporteerd als Turtle RDF (.ttl) + Web Access Control (.acl).");
+          showToast(`POD "${pod.name}" geëxporteerd (.ttl + .acl).`, "ok");
         }));
 
         $("pod-list-container").querySelectorAll("[data-del-pod]").forEach(b => b.addEventListener("click", () => {
@@ -832,16 +868,16 @@
           id,
           name,
           webid: $("pod-webid").value.trim() || `https://solid-virid.vercel.app/pod/${id}/`,
+          ownerWebId: $("pod-owner-webid").value.trim() || "https://solid-virid.vercel.app/profile/card#me",
+          publicRead: $("pod-public-read").checked,
           retention: $("pod-retention").value.trim() || "Permanent",
           desc: $("pod-desc").value.trim(),
           createdAt: new Date().toISOString()
         };
         state.pods.push(pod);
-        $("pod-name").value = ""; $("pod-webid").value = ""; $("pod-retention").value = ""; $("pod-desc").value = "";
-        logAudit("POD_BEHEER", pod.name, `Nieuwe archief-POD aangemaakt (${pod.webid}).`);
-        renderPodModal();
-        renderAll();
-        showToast(`Archief-POD "${pod.name}" aangemaakt.`, "ok");
+        $("pod-name").value = ""; $("pod-webid").value = ""; $("pod-owner-webid").value = ""; $("pod-retention").value = ""; $("pod-desc").value = ""; $("pod-public-read").checked = false;
+        logAudit("POD_BEHEER", pod.name, `Nieuwe archief-POD aangemaakt (${pod.publicRead ? "publiek lezen" : "privé"}).`);
+        renderPodModal(); renderAll(); showToast(`Archief-POD "${pod.name}" aangemaakt.`, "ok");
       });
 
       // =======================================================================
@@ -882,6 +918,14 @@
         showToast("Alle PODs geëxporteerd als .ttl", "ok");
       });
 
+      $("btn-exp-acl").addEventListener("click", () => {
+        state.pods.forEach((pod, idx) => {
+          setTimeout(() => downloadFile(`${pod.id}.acl`, buildAclForPod(pod), "text/turtle;charset=utf-8"), idx * 180);
+        });
+        logAudit("EXPORT", "Alle PODs (.acl)", `${state.pods.length} W3C .acl-bestand(en) geëxporteerd.`);
+        showToast(`${state.pods.length} .acl-bestand(en) geëxporteerd.`, "ok");
+      });
+
       $("btn-exp-csv").addEventListener("click", () => {
         const rows = [["Bestandsnaam", "Nummer", "Status", "Map", "POD", "Datum", "Ondertekend"]];
         for (const f of getAllFiles()) {
@@ -909,7 +953,7 @@
       });
 
       // =======================================================================
-      // CONTROLEMECHANISME VÓÓR VERWIJDEREN (MAP, DOCUMENT, POD)
+      // CONTROLEMECHANISME VÓÓR VERWIJDEREN
       // =======================================================================
       function openControlDeleteModal(type, target) {
         if (!state.unlocked) return;
@@ -975,8 +1019,7 @@
           logAudit("VERWIJDERD_NA_CONTROLE", file.name, `Document verwijderd (${state.deleteMode}).`);
         }
         $("control-delete-modal").classList.remove("visible");
-        renderAll();
-        showToast("Verwijderd na controle.", "ok");
+        renderAll(); showToast("Verwijderd na controle.", "ok");
       });
 
       // =======================================================================
