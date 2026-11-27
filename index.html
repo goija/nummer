@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentenbeheerder — Veerpen &amp; Verificatie</title>
+  <title>Documentenbeheerder — Headers, Nummers &amp; Veerpen</title>
   <style>
     /* =========================================================================
        KRIJTWIT & ZEEUWS MEEKRAB-ROOD — KLEUREN & BASISVARIABELEN
@@ -26,6 +26,9 @@
       --warn: #8A5300;
       --warn-soft: #FFF8EB;
       --warn-border: #E9CF9B;
+      --info: #1D4E89;
+      --info-soft: #EFF5FC;
+      --info-border: #BDD4F0;
       --radius: 10px;
       --radius-sm: 7px;
       --shadow-sm: 0 1px 2px rgba(30, 30, 30, 0.05);
@@ -35,9 +38,7 @@
       --doc-scale: 1;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -50,17 +51,15 @@
     }
 
     .page {
-      max-width: 1020px;
+      max-width: 1240px;
       margin: 0 auto;
-      padding: 24px 18px 56px;
+      padding: 22px 18px 56px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    main {
-      flex: 1;
-    }
+    main { flex: 1; }
 
     /* =========================================================================
        HEADER
@@ -71,22 +70,21 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 16px;
-      padding-bottom: 18px;
+      padding-bottom: 16px;
       border-bottom: 2px solid var(--text);
       margin-bottom: 16px;
     }
 
     .brand h1 {
       margin: 0 0 4px;
-      font-size: clamp(23px, 3vw, 31px);
+      font-size: clamp(22px, 3vw, 30px);
       font-weight: 700;
       letter-spacing: -0.025em;
-      color: var(--text);
     }
 
     .brand p {
       margin: 0;
-      font-size: 14px;
+      font-size: 13.5px;
       color: var(--muted);
     }
 
@@ -127,27 +125,15 @@
       padding: 6px 10px;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.14s ease, color 0.14s ease;
     }
 
-    .font-btn:hover {
-      background: var(--paper-hover);
-      color: var(--red);
-    }
+    .font-btn:hover { background: var(--paper-hover); color: var(--red); }
+    .font-btn.active { background: var(--bg); color: var(--red); box-shadow: var(--shadow-sm); }
 
-    .font-btn.active {
-      background: var(--bg);
-      color: var(--red);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* Veerpen-knop */
     .quill-btn {
       appearance: none;
-      position: relative;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 7px;
       height: 38px;
       padding: 0 12px;
@@ -162,151 +148,45 @@
       transition: all 0.16s ease;
     }
 
-    .quill-btn:hover {
-      border-color: var(--red);
-      color: var(--red);
-      background: var(--red-soft);
-    }
-
-    .quill-btn.is-unlocked {
-      background: var(--red);
-      border-color: var(--red);
-      color: #FFFFFF;
-      box-shadow: 0 2px 8px rgba(163, 28, 28, 0.25);
-    }
-
-    .quill-btn.is-unlocked:hover {
-      background: var(--red-hover);
-      border-color: var(--red-hover);
-    }
-
-    .quill-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #FFFFFF;
-      display: none;
-    }
-
-    .quill-btn.is-unlocked .quill-dot {
-      display: inline-block;
-    }
+    .quill-btn:hover { border-color: var(--red); color: var(--red); background: var(--red-soft); }
+    .quill-btn.is-unlocked { background: var(--red); border-color: var(--red); color: #FFFFFF; }
+    .quill-dot { width: 7px; height: 7px; border-radius: 50%; background: #FFFFFF; display: none; }
+    .quill-btn.is-unlocked .quill-dot { display: inline-block; }
 
     /* =========================================================================
-       VEERPEN ONTGRENDEL-PANEEL & BEHEERBALK
+       PANEEL & BEHEERBALK
        ========================================================================= */
-    .unlock-panel {
+    .unlock-panel, .admin-bar {
       display: none;
-      background: var(--paper);
-      border: 1px solid var(--border-strong);
-      border-left: 3.5px solid var(--red);
       border-radius: var(--radius);
       padding: 14px 16px;
       margin-bottom: 16px;
-      box-shadow: var(--shadow-sm);
     }
 
-    .unlock-panel.visible {
-      display: block;
+    .unlock-panel {
+      background: var(--paper);
+      border: 1px solid var(--border-strong);
+      border-left: 3.5px solid var(--red);
     }
 
-    .unlock-head {
+    .admin-bar {
+      background: var(--red-soft);
+      border: 1px solid var(--red-border);
+      border-left: 4px solid var(--red);
+    }
+
+    .unlock-panel.visible, .admin-bar.visible { display: block; }
+
+    .unlock-head, .admin-top {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
       margin-bottom: 10px;
     }
 
-    .unlock-title {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .unlock-title svg {
-      color: var(--red);
-    }
-
-    .unlock-form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .input-field {
-      flex: 1;
-      min-width: 200px;
-      padding: 9px 12px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-strong);
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 14px;
-      transition: border-color 0.14s ease, box-shadow 0.14s ease;
-    }
-
-    .input-field:focus {
-      outline: none;
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(163, 28, 28, 0.12);
-    }
-
-    .input-field.shake {
-      animation: shakeX 0.34s ease;
-      border-color: var(--red);
-    }
-
-    @keyframes shakeX {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-6px); }
-      40% { transform: translateX(6px); }
-      60% { transform: translateX(-4px); }
-      80% { transform: translateX(4px); }
-    }
-
-    .unlock-error {
-      margin: 7px 0 0;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--red);
-      display: none;
-    }
-
-    .unlock-error.visible {
-      display: block;
-    }
-
-    /* Actieve Veerpen-beheerbalk */
-    .admin-bar {
-      display: none;
-      background: var(--red-soft);
-      border: 1px solid var(--red-border);
-      border-left: 4px solid var(--red);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      margin-bottom: 16px;
-    }
-
-    .admin-bar.visible {
-      display: block;
-    }
-
-    .admin-top {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .admin-status {
+    .unlock-title, .admin-status {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -315,7 +195,7 @@
       color: var(--red);
     }
 
-    .admin-actions-row {
+    .unlock-form, .admin-actions-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -332,12 +212,7 @@
       border-top: 1px solid var(--red-border);
     }
 
-    .mode-switch {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
+    .mode-switch { display: inline-flex; flex-wrap: wrap; gap: 6px; }
     .mode-option {
       display: inline-flex;
       align-items: center;
@@ -348,21 +223,10 @@
       background: var(--bg);
       font-size: 12.5px;
       font-weight: 600;
-      color: var(--text);
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .mode-option input {
-      accent-color: var(--red);
-      margin: 0;
       cursor: pointer;
     }
-
-    .mode-option.is-active {
-      border-color: var(--red);
-      color: var(--red);
-    }
+    .mode-option input { accent-color: var(--red); margin: 0; }
+    .mode-option.is-active { border-color: var(--red); color: var(--red); }
 
     .token-row {
       display: none;
@@ -373,17 +237,28 @@
       flex-wrap: wrap;
       align-items: center;
     }
+    .token-row.visible { display: flex; }
+    .token-note { width: 100%; font-size: 11.5px; color: var(--muted); margin: 0; }
 
-    .token-row.visible {
-      display: flex;
+    .input-field, .select-field {
+      padding: 8px 11px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 13.5px;
     }
 
-    .token-note {
-      width: 100%;
-      font-size: 11.5px;
-      color: var(--muted);
-      margin: 0;
+    .input-field { flex: 1; min-width: 180px; }
+    .input-field:focus, .select-field:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(163, 28, 28, 0.12);
     }
+
+    .unlock-error { margin: 7px 0 0; font-size: 12.5px; font-weight: 600; color: var(--red); display: none; }
+    .unlock-error.visible { display: block; }
 
     /* =========================================================================
        KNOPPEN
@@ -394,169 +269,172 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      padding: 8px 13px;
+      padding: 7px 12px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-strong);
       background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.14s ease;
     }
 
-    .btn:hover:not(:disabled) {
-      border-color: var(--red);
-      color: var(--red);
-      background: var(--red-soft);
+    .btn:hover:not(:disabled) { border-color: var(--red); color: var(--red); background: var(--red-soft); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn--primary { background: var(--red); border-color: var(--red); color: #FFFFFF; }
+    .btn--primary:hover:not(:disabled) { background: var(--red-hover); border-color: var(--red-hover); color: #FFFFFF; }
+    .btn--sm { padding: 5px 9px; font-size: 12px; }
+    .btn--ghost { background: transparent; border-color: transparent; color: var(--muted); padding: 4px 8px; }
+    .btn--ghost:hover:not(:disabled) { background: var(--paper-hover); color: var(--text); border-color: transparent; }
+
+    /* =========================================================================
+       TWEEKOLOMS WORKSPACE (MAPPENSTRUCTUUR + DOCUMENTEN)
+       ========================================================================= */
+    .workspace {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
     }
 
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    @media (max-width: 860px) {
+      .workspace { grid-template-columns: 1fr; }
     }
 
-    .btn--primary {
-      background: var(--red);
-      border-color: var(--red);
-      color: #FFFFFF;
+    .sidebar {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
     }
 
-    .btn--primary:hover:not(:disabled) {
-      background: var(--red-hover);
-      border-color: var(--red-hover);
-      color: #FFFFFF;
-    }
+    .sidebar-section { margin-bottom: 14px; }
+    .sidebar-section:last-child { margin-bottom: 0; }
 
-    .btn--ok {
-      background: var(--ok);
-      border-color: var(--ok);
-      color: #FFFFFF;
-    }
-
-    .btn--ok:hover:not(:disabled) {
-      background: #145534;
-      border-color: #145534;
-      color: #FFFFFF;
-    }
-
-    .btn--sm {
-      padding: 5px 10px;
-      font-size: 12px;
-    }
-
-    .btn--ghost {
-      background: transparent;
-      border-color: transparent;
+    .sidebar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       color: var(--muted);
-      padding: 4px 8px;
     }
 
-    .btn--ghost:hover:not(:disabled) {
-      background: var(--paper-hover);
-      border-color: transparent;
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 9px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: transparent;
       color: var(--text);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 550;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover { background: var(--paper-hover); }
+    .nav-btn.is-active {
+      background: var(--bg);
+      border-color: var(--red-border);
+      color: var(--red);
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-count {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0 6px;
+    }
+
+    .folder-add-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .folder-add-row .input-field {
+      min-width: 0;
+      padding: 6px 8px;
+      font-size: 12.5px;
     }
 
     /* =========================================================================
-       WERKBALK
+       WERKBALK & DOCUMENTENLIJST
        ========================================================================= */
     .toolbar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: var(--paper);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 10px 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
-    .search-wrap {
-      position: relative;
-      flex: 1;
-      min-width: 210px;
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 11px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      pointer-events: none;
-    }
-
+    .search-wrap { position: relative; flex: 1; min-width: 200px; }
+    .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
     .search-input {
       width: 100%;
-      padding: 8px 32px 8px 34px;
+      padding: 7px 30px 7px 32px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-strong);
       background: var(--bg);
-      color: var(--text);
       font-family: var(--sans);
-      font-size: 14px;
+      font-size: 13.5px;
     }
-
-    .search-input:focus {
-      outline: none;
-      border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(163, 28, 28, 0.1);
-    }
-
-    .search-clear {
-      position: absolute;
-      right: 7px;
-      top: 50%;
-      transform: translateY(-50%);
-      appearance: none;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1;
-      padding: 4px 6px;
-      cursor: pointer;
-      display: none;
-    }
-
-    .search-clear.visible {
-      display: block;
-    }
+    .search-input:focus { outline: none; border-color: var(--red); }
 
     .doc-counter {
       font-family: var(--mono);
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 600;
       color: var(--muted);
       padding: 4px 9px;
       border-radius: 999px;
       background: var(--bg);
       border: 1px solid var(--border);
-      white-space: nowrap;
     }
 
-    /* =========================================================================
-       DOCUMENTENLIJST & VERIFICATIEZEGELS
-       ========================================================================= */
     .doc-list {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      font-size: calc(15px * var(--doc-scale));
+      gap: 10px;
+      font-size: calc(14.5px * var(--doc-scale));
     }
 
     .doc-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
       background: var(--paper);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -564,103 +442,58 @@
       transition: border-color 0.14s ease, background-color 0.14s ease;
     }
 
-    .doc-item:hover {
-      border-color: var(--border-strong);
-      background: var(--paper-hover);
-    }
+    .doc-item:hover { border-color: var(--border-strong); background: var(--paper-hover); }
+    .doc-item.is-verified { border-left: 3.5px solid var(--ok); }
+    .doc-item.is-invalid { border-left: 3.5px solid var(--red); }
 
-    .doc-item.is-verified {
-      border-left: 3.5px solid var(--ok);
-    }
-
-    .doc-item.is-invalid {
-      border-left: 3.5px solid var(--red);
-    }
-
-    .doc-main {
-      min-width: 0;
-      flex: 1;
+    .doc-top {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
+
+    .doc-main { min-width: 0; flex: 1; }
 
     .doc-title-row {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       flex-wrap: wrap;
+      margin-bottom: 4px;
     }
 
     .doc-link {
       color: var(--text);
       text-decoration: none;
-      font-weight: 650;
+      font-weight: 700;
       font-size: 1em;
       word-break: break-word;
     }
+    .doc-link:hover { color: var(--red); text-decoration: underline; }
 
-    .doc-link:hover {
-      color: var(--red);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .ext-badge,
-    .sig-badge {
+    .badge {
       font-family: var(--mono);
       font-size: 11px;
       font-weight: 700;
       padding: 1px 7px;
       border-radius: 5px;
-      flex-shrink: 0;
+      border: 1px solid var(--border-strong);
+      background: var(--bg);
+      color: var(--muted);
       display: inline-flex;
       align-items: center;
       gap: 4px;
     }
 
-    .ext-badge {
-      text-transform: uppercase;
-      background: var(--bg);
-      border: 1px solid var(--border-strong);
-      color: var(--muted);
-    }
-
-    .ext-badge--html {
-      background: var(--red-soft);
-      border-color: var(--red-border);
-      color: var(--red);
-    }
-
-    .ext-badge--local {
-      background: var(--warn-soft);
-      border-color: var(--warn-border);
-      color: var(--warn);
-    }
-
-    .sig-badge {
-      font-family: var(--sans);
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
-
-    .sig-badge--signed {
-      background: var(--warn-soft);
-      border-color: var(--warn-border);
-      color: var(--warn);
-    }
-
-    .sig-badge--ok {
-      background: var(--ok-soft);
-      border-color: var(--ok-border);
-      color: var(--ok);
-    }
-
-    .sig-badge--invalid {
-      background: var(--red-soft);
-      border-color: var(--red-border);
-      color: var(--red);
-    }
+    .badge--num { background: var(--text); border-color: var(--text); color: #FFFFFF; }
+    .badge--folder { background: var(--info-soft); border-color: var(--info-border); color: var(--info); font-family: var(--sans); }
+    .badge--onderlegger { background: var(--warn-soft); border-color: var(--warn-border); color: var(--warn); font-family: var(--sans); }
+    .badge--html { background: var(--red-soft); border-color: var(--red-border); color: var(--red); }
+    .badge--ok { background: var(--ok-soft); border-color: var(--ok-border); color: var(--ok); font-family: var(--sans); cursor: pointer; }
+    .badge--invalid { background: var(--red-soft); border-color: var(--red-border); color: var(--red); font-family: var(--sans); cursor: pointer; }
+    .badge--signed { background: var(--warn-soft); border-color: var(--warn-border); color: var(--warn); font-family: var(--sans); cursor: pointer; }
 
     .doc-meta {
       display: flex;
@@ -672,44 +505,37 @@
       font-family: var(--mono);
     }
 
+    /* Administratieve Header-samenvatting op kaart */
+    .admin-meta-strip {
+      margin-top: 9px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 6px 12px;
+      font-size: 12px;
+    }
+
+    .meta-cell strong {
+      display: block;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+
+    .meta-cell span {
+      color: var(--text);
+      word-break: break-word;
+    }
+
     .doc-actions {
       display: flex;
       align-items: center;
       gap: 6px;
-      flex-shrink: 0;
       flex-wrap: wrap;
-    }
-
-    .gh-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 9px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 600;
-      transition: all 0.14s ease;
-    }
-
-    .gh-link:hover {
-      border-color: var(--text);
-      color: var(--text);
-    }
-
-    @media (max-width: 700px) {
-      .doc-item {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .doc-actions {
-        justify-content: flex-end;
-        padding-top: 8px;
-        border-top: 1px solid var(--border);
-      }
     }
 
     .state-box {
@@ -722,34 +548,10 @@
       font-size: 14px;
     }
 
-    .state-box--error {
-      background: var(--red-soft);
-      border-color: var(--red-border);
-      color: var(--red);
-    }
-
-    .state-box p {
-      margin: 0 0 12px;
-    }
-
-    .spinner {
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 2.5px solid var(--border-strong);
-      border-top-color: var(--red);
-      border-radius: 50%;
-      animation: spin 0.75s linear infinite;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    .state-box--error { background: var(--red-soft); border-color: var(--red-border); color: var(--red); }
 
     /* =========================================================================
-       MODALS (ONDERTEKENEN, VERIFIEREN, VERWIJDEREN)
+       MODALS
        ========================================================================= */
     .modal-backdrop {
       position: fixed;
@@ -760,16 +562,12 @@
       justify-content: center;
       padding: 16px;
       z-index: 100;
-      overflow-y: auto;
     }
-
-    .modal-backdrop.visible {
-      display: flex;
-    }
+    .modal-backdrop.visible { display: flex; }
 
     .modal-card {
       width: 100%;
-      max-width: 520px;
+      max-width: 560px;
       background: var(--bg);
       border: 1px solid var(--border-strong);
       border-top: 4px solid var(--red);
@@ -780,26 +578,12 @@
       overflow-y: auto;
     }
 
-    .modal-title {
-      margin: 0 0 10px;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .modal-body {
-      margin: 0 0 14px;
-      font-size: 13.5px;
-      color: var(--muted);
-    }
-
-    .modal-filename,
+    .modal-title { margin: 0 0 10px; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .modal-body { margin: 0 0 14px; font-size: 13.5px; color: var(--muted); }
+    .field-label { display: block; font-size: 12px; font-weight: 700; color: var(--text); margin: 10px 0 4px; }
     .hash-box {
       display: block;
-      margin: 6px 0 10px;
+      margin: 4px 0 8px;
       padding: 8px 10px;
       border-radius: var(--radius-sm);
       background: var(--paper);
@@ -810,118 +594,38 @@
       word-break: break-all;
     }
 
-    .modal-mode-tag {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 11.5px;
-      font-weight: 700;
-      background: var(--red-soft);
-      border: 1px solid var(--red-border);
-      color: var(--red);
-      margin-bottom: 8px;
-    }
-
-    .field-label {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text);
-      margin: 10px 0 4px;
-    }
-
-    .sig-pad-wrap {
-      border: 1px dashed var(--border-strong);
-      border-radius: var(--radius-sm);
-      background: var(--paper);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .sig-pad {
-      display: block;
+    .header-table {
       width: 100%;
-      height: 120px;
-      cursor: crosshair;
-      touch-action: none;
-    }
-
-    .sig-pad-tools {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 4px 8px;
-      border-top: 1px solid var(--border);
-      background: var(--bg);
-      font-size: 11.5px;
-      color: var(--muted);
-    }
-
-    .verify-banner {
-      padding: 10px 12px;
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      border: 1px solid var(--border);
-      background: var(--paper);
-    }
-
-    .verify-banner--ok {
-      background: var(--ok-soft);
-      border-color: var(--ok-border);
-      color: var(--ok);
-    }
-
-    .verify-banner--invalid {
-      background: var(--red-soft);
-      border-color: var(--red-border);
-      color: var(--red);
-    }
-
-    .verify-banner--warn {
-      background: var(--warn-soft);
-      border-color: var(--warn-border);
-      color: var(--warn);
-    }
-
-    .sig-preview-img {
-      display: block;
-      max-width: 100%;
-      max-height: 90px;
-      margin: 6px 0;
-      padding: 6px;
-      background: var(--paper);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-    }
-
-    .modal-error {
-      display: none;
-      margin: 0 0 12px;
-      padding: 8px 10px;
-      border-radius: var(--radius-sm);
-      background: var(--red-soft);
-      border: 1px solid var(--red-border);
-      color: var(--red);
+      border-collapse: collapse;
       font-size: 12.5px;
+      margin-top: 8px;
+    }
+    .header-table th, .header-table td {
+      text-align: left;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .header-table th {
+      width: 34%;
+      font-family: var(--mono);
+      color: var(--muted);
       font-weight: 600;
     }
 
-    .modal-error.visible {
-      display: block;
-    }
+    .sig-pad-wrap { border: 1px dashed var(--border-strong); border-radius: var(--radius-sm); background: var(--paper); overflow: hidden; }
+    .sig-pad { display: block; width: 100%; height: 115px; cursor: crosshair; touch-action: none; }
+    .sig-pad-tools { display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; border-top: 1px solid var(--border); background: var(--bg); font-size: 11.5px; }
 
-    .modal-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    .verify-banner { padding: 10px 12px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; margin-bottom: 10px; border: 1px solid var(--border); }
+    .verify-banner--ok { background: var(--ok-soft); border-color: var(--ok-border); color: var(--ok); }
+    .verify-banner--invalid { background: var(--red-soft); border-color: var(--red-border); color: var(--red); }
+    .verify-banner--warn { background: var(--warn-soft); border-color: var(--warn-border); color: var(--warn); }
 
-    /* =========================================================================
-       TOAST & FOOTER
-       ========================================================================= */
+    .modal-error { display: none; margin: 0 0 10px; padding: 8px 10px; border-radius: var(--radius-sm); background: var(--red-soft); border: 1px solid var(--red-border); color: var(--red); font-size: 12.5px; font-weight: 600; }
+    .modal-error.visible { display: block; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+
     .toast {
       position: fixed;
       bottom: 20px;
@@ -940,42 +644,22 @@
       transition: opacity 0.2s ease, transform 0.2s ease;
       z-index: 120;
     }
-
-    .toast.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .toast--red {
-      background: var(--red);
-    }
-
-    .toast--ok {
-      background: var(--ok);
-    }
+    .toast.visible { opacity: 1; transform: translateY(0); }
+    .toast--red { background: var(--red); }
+    .toast--ok { background: var(--ok); }
 
     .footer {
-      margin-top: 32px;
-      padding-top: 16px;
+      margin-top: 28px;
+      padding-top: 14px;
       border-top: 1px solid var(--border);
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
       justify-content: space-between;
       gap: 8px;
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--muted);
     }
-
-    .footer a {
-      color: var(--red);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
+    .footer a { color: var(--red); text-decoration: none; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -983,25 +667,18 @@
     <!-- HEADER -->
     <header class="header">
       <div class="brand">
-        <h1>Documentenbeheerder</h1>
-        <p>Beheer &amp; handtekening-verificatie voor <code id="repo-label">goija/nummer</code></p>
+        <h1>Documentenbeheerder &amp; Header-herkenner</h1>
+        <p>Automatische nummerorganisatie, mappenstructuur &amp; veerpen-verificatie voor <code id="repo-label">goija/nummer</code></p>
       </div>
 
       <div class="header-actions">
-        <div class="font-controls" role="group" aria-label="Lettergrootte aanpassen">
-          <button type="button" class="font-btn" id="btn-font-down" title="Kleinere tekst">A&minus;</button>
-          <button type="button" class="font-btn active" id="btn-font-reset" title="Standaard tekstgrootte">A</button>
-          <button type="button" class="font-btn" id="btn-font-up" title="Grotere tekst">A+</button>
+        <div class="font-controls" role="group" aria-label="Lettergrootte">
+          <button type="button" class="font-btn" id="btn-font-down">A&minus;</button>
+          <button type="button" class="font-btn active" id="btn-font-reset">A</button>
+          <button type="button" class="font-btn" id="btn-font-up">A+</button>
         </div>
 
-        <!-- Veerpen-knop voor beheer, ondertekening & verificatie -->
-        <button
-          type="button"
-          class="quill-btn"
-          id="btn-quill"
-          title="Veerpen — Beheer & handtekening-verificatie"
-          aria-expanded="false"
-        >
+        <button type="button" class="quill-btn" id="btn-quill" aria-expanded="false">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M20.24 3.76a6 6 0 0 0-8.49 0L5 10.5V19h8.5l6.74-6.75a6 6 0 0 0 0-8.49z"/>
             <line x1="16" y1="8" x2="2" y2="22"/>
@@ -1015,57 +692,38 @@
 
     <main>
       <!-- VEERPEN ONTGRENDEL-PANEEL -->
-      <section class="unlock-panel" id="unlock-panel" aria-label="Veerpen ontgrendelen">
+      <section class="unlock-panel" id="unlock-panel">
         <div class="unlock-head">
-          <span class="unlock-title">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20.24 3.76a6 6 0 0 0-8.49 0L5 10.5V19h8.5l6.74-6.75a6 6 0 0 0 0-8.49z"/>
-              <line x1="16" y1="8" x2="2" y2="22"/>
-            </svg>
-            Veerpen ontgrendelen met geheime string
-          </span>
+          <span class="unlock-title">Veerpen ontgrendelen met geheime string</span>
           <button type="button" class="btn btn--ghost btn--sm" id="btn-close-unlock">&times; Sluiten</button>
         </div>
-
         <form class="unlock-form" id="unlock-form" autocomplete="off">
-          <input
-            type="password"
-            id="secret-input"
-            class="input-field"
-            placeholder="Voer de geheime string in voor beheer &amp; HMAC-ondertekening..."
-            aria-label="Geheime string"
-            autocomplete="off"
-          />
-          <button type="submit" class="btn btn--primary">Ontgrendel veerpen</button>
+          <input type="password" id="secret-input" class="input-field" placeholder="Geheime string voor beheer &amp; HMAC-handtekening..." autocomplete="off" />
+          <button type="submit" class="btn btn--primary">Ontgrendel</button>
         </form>
-        <p class="unlock-error" id="unlock-error" role="alert">Onjuiste geheime string. Probeer opnieuw.</p>
+        <p class="unlock-error" id="unlock-error">Onjuiste geheime string.</p>
       </section>
 
       <!-- ACTIEVE VEERPEN-BEHEERBALK -->
-      <section class="admin-bar" id="admin-bar" aria-label="Veerpen beheeropties">
+      <section class="admin-bar" id="admin-bar">
         <div class="admin-top">
-          <span class="admin-status">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20.24 3.76a6 6 0 0 0-8.49 0L5 10.5V19h8.5l6.74-6.75a6 6 0 0 0 0-8.49z"/>
-              <line x1="16" y1="8" x2="2" y2="22"/>
-            </svg>
-            Veerpen actief — Ondertekenen, verifiëren &amp; beheren
-          </span>
-
+          <span class="admin-status">Veerpen actief — Beheer, Headers &amp; Verificatie</span>
           <div class="admin-actions-row">
-            <button type="button" class="btn btn--sm" id="btn-add-file">+ Document toevoegen</button>
-            <input type="file" id="file-upload-input" hidden />
-            <button type="button" class="btn btn--sm" id="btn-verify-all">Verifieer alle zegels</button>
-            <button type="button" class="btn btn--sm" id="btn-export-sigs">Exporteer zegels (.json)</button>
-            <button type="button" class="btn btn--sm" id="btn-import-sigs">Importeer zegels</button>
-            <input type="file" id="sig-import-input" accept=".json,application/json" hidden />
+            <button type="button" class="btn btn--sm" id="btn-add-file">+ Document</button>
+            <input type="file" id="file-upload-input" hidden multiple />
+            <button type="button" class="btn btn--sm" id="btn-scan-all">Scan alle headers</button>
+            <button type="button" class="btn btn--sm" id="btn-auto-folders">Auto-organiseer op nummer</button>
+            <button type="button" class="btn btn--sm" id="btn-verify-all">Verifieer zegels</button>
+            <button type="button" class="btn btn--sm" id="btn-export-manifest">Exporteer manifest</button>
+            <button type="button" class="btn btn--sm" id="btn-import-manifest">Importeer manifest</button>
+            <input type="file" id="manifest-import-input" accept=".json,application/json" hidden />
             <button type="button" class="btn btn--sm" id="btn-restore-hidden" disabled>Herstel verborgen (0)</button>
             <button type="button" class="btn btn--primary btn--sm" id="btn-lock">Vergrendelen</button>
           </div>
         </div>
 
         <div class="admin-controls">
-          <div class="mode-switch" role="radiogroup" aria-label="Beheermodus">
+          <div class="mode-switch">
             <label class="mode-option is-active" id="lbl-mode-local">
               <input type="radio" name="deleteMode" value="local" checked />
               <span>Lokaal beheer (browser)</span>
@@ -1078,96 +736,128 @@
         </div>
 
         <div class="token-row" id="token-row">
-          <input
-            type="password"
-            id="gh-token-input"
-            class="input-field"
-            placeholder="GitHub Personal Access Token (contents: write)"
-            aria-label="GitHub Personal Access Token"
-            autocomplete="off"
-          />
+          <input type="password" id="gh-token-input" class="input-field" placeholder="GitHub Personal Access Token (contents: write)" autocomplete="off" />
           <button type="button" class="btn btn--sm" id="btn-save-token">Bewaar in sessie</button>
           <button type="button" class="btn btn--sm btn--ghost" id="btn-clear-token">Wis token</button>
-          <p class="token-note">
-            Het token blijft uitsluitend in <code>sessionStorage</code> van dit tabblad en gaat rechtstreeks naar <code>api.github.com</code>.
-          </p>
+          <p class="token-note">Blijft uitsluitend in <code>sessionStorage</code> en gaat rechtstreeks naar <code>api.github.com</code>.</p>
         </div>
       </section>
 
-      <!-- WERKBALK -->
-      <section class="toolbar" aria-label="Filteren en vernieuwen">
-        <div class="search-wrap">
-          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-          <input
-            type="search"
-            id="search-input"
-            class="search-input"
-            placeholder="Zoek op bestandsnaam, extensie of status..."
-            aria-label="Zoek documenten"
-          />
-          <button type="button" class="search-clear" id="btn-clear-search" aria-label="Zoekveld wissen">&times;</button>
-        </div>
+      <!-- WORKSPACE: MAPPENSTRUCTUUR LINKS + DOCUMENTEN RECHTS -->
+      <div class="workspace">
+        <!-- SIDEBAR: MAPPEN & AUTOMATISCHE NUMMERS -->
+        <aside class="sidebar" aria-label="Mappenstructuur en nummerfilters">
+          <div class="sidebar-section">
+            <div class="sidebar-head"><span>Overzichten</span></div>
+            <ul class="nav-list" id="nav-views"></ul>
+          </div>
 
-        <button type="button" class="btn" id="btn-refresh">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="23 4 23 10 17 10"/>
-            <polyline points="1 20 1 14 7 14"/>
-            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-          </svg>
-          Vernieuwen
-        </button>
+          <div class="sidebar-section">
+            <div class="sidebar-head">
+              <span>Mappenstructuur</span>
+            </div>
+            <ul class="nav-list" id="nav-folders"></ul>
+            <div class="folder-add-row">
+              <input type="text" id="new-folder-input" class="input-field" placeholder="Map of Map/Submap..." />
+              <button type="button" class="btn btn--sm" id="btn-create-folder">+</button>
+            </div>
+          </div>
 
-        <span class="doc-counter" id="doc-counter" aria-live="polite">Laden...</span>
-      </section>
+          <div class="sidebar-section">
+            <div class="sidebar-head">
+              <span>Herkende nummers</span>
+            </div>
+            <ul class="nav-list" id="nav-numbers"></ul>
+          </div>
+        </aside>
 
-      <!-- DOCUMENTENLIJST -->
-      <section aria-label="Documentenoverzicht">
-        <div id="list-container"></div>
-      </section>
+        <!-- RECHTERKOLOM: WERKBALK & DOCUMENTEN -->
+        <section>
+          <div class="toolbar">
+            <div class="search-wrap">
+              <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="search" id="search-input" class="search-input" placeholder="Zoek op nummer, kenmerk, afzender, map of bestandsnaam..." />
+            </div>
+            <select id="sort-select" class="select-field" aria-label="Sorteren">
+              <option value="number">Sorteer op nummer</option>
+              <option value="name">Sorteer op naam (A-Z)</option>
+              <option value="date">Sorteer op datum</option>
+            </select>
+            <button type="button" class="btn" id="btn-refresh">Vernieuwen</button>
+            <span class="doc-counter" id="doc-counter">Laden...</span>
+          </div>
+
+          <div id="list-container"></div>
+        </section>
+      </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="footer">
       <span>Bron: <a id="footer-repo-link" href="https://github.com/goija/nummer" target="_blank" rel="noopener noreferrer">github.com/goija/nummer</a></span>
-      <span style="font-family:var(--mono); font-size:12px;">SHA-256 + HMAC-SHA256 (Web Crypto)</span>
+      <span style="font-family:var(--mono);">Headersysteem + Nummerorganisatie + HMAC-SHA256</span>
     </footer>
   </div>
 
-  <!-- MODAL 1: ONDERTEKENEN MET VEERPEN -->
-  <div class="modal-backdrop" id="sign-modal" role="dialog" aria-modal="true" aria-labelledby="sign-modal-title">
+  <!-- MODAL: HEADER & ADMINISTRATIEVE METADATA / MAP TOEVOEGEN -->
+  <div class="modal-backdrop" id="meta-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
-      <h2 class="modal-title" id="sign-modal-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A31C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20.24 3.76a6 6 0 0 0-8.49 0L5 10.5V19h8.5l6.74-6.75a6 6 0 0 0 0-8.49z"/>
-          <line x1="16" y1="8" x2="2" y2="22"/>
-        </svg>
-        Document ondertekenen (Veerpen-zegel)
-      </h2>
-
+      <h2 class="modal-title">Headers, Administratie &amp; Mapindeling</h2>
       <div class="modal-body">
-        Bestand:
-        <span class="modal-filename" id="sign-filename"></span>
+        <span class="hash-box" id="meta-filename"></span>
 
+        <label class="field-label" for="meta-number">Dossier- / Volgnummer</label>
+        <input type="text" id="meta-number" class="input-field" style="width:100%;" placeholder="Bijv. 2026-001 of NR-14" />
+
+        <label class="field-label" for="meta-role">Documenttype</label>
+        <select id="meta-role" class="select-field" style="width:100%;">
+          <option value="hoofddocument">Hoofddocument</option>
+          <option value="onderlegger">Onderlegger / Bijlage</option>
+        </select>
+
+        <label class="field-label" for="meta-folder">Map (gebruik / voor submappen)</label>
+        <input type="text" id="meta-folder" class="input-field" style="width:100%;" list="folder-datalist" placeholder="Bijv. 2026/Dossier-001/Onderleggers" />
+        <datalist id="folder-datalist"></datalist>
+
+        <label class="field-label" for="meta-subject">Onderwerp / Omschrijving</label>
+        <input type="text" id="meta-subject" class="input-field" style="width:100%;" />
+
+        <label class="field-label" for="meta-sender">Afzender / Bron</label>
+        <input type="text" id="meta-sender" class="input-field" style="width:100%;" />
+
+        <label class="field-label" for="meta-date">Datum</label>
+        <input type="text" id="meta-date" class="input-field" style="width:100%;" placeholder="YYYY-MM-DD" />
+
+        <span class="field-label">Uitgelezen ruwe headers</span>
+        <table class="header-table"><tbody id="meta-raw-headers"></tbody></table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="btn-meta-rescan">Opnieuw scannen</button>
+        <button type="button" class="btn" id="btn-meta-cancel">Sluiten</button>
+        <button type="button" class="btn btn--primary" id="btn-meta-save">Opslaan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ONDERTEKENEN (VEERPEN) -->
+  <div class="modal-backdrop" id="sign-modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <h2 class="modal-title">Document ondertekenen (Veerpen-zegel)</h2>
+      <div class="modal-body">
+        <span class="hash-box" id="sign-filename"></span>
         <span class="field-label">Berekende SHA-256 inhoudshash</span>
         <span class="hash-box" id="sign-hash-preview">Berekenen...</span>
-
-        <label class="field-label" for="signer-name-input">Ondertekenaar (optioneel)</label>
+        <label class="field-label" for="signer-name-input">Ondertekenaar</label>
         <input type="text" id="signer-name-input" class="input-field" style="width:100%;" placeholder="Initialen of naam..." />
-
-        <span class="field-label">Veerpen-handtekening (optioneel tekenen)</span>
+        <span class="field-label">Veerpen-handtekening (optioneel)</span>
         <div class="sig-pad-wrap">
-          <canvas id="sig-pad" class="sig-pad" width="460" height="120"></canvas>
+          <canvas id="sig-pad" class="sig-pad" width="480" height="115"></canvas>
           <div class="sig-pad-tools">
-            <span>Teken met muis of vinger (meekrab-rood)</span>
-            <button type="button" class="btn btn--ghost btn--sm" id="btn-clear-pad">Wis tekening</button>
+            <span>Teken met muis of vinger</span>
+            <button type="button" class="btn btn--ghost btn--sm" id="btn-clear-pad">Wis</button>
           </div>
         </div>
       </div>
-
-      <div class="modal-error" id="sign-error" role="alert"></div>
+      <div class="modal-error" id="sign-error"></div>
       <div class="modal-footer">
         <button type="button" class="btn" id="btn-sign-cancel">Annuleren</button>
         <button type="button" class="btn btn--primary" id="btn-sign-confirm">Onderteken &amp; verzegel</button>
@@ -1175,34 +865,22 @@
     </div>
   </div>
 
-  <!-- MODAL 2: HANDTEKENING VERIFIËREN -->
-  <div class="modal-backdrop" id="verify-modal" role="dialog" aria-modal="true" aria-labelledby="verify-modal-title">
+  <!-- MODAL: VERIFIËREN -->
+  <div class="modal-backdrop" id="verify-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
-      <h2 class="modal-title" id="verify-modal-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B6B43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          <polyline points="9 12 11 14 15 10"/>
-        </svg>
-        Handtekening-verificatie
-      </h2>
-
+      <h2 class="modal-title">Handtekening-verificatie</h2>
       <div class="modal-body">
-        <div class="verify-banner" id="verify-banner">Bezig met verifiëren...</div>
-
-        Bestand:
-        <span class="modal-filename" id="verify-filename"></span>
-
+        <div class="verify-banner" id="verify-banner">Verifiëren...</div>
+        <span class="hash-box" id="verify-filename"></span>
         <div id="verify-details"></div>
-
-        <div id="verify-secret-box" style="display:none; margin-top:12px;">
+        <div id="verify-secret-box" style="display:none; margin-top:10px;">
           <label class="field-label" for="verify-secret-input">Geheime string voor HMAC-verificatie</label>
           <div style="display:flex; gap:8px;">
-            <input type="password" id="verify-secret-input" class="input-field" placeholder="Voer geheime string in..." />
+            <input type="password" id="verify-secret-input" class="input-field" placeholder="Geheime string..." />
             <button type="button" class="btn btn--primary btn--sm" id="btn-run-hmac-verify">Controleer</button>
           </div>
         </div>
       </div>
-
       <div class="modal-footer">
         <button type="button" class="btn btn--ghost btn--sm" id="btn-remove-sig" style="margin-right:auto; color:var(--red); display:none;">Verwijder zegel</button>
         <button type="button" class="btn" id="btn-verify-close">Sluiten</button>
@@ -1210,17 +888,15 @@
     </div>
   </div>
 
-  <!-- MODAL 3: BEVESTIGING VERWIJDEREN -->
-  <div class="modal-backdrop" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <!-- MODAL: VERWIJDEREN -->
+  <div class="modal-backdrop" id="confirm-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
-      <h2 class="modal-title" id="modal-title">Document verwijderen</h2>
-      <div class="modal-mode-tag" id="modal-mode-tag">Lokaal verbergen</div>
+      <h2 class="modal-title">Document verwijderen</h2>
       <div class="modal-body">
-        Weet je zeker dat je dit document wilt verwijderen?
-        <span class="modal-filename" id="modal-filename"></span>
+        <span class="hash-box" id="modal-filename"></span>
         <span id="modal-detail"></span>
       </div>
-      <div class="modal-error" id="modal-error" role="alert"></div>
+      <div class="modal-error" id="modal-error"></div>
       <div class="modal-footer">
         <button type="button" class="btn" id="btn-modal-cancel">Annuleren</button>
         <button type="button" class="btn btn--primary" id="btn-modal-confirm">Bevestig verwijderen</button>
@@ -1228,199 +904,67 @@
     </div>
   </div>
 
-  <!-- TOAST -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
     (() => {
       // =========================================================================
-      // CONFIGURATIE — PAS HIER REPO & GEHEIME STRING AAN
+      // CONFIGURATIE
       // =========================================================================
       const GEHEIME_STRING = "penveer6174";
       const REPO_OWNER = "goija";
-      const REPO_NAME = "nummer"; // Pas eventueel aan naar bijv. "datananalyses"
+      const REPO_NAME = "nummer";
       const SITE_BASE_URL = "https://nummer-jet.vercel.app";
 
       const GITHUB_API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents`;
       const IGNORED_FILES = new Set(["index.html", "vercel.json", "CNAME", "LICENSE"]);
+      const TEXT_EXTS = new Set(["html", "htm", "txt", "md", "eml", "json", "csv", "xml", "log", "ttl", "ini"]);
 
-      // Opslagsleutels
       const STORAGE_HIDDEN = `docmgr_hidden_${REPO_NAME}`;
-      const STORAGE_FONT = "docmgr_font_scale";
       const STORAGE_SIGS = `docmgr_signatures_${REPO_NAME}`;
+      const STORAGE_META = `docmgr_meta_${REPO_NAME}`;
+      const STORAGE_FOLDERS = `docmgr_folders_${REPO_NAME}`;
+      const STORAGE_FONT = "docmgr_font_scale";
       const SESSION_TOKEN = "docmgr_gh_token";
 
-      // =========================================================================
-      // APPLICATIESTATUS
-      // =========================================================================
       const state = {
-        files: [],            // GitHub-bestanden
-        localFiles: [],       // Lokaal toegevoegde bestanden (sessie)
+        files: [],
+        localFiles: [],
         loading: true,
         error: null,
         query: "",
+        sortBy: "number",
+        activeFilter: { type: "all", value: "" }, // all | onderleggers | unsigned | folder | number
         fontScale: 1,
         unlocked: false,
-        activeSecret: "",     // Actieve geheime string in geheugen na ontgrendeling
+        activeSecret: "",
         unlockOpen: false,
-        deleteMode: "local",  // "local" | "github"
+        deleteMode: "local",
         hiddenFiles: new Set(),
-        signatures: {},       // { [filename]: { sha256, hmac, signer, signedAt, drawing } }
-        verifyStatus: {},     // { [filename]: "ok" | "invalid" | "hash-only" }
-        pendingDelete: null,
+        folders: ["Algemeen", "Onderleggers"],
+        meta: {},          // { [filename]: { number, role, folder, subject, sender, date, rawHeaders } }
+        signatures: {},    // { [filename]: { sha256, hmac, signer, signedAt, drawing, drawingHash } }
+        verifyStatus: {},
+        pendingMetaFile: null,
         pendingSign: null,
         pendingSignHash: null,
         pendingVerifyFile: null,
+        pendingDelete: null,
         deleting: false
       };
 
       // =========================================================================
-      // DOM-ELEMENTEN
+      // DOM-REFERENTIES
       // =========================================================================
-      document.getElementById("repo-label").textContent = `${REPO_OWNER}/${REPO_NAME}`;
-      const footerLink = document.getElementById("footer-repo-link");
-      footerLink.href = `https://github.com/${REPO_OWNER}/${REPO_NAME}`;
-      footerLink.textContent = `github.com/${REPO_OWNER}/${REPO_NAME}`;
-
-      const btnFontDown = document.getElementById("btn-font-down");
-      const btnFontReset = document.getElementById("btn-font-reset");
-      const btnFontUp = document.getElementById("btn-font-up");
-
-      const btnQuill = document.getElementById("btn-quill");
-      const quillLabel = document.getElementById("quill-label");
-      const unlockPanel = document.getElementById("unlock-panel");
-      const btnCloseUnlock = document.getElementById("btn-close-unlock");
-      const unlockForm = document.getElementById("unlock-form");
-      const secretInput = document.getElementById("secret-input");
-      const unlockError = document.getElementById("unlock-error");
-
-      const adminBar = document.getElementById("admin-bar");
-      const btnAddFile = document.getElementById("btn-add-file");
-      const fileUploadInput = document.getElementById("file-upload-input");
-      const btnVerifyAll = document.getElementById("btn-verify-all");
-      const btnExportSigs = document.getElementById("btn-export-sigs");
-      const btnImportSigs = document.getElementById("btn-import-sigs");
-      const sigImportInput = document.getElementById("sig-import-input");
-      const btnRestoreHidden = document.getElementById("btn-restore-hidden");
-      const btnLock = document.getElementById("btn-lock");
-
-      const lblModeLocal = document.getElementById("lbl-mode-local");
-      const lblModeGithub = document.getElementById("lbl-mode-github");
-      const tokenRow = document.getElementById("token-row");
-      const ghTokenInput = document.getElementById("gh-token-input");
-      const btnSaveToken = document.getElementById("btn-save-token");
-      const btnClearToken = document.getElementById("btn-clear-token");
-
-      const searchInput = document.getElementById("search-input");
-      const btnClearSearch = document.getElementById("btn-clear-search");
-      const btnRefresh = document.getElementById("btn-refresh");
-      const docCounter = document.getElementById("doc-counter");
-      const listContainer = document.getElementById("list-container");
-
-      // Modals
-      const signModal = document.getElementById("sign-modal");
-      const signFilename = document.getElementById("sign-filename");
-      const signHashPreview = document.getElementById("sign-hash-preview");
-      const signerNameInput = document.getElementById("signer-name-input");
-      const sigPad = document.getElementById("sig-pad");
-      const btnClearPad = document.getElementById("btn-clear-pad");
-      const signError = document.getElementById("sign-error");
-      const btnSignCancel = document.getElementById("btn-sign-cancel");
-      const btnSignConfirm = document.getElementById("btn-sign-confirm");
-
-      const verifyModal = document.getElementById("verify-modal");
-      const verifyBanner = document.getElementById("verify-banner");
-      const verifyFilename = document.getElementById("verify-filename");
-      const verifyDetails = document.getElementById("verify-details");
-      const verifySecretBox = document.getElementById("verify-secret-box");
-      const verifySecretInput = document.getElementById("verify-secret-input");
-      const btnRunHmacVerify = document.getElementById("btn-run-hmac-verify");
-      const btnRemoveSig = document.getElementById("btn-remove-sig");
-      const btnVerifyClose = document.getElementById("btn-verify-close");
-
-      const confirmModal = document.getElementById("confirm-modal");
-      const modalModeTag = document.getElementById("modal-mode-tag");
-      const modalFilename = document.getElementById("modal-filename");
-      const modalDetail = document.getElementById("modal-detail");
-      const modalError = document.getElementById("modal-error");
-      const btnModalCancel = document.getElementById("btn-modal-cancel");
-      const btnModalConfirm = document.getElementById("btn-modal-confirm");
-
-      const toastEl = document.getElementById("toast");
+      const $ = (id) => document.getElementById(id);
+      const navViews = $("nav-views");
+      const navFolders = $("nav-folders");
+      const navNumbers = $("nav-numbers");
+      const listContainer = $("list-container");
+      const docCounter = $("doc-counter");
+      const toastEl = $("toast");
       let toastTimer = null;
 
-      // =========================================================================
-      // WEB CRYPTO API: SHA-256 & HMAC-SHA256 HANDTEKENING
-      // =========================================================================
-      function ensureCrypto() {
-        if (!window.crypto || !window.crypto.subtle) {
-          throw new Error("Web Crypto API is alleen beschikbaar via HTTPS of localhost.");
-        }
-      }
-
-      function bufToHex(buffer) {
-        return [...new Uint8Array(buffer)]
-          .map(b => b.toString(16).padStart(2, "0"))
-          .join("");
-      }
-
-      async function sha256Hex(arrayBuffer) {
-        ensureCrypto();
-        const digest = await crypto.subtle.digest("SHA-256", arrayBuffer);
-        return bufToHex(digest);
-      }
-
-      async function hmacSha256Hex(secret, message) {
-        ensureCrypto();
-        const enc = new TextEncoder();
-        const key = await crypto.subtle.importKey(
-          "raw",
-          enc.encode(secret),
-          { name: "HMAC", hash: "SHA-256" },
-          false,
-          ["sign"]
-        );
-        const sig = await crypto.subtle.sign("HMAC", key, enc.encode(message));
-        return bufToHex(sig);
-      }
-
-      function timingSafeEqual(a, b) {
-        if (typeof a !== "string" || typeof b !== "string" || a.length !== b.length) return false;
-        let diff = 0;
-        for (let i = 0; i < a.length; i++) {
-          diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-        }
-        return diff === 0;
-      }
-
-      function buildSignPayload({ name, sha256, signer, signedAt, drawingHash }) {
-        return `${name}|${sha256}|${signer}|${signedAt}|${drawingHash || ""}`;
-      }
-
-      async function getFileArrayBuffer(file) {
-        if (file.isLocal && file.buffer) {
-          return file.buffer;
-        }
-        const candidates = [];
-        if (file.download_url) candidates.push(file.download_url);
-        candidates.push(`${SITE_BASE_URL}/${encodeURIComponent(file.name)}`);
-
-        let lastErr = null;
-        for (const url of candidates) {
-          try {
-            const resp = await fetch(url, { cache: "no-store" });
-            if (resp.ok) return await resp.arrayBuffer();
-            lastErr = new Error(`HTTP ${resp.status} bij ophalen van ${file.name}`);
-          } catch (err) {
-            lastErr = err;
-          }
-        }
-        throw lastErr || new Error("Kon bestandsinhoud niet ophalen voor hashing.");
-      }
-
-      // =========================================================================
-      // HULPFUNCTIES & OPSLAG
-      // =========================================================================
       function showToast(msg, variant = "") {
         toastEl.textContent = msg;
         toastEl.className = `toast visible ${variant ? `toast--${variant}` : ""}`;
@@ -1429,653 +973,389 @@
       }
 
       function escapeHtml(str) {
-        return String(str)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#39;");
+        return String(str ?? "")
+          .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
       }
 
-      function formatBytes(bytes) {
-        if (!Number.isFinite(bytes) || bytes < 0) return "—";
-        if (bytes < 1024) return `${bytes} B`;
-        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1).replace(".", ",")} KB`;
-        return `${(bytes / (1024 * 1024)).toFixed(2).replace(".", ",")} MB`;
+      function formatBytes(b) {
+        if (!Number.isFinite(b) || b < 0) return "—";
+        if (b < 1024) return `${b} B`;
+        if (b < 1048576) return `${(b / 1024).toFixed(1).replace(".", ",")} KB`;
+        return `${(b / 1048576).toFixed(2).replace(".", ",")} MB`;
       }
 
       function splitFileName(name) {
-        const lastDot = name.lastIndexOf(".");
-        if (lastDot <= 0) return { base: name, ext: "" };
-        return { base: name.slice(0, lastDot), ext: name.slice(lastDot + 1) };
+        const i = name.lastIndexOf(".");
+        return i <= 0 ? { base: name, ext: "" } : { base: name.slice(0, i), ext: name.slice(i + 1) };
       }
 
-      function loadStorageJson(key, fallback) {
-        try {
-          const raw = localStorage.getItem(key);
-          return raw ? JSON.parse(raw) : fallback;
-        } catch {
-          return fallback;
-        }
+      function loadJson(key, fallback) {
+        try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
       }
 
-      function saveHiddenFiles() {
+      function persistAll() {
         try {
           localStorage.setItem(STORAGE_HIDDEN, JSON.stringify([...state.hiddenFiles]));
-        } catch {}
-        const n = state.hiddenFiles.size;
-        btnRestoreHidden.textContent = `Herstel verborgen (${n})`;
-        btnRestoreHidden.disabled = n === 0;
-      }
-
-      function saveSignatures() {
-        try {
           localStorage.setItem(STORAGE_SIGS, JSON.stringify(state.signatures));
+          localStorage.setItem(STORAGE_META, JSON.stringify(state.meta));
+          localStorage.setItem(STORAGE_FOLDERS, JSON.stringify(state.folders));
         } catch {}
+        $("btn-restore-hidden").textContent = `Herstel verborgen (${state.hiddenFiles.size})`;
+        $("btn-restore-hidden").disabled = state.hiddenFiles.size === 0;
       }
 
       // =========================================================================
-      // VEERPEN TEKENVELD (CANVAS)
+      // HEADERSYSTEEM-HERKENNER & NUMMER-EXTRACTOR
       // =========================================================================
-      const padCtx = sigPad.getContext("2d");
-      let isDrawing = false;
-      let padHasInk = false;
+      function detectFromFileName(name) {
+        const { base } = splitFileName(name);
+        const lower = base.toLowerCase();
 
-      function resetSigPad() {
-        padCtx.clearRect(0, 0, sigPad.width, sigPad.height);
-        padHasInk = false;
-      }
+        // Herken dossier-/volgnummerpatronen (bijv. 2026-001, NR-12, TH-72, DOC_042, 0045)
+        const numMatch =
+          base.match(/\b(20\d{2}[-_.]\d{1,5})\b/) ||
+          base.match(/\b([A-Z]{2,5}[-_\s]?\d{1,6})\b/i) ||
+          base.match(/(?:^|[-_\s])(\d{2,8})(?:$|[-_\s])/);
 
-      function getPadPos(e) {
-        const rect = sigPad.getBoundingClientRect();
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const dateMatch = base.match(/\b(20\d{2}[-_.]\d{2}[-_.]\d{2})\b/);
+        const isOnderlegger = /(onderlegger|bijlage|bewijs|bon|factuur|scan|kopie|appendix|att|annex)/i.test(lower);
+
         return {
-          x: ((clientX - rect.left) / rect.width) * sigPad.width,
-          y: ((clientY - rect.top) / rect.height) * sigPad.height
+          number: numMatch ? numMatch[1].replace(/[_\s]+/g, "-").toUpperCase() : "",
+          role: isOnderlegger ? "onderlegger" : "hoofddocument",
+          date: dateMatch ? dateMatch[1].replace(/[_.]/g, "-") : "",
+          subject: base.replace(/[-_]+/g, " ").trim(),
+          sender: "",
+          folder: isOnderlegger ? "Onderleggers" : "Algemeen",
+          rawHeaders: {}
         };
       }
 
-      function startDraw(e) {
-        e.preventDefault();
-        isDrawing = true;
-        padHasInk = true;
-        const { x, y } = getPadPos(e);
-        padCtx.beginPath();
-        padCtx.moveTo(x, y);
-      }
+      function parseHeadersFromText(name, text) {
+        const baseMeta = detectFromFileName(name);
+        const raw = {};
+        const { ext } = splitFileName(name);
 
-      function moveDraw(e) {
-        if (!isDrawing) return;
-        e.preventDefault();
-        const { x, y } = getPadPos(e);
-        padCtx.lineWidth = 2.4;
-        padCtx.lineCap = "round";
-        padCtx.lineJoin = "round";
-        padCtx.strokeStyle = "#A31C1C";
-        padCtx.lineTo(x, y);
-        padCtx.stroke();
-      }
-
-      function endDraw() {
-        isDrawing = false;
-      }
-
-      sigPad.addEventListener("mousedown", startDraw);
-      sigPad.addEventListener("mousemove", moveDraw);
-      window.addEventListener("mouseup", endDraw);
-      sigPad.addEventListener("touchstart", startDraw, { passive: false });
-      sigPad.addEventListener("touchmove", moveDraw, { passive: false });
-      window.addEventListener("touchend", endDraw);
-      btnClearPad.addEventListener("click", resetSigPad);
-
-      // =========================================================================
-      // LETTERGROOTTE
-      // =========================================================================
-      function applyFontScale(scale) {
-        const clamped = Math.max(0.85, Math.min(1.35, Math.round(scale * 100) / 100));
-        state.fontScale = clamped;
-        document.documentElement.style.setProperty("--doc-scale", String(clamped));
-        btnFontDown.classList.toggle("active", clamped < 0.99);
-        btnFontReset.classList.toggle("active", clamped >= 0.99 && clamped <= 1.01);
-        btnFontUp.classList.toggle("active", clamped > 1.01);
-        try { localStorage.setItem(STORAGE_FONT, String(clamped)); } catch {}
-      }
-
-      btnFontDown.addEventListener("click", () => applyFontScale(state.fontScale - 0.1));
-      btnFontReset.addEventListener("click", () => applyFontScale(1));
-      btnFontUp.addEventListener("click", () => applyFontScale(state.fontScale + 0.1));
-
-      // =========================================================================
-      // VEERPEN ONTGRENDELEN & VERGRENDELEN
-      // =========================================================================
-      function setUnlockPanelVisible(show) {
-        state.unlockOpen = show;
-        unlockPanel.classList.toggle("visible", show && !state.unlocked);
-        btnQuill.setAttribute("aria-expanded", String(show || state.unlocked));
-        unlockError.classList.remove("visible");
-        if (show && !state.unlocked) {
-          secretInput.value = "";
-          setTimeout(() => secretInput.focus(), 20);
-        }
-      }
-
-      function unlockAdmin(secret) {
-        state.unlocked = true;
-        state.activeSecret = secret;
-        state.unlockOpen = false;
-        unlockPanel.classList.remove("visible");
-        adminBar.classList.add("visible");
-        btnQuill.classList.add("is-unlocked");
-        quillLabel.textContent = "Veerpen actief";
-        btnQuill.setAttribute("aria-expanded", "true");
-        secretInput.value = "";
-        saveHiddenFiles();
-        renderList();
-        showToast("Veerpen ontgrendeld voor beheer & ondertekening", "ok");
-      }
-
-      function lockAdmin() {
-        state.unlocked = false;
-        state.activeSecret = "";
-        state.unlockOpen = false;
-        adminBar.classList.remove("visible");
-        unlockPanel.classList.remove("visible");
-        btnQuill.classList.remove("is-unlocked");
-        quillLabel.textContent = "Veerpen";
-        btnQuill.setAttribute("aria-expanded", "false");
-        closeAllModals();
-        renderList();
-        showToast("Veerpen vergrendeld");
-      }
-
-      btnQuill.addEventListener("click", () => {
-        if (state.unlocked) {
-          adminBar.scrollIntoView({ behavior: "smooth", block: "nearest" });
-          return;
-        }
-        setUnlockPanelVisible(!state.unlockOpen);
-      });
-
-      btnCloseUnlock.addEventListener("click", () => setUnlockPanelVisible(false));
-      btnLock.addEventListener("click", lockAdmin);
-
-      unlockForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const entered = secretInput.value.trim();
-        if (entered === GEHEIME_STRING) {
-          unlockAdmin(entered);
-        } else {
-          unlockError.classList.add("visible");
-          secretInput.classList.remove("shake");
-          void secretInput.offsetWidth;
-          secretInput.classList.add("shake");
-          secretInput.select();
-        }
-      });
-
-      document.querySelectorAll('input[name="deleteMode"]').forEach(radio => {
-        radio.addEventListener("change", (e) => {
-          state.deleteMode = e.target.value;
-          lblModeLocal.classList.toggle("is-active", state.deleteMode === "local");
-          lblModeGithub.classList.toggle("is-active", state.deleteMode === "github");
-          tokenRow.classList.toggle("visible", state.deleteMode === "github");
-        });
-      });
-
-      btnSaveToken.addEventListener("click", () => {
-        const t = ghTokenInput.value.trim();
-        if (!t) return showToast("Vul eerst een GitHub-token in.", "red");
-        try {
-          sessionStorage.setItem(SESSION_TOKEN, t);
-          showToast("GitHub-token bewaard voor deze sessie.", "ok");
-        } catch {
-          showToast("Kon token niet opslaan.", "red");
-        }
-      });
-
-      btnClearToken.addEventListener("click", () => {
-        ghTokenInput.value = "";
-        try { sessionStorage.removeItem(SESSION_TOKEN); } catch {}
-        showToast("GitHub-token gewist.");
-      });
-
-      btnRestoreHidden.addEventListener("click", () => {
-        const count = state.hiddenFiles.size;
-        state.hiddenFiles.clear();
-        saveHiddenFiles();
-        renderList();
-        showToast(`${count} verborgen document(en) hersteld.`);
-      });
-
-      // =========================================================================
-      // DOCUMENT TOEVOEGEN (LOKAAL OF GITHUB PUT)
-      // =========================================================================
-      btnAddFile.addEventListener("click", () => fileUploadInput.click());
-
-      fileUploadInput.addEventListener("change", async (e) => {
-        const file = e.target.files && e.target.files[0];
-        fileUploadInput.value = "";
-        if (!file) return;
-
-        const buffer = await file.arrayBuffer();
-
-        if (state.deleteMode === "github") {
-          const token = ghTokenInput.value.trim() || sessionStorage.getItem(SESSION_TOKEN) || "";
-          if (!token) {
-            showToast("Vul eerst een GitHub-token in voor upload naar GitHub.", "red");
-            return;
-          }
-          try {
-            showToast(`Uploaden van "${file.name}" naar GitHub...`);
-            const bytes = new Uint8Array(buffer);
-            let binary = "";
-            for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-            const base64 = btoa(binary);
-
-            const existing = state.files.find(f => f.name === file.name);
-            const encodedPath = encodeURIComponent(file.name);
-            const body = {
-              message: `Upload ${file.name} via Documentenbeheerder`,
-              content: base64
-            };
-            if (existing && existing.sha) body.sha = existing.sha;
-
-            const resp = await fetch(`${GITHUB_API_BASE}/${encodedPath}`, {
-              method: "PUT",
-              headers: {
-                Accept: "application/vnd.github.v3+json",
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify(body)
-            });
-
-            if (!resp.ok) {
-              const errJson = await resp.json().catch(() => ({}));
-              throw new Error(errJson.message || `HTTP ${resp.status}`);
-            }
-
-            showToast(`"${file.name}" geüpload naar GitHub.`, "ok");
-            await fetchDocuments();
-            return;
-          } catch (err) {
-            showToast(`Upload mislukt: ${err.message}`, "red");
-            return;
-          }
-        }
-
-        // Lokaal toevoegen in huidige sessie
-        const blobUrl = URL.createObjectURL(new Blob([buffer], { type: file.type || "application/octet-stream" }));
-        state.localFiles = state.localFiles.filter(f => f.name !== file.name);
-        state.localFiles.push({
-          name: file.name,
-          size: file.size,
-          isLocal: true,
-          buffer,
-          blobUrl
-        });
-        renderList();
-        showToast(`"${file.name}" lokaal toegevoegd. Je kunt het nu ondertekenen.`, "ok");
-      });
-
-      // =========================================================================
-      // HANDTEKENINGEN EXPORTEREN & IMPORTEREN
-      // =========================================================================
-      btnExportSigs.addEventListener("click", () => {
-        const count = Object.keys(state.signatures).length;
-        if (count === 0) return showToast("Er zijn nog geen handtekeningen om te exporteren.", "red");
-        const payload = {
-          repo: `${REPO_OWNER}/${REPO_NAME}`,
-          exportedAt: new Date().toISOString(),
-          algorithm: "SHA-256 + HMAC-SHA256",
-          signatures: state.signatures
-        };
-        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = `handtekeningen-${REPO_NAME}.json`;
-        a.click();
-        URL.revokeObjectURL(a.href);
-        showToast(`${count} handtekening(en) geëxporteerd.`, "ok");
-      });
-
-      btnImportSigs.addEventListener("click", () => sigImportInput.click());
-
-      sigImportInput.addEventListener("change", async (e) => {
-        const file = e.target.files && e.target.files[0];
-        sigImportInput.value = "";
-        if (!file) return;
-        try {
-          const parsed = JSON.parse(await file.text());
-          const incoming = parsed.signatures && typeof parsed.signatures === "object" ? parsed.signatures : parsed;
-          state.signatures = { ...state.signatures, ...incoming };
-          saveSignatures();
-          renderList();
-          showToast("Handtekeningen geïmporteerd.", "ok");
-        } catch {
-          showToast("Ongeldig JSON-bestand met handtekeningen.", "red");
-        }
-      });
-
-      // =========================================================================
-      // ONDERTEKENEN (VEERPEN-MODAL)
-      // =========================================================================
-      async function openSignModal(file) {
-        state.pendingSign = file;
-        state.pendingSignHash = null;
-        signFilename.textContent = file.name;
-        signHashPreview.textContent = "SHA-256 hash berekenen...";
-        signError.classList.remove("visible");
-        btnSignConfirm.disabled = true;
-        resetSigPad();
-        signModal.classList.add("visible");
-
-        try {
-          const buf = await getFileArrayBuffer(file);
-          const hash = await sha256Hex(buf);
-          state.pendingSignHash = hash;
-          signHashPreview.textContent = hash;
-          btnSignConfirm.disabled = false;
-        } catch (err) {
-          signHashPreview.textContent = "—";
-          signError.textContent = err.message || "Kon bestand niet hashen.";
-          signError.classList.add("visible");
-        }
-      }
-
-      btnSignCancel.addEventListener("click", () => signModal.classList.remove("visible"));
-      signModal.addEventListener("click", (e) => { if (e.target === signModal) signModal.classList.remove("visible"); });
-
-      btnSignConfirm.addEventListener("click", async () => {
-        const file = state.pendingSign;
-        if (!file || !state.pendingSignHash || !state.unlocked) return;
-
-        try {
-          const signer = signerNameInput.value.trim() || "Beheerder";
-          const signedAt = new Date().toISOString();
-          const drawing = padHasInk ? sigPad.toDataURL("image/png") : "";
-          const drawingHash = drawing ? await sha256Hex(new TextEncoder().encode(drawing)) : "";
-
-          const payload = buildSignPayload({
-            name: file.name,
-            sha256: state.pendingSignHash,
-            signer,
-            signedAt,
-            drawingHash
+        // 1. HTML <title>, <meta>, <h1>
+        if (ext.toLowerCase() === "html" || ext.toLowerCase() === "htm") {
+          const doc = new DOMParser().parseFromString(text, "text/html");
+          const title = doc.querySelector("title")?.textContent?.trim();
+          const h1 = doc.querySelector("h1")?.textContent?.trim();
+          if (title) raw["HTML-Title"] = title;
+          if (h1) raw["HTML-H1"] = h1;
+          doc.querySelectorAll("meta[name], meta[property]").forEach(m => {
+            const k = m.getAttribute("name") || m.getAttribute("property");
+            const v = m.getAttribute("content");
+            if (k && v) raw[`Meta:${k}`] = v.trim();
           });
-          const hmac = await hmacSha256Hex(state.activeSecret, payload);
-
-          state.signatures[file.name] = {
-            sha256: state.pendingSignHash,
-            hmac,
-            signer,
-            signedAt,
-            drawing,
-            drawingHash
-          };
-          state.verifyStatus[file.name] = "ok";
-          saveSignatures();
-          signModal.classList.remove("visible");
-          renderList();
-          showToast(`"${file.name}" cryptografisch ondertekend.`, "ok");
-        } catch (err) {
-          signError.textContent = err.message || "Ondertekenen mislukt.";
-          signError.classList.add("visible");
-        }
-      });
-
-      // =========================================================================
-      // HANDTEKENING VERIFIËREN
-      // =========================================================================
-      async function verifyFile(file, secretToUse = "") {
-        const sig = state.signatures[file.name];
-        if (!sig) return { status: "unsigned", message: "Geen handtekening aanwezig." };
-
-        const buf = await getFileArrayBuffer(file);
-        const liveSha = await sha256Hex(buf);
-        const hashMatches = timingSafeEqual(liveSha, sig.sha256);
-
-        if (!hashMatches) {
-          state.verifyStatus[file.name] = "invalid";
-          return {
-            status: "invalid",
-            liveSha,
-            message: "WAARSCHUWING: De bestandsinhoud (SHA-256) komt niet meer overeen met het ondertekende zegel."
-          };
+          if (h1 || title) baseMeta.subject = h1 || title;
         }
 
-        if (!secretToUse) {
-          state.verifyStatus[file.name] = "hash-only";
-          return {
-            status: "hash-only",
-            liveSha,
-            message: "SHA-256 inhoudshash klopt. Voer de geheime string in om ook de HMAC-handtekening te verifiëren."
-          };
+        // 2. Regelgebaseerde headers (RFC-5322, E-mail, Administratieve koppen)
+        const lines = text.split(/\r?\n/).slice(0, 80);
+        const headerRegex = /^([A-Za-zÀ-ÿ0-9\-_ ]{2,32}):\s*(.{1,240})$/;
+        for (const line of lines) {
+          const m = line.match(headerRegex);
+          if (!m) continue;
+          const key = m[1].trim();
+          const val = m[2].trim();
+          if (key.startsWith("http")) continue;
+          raw[key] = val;
+
+          const lk = key.toLowerCase();
+          if (/^(kenmerk|dossier|dossiernummer|zaaknummer|nummer|factuurnummer|referentie|id|code)$/.test(lk)) {
+            baseMeta.number = val.toUpperCase();
+          } else if (/^(onderwerp|subject|betreft|titel|title)$/.test(lk)) {
+            baseMeta.subject = val;
+          } else if (/^(afzender|from|bron|auteur|author|organisatie)$/.test(lk)) {
+            baseMeta.sender = val;
+          } else if (/^(datum|date|verzonden)$/.test(lk)) {
+            baseMeta.date = val;
+          } else if (/^(bijlage|onderlegger|type|categorie)$/.test(lk) && /onderlegger|bijlage|bewijs/i.test(val)) {
+            baseMeta.role = "onderlegger";
+          }
         }
 
-        const expectedPayload = buildSignPayload({
-          name: file.name,
-          sha256: liveSha,
-          signer: sig.signer,
-          signedAt: sig.signedAt,
-          drawingHash: sig.drawingHash || ""
-        });
-        const expectedHmac = await hmacSha256Hex(secretToUse, expectedPayload);
-        const hmacMatches = timingSafeEqual(expectedHmac, sig.hmac);
-
-        if (hmacMatches) {
-          state.verifyStatus[file.name] = "ok";
-          return {
-            status: "ok",
-            liveSha,
-            message: "GEVERIFIEERD: Inhoud (SHA-256) en cryptografische veerpen-handtekening (HMAC-SHA256) zijn volledig geldig."
-          };
-        } else {
-          state.verifyStatus[file.name] = "invalid";
-          return {
-            status: "invalid",
-            liveSha,
-            message: "ONGELDIG: De HMAC-handtekening komt niet overeen met de opgegeven geheime string."
-          };
-        }
+        baseMeta.rawHeaders = raw;
+        return baseMeta;
       }
 
-      async function openVerifyModal(file, customSecret = "") {
-        state.pendingVerifyFile = file;
-        const sig = state.signatures[file.name];
-        verifyFilename.textContent = file.name;
-        verifyBanner.className = "verify-banner";
-        verifyBanner.textContent = "Bestand ophalen en verifiëren...";
-        verifyDetails.innerHTML = "";
-        verifySecretBox.style.display = "none";
-        btnRemoveSig.style.display = state.unlocked && sig ? "inline-flex" : "none";
-        verifyModal.classList.add("visible");
-
-        if (!sig) {
-          verifyBanner.className = "verify-banner verify-banner--warn";
-          verifyBanner.textContent = "Dit document is nog niet ondertekend.";
-          return;
-        }
-
-        const secret = customSecret || state.activeSecret;
-        try {
-          const result = await verifyFile(file, secret);
-          renderList();
-
-          if (result.status === "ok") {
-            verifyBanner.className = "verify-banner verify-banner--ok";
-          } else if (result.status === "invalid") {
-            verifyBanner.className = "verify-banner verify-banner--invalid";
-          } else {
-            verifyBanner.className = "verify-banner verify-banner--warn";
-          }
-          verifyBanner.textContent = result.message;
-
-          verifyDetails.innerHTML = `
-            <span class="field-label">Ondertekenaar &amp; Tijdstempel</span>
-            <span class="hash-box">${escapeHtml(sig.signer)} &bull; ${escapeHtml(new Date(sig.signedAt).toLocaleString("nl-NL"))}</span>
-            <span class="field-label">Live SHA-256 inhoudshash</span>
-            <span class="hash-box">${escapeHtml(result.liveSha || "—")}</span>
-            <span class="field-label">HMAC-SHA256 zegel</span>
-            <span class="hash-box">${escapeHtml(sig.hmac)}</span>
-            ${sig.drawing ? `<span class="field-label">Veerpen-handtekening</span><img class="sig-preview-img" src="${sig.drawing}" alt="Getekende handtekening" />` : ""}
-          `;
-
-          if (!state.unlocked && result.status !== "ok") {
-            verifySecretBox.style.display = "block";
-            verifySecretInput.value = "";
-          }
-        } catch (err) {
-          verifyBanner.className = "verify-banner verify-banner--invalid";
-          verifyBanner.textContent = err.message || "Verificatie mislukt.";
-        }
-      }
-
-      btnRunHmacVerify.addEventListener("click", () => {
-        if (!state.pendingVerifyFile) return;
-        openVerifyModal(state.pendingVerifyFile, verifySecretInput.value.trim());
-      });
-
-      btnRemoveSig.addEventListener("click", () => {
-        if (!state.pendingVerifyFile || !state.unlocked) return;
-        const name = state.pendingVerifyFile.name;
-        delete state.signatures[name];
-        delete state.verifyStatus[name];
-        saveSignatures();
-        verifyModal.classList.remove("visible");
-        renderList();
-        showToast(`Handtekening van "${name}" verwijderd.`);
-      });
-
-      btnVerifyClose.addEventListener("click", () => verifyModal.classList.remove("visible"));
-      verifyModal.addEventListener("click", (e) => { if (e.target === verifyModal) verifyModal.classList.remove("visible"); });
-
-      btnVerifyAll.addEventListener("click", async () => {
-        const all = getAllFiles().filter(f => state.signatures[f.name]);
-        if (all.length === 0) return showToast("Geen ondertekende documenten gevonden.");
-        let okCount = 0;
-        let failCount = 0;
-        for (const f of all) {
+      async function getFileArrayBuffer(file) {
+        if (file.isLocal && file.buffer) return file.buffer;
+        const urls = [];
+        if (file.download_url) urls.push(file.download_url);
+        urls.push(`${SITE_BASE_URL}/${encodeURIComponent(file.name)}`);
+        let lastErr;
+        for (const u of urls) {
           try {
-            const res = await verifyFile(f, state.activeSecret);
-            if (res.status === "ok") okCount++;
-            else failCount++;
-          } catch {
-            state.verifyStatus[f.name] = "invalid";
-            failCount++;
+            const r = await fetch(u, { cache: "no-store" });
+            if (r.ok) return await r.arrayBuffer();
+            lastErr = new Error(`HTTP ${r.status}`);
+          } catch (e) { lastErr = e; }
+        }
+        throw lastErr || new Error("Kon bestand niet ophalen.");
+      }
+
+      async function scanFileHeaders(file, force = false) {
+        if (!force && state.meta[file.name] && Object.keys(state.meta[file.name].rawHeaders || {}).length > 0) {
+          return state.meta[file.name];
+        }
+        const { ext } = splitFileName(file.name);
+        let parsed = detectFromFileName(file.name);
+
+        if (TEXT_EXTS.has(ext.toLowerCase())) {
+          try {
+            const buf = await getFileArrayBuffer(file);
+            const text = new TextDecoder("utf-8", { fatal: false }).decode(buf.slice(0, 65536));
+            parsed = parseHeadersFromText(file.name, text);
+          } catch {}
+        }
+
+        const existing = state.meta[file.name] || {};
+        state.meta[file.name] = {
+          number: existing.number || parsed.number,
+          role: existing.role || parsed.role,
+          folder: existing.folder || parsed.folder,
+          subject: existing.subject || parsed.subject,
+          sender: existing.sender || parsed.sender,
+          date: existing.date || parsed.date,
+          rawHeaders: parsed.rawHeaders
+        };
+        ensureFolderExists(state.meta[file.name].folder);
+        persistAll();
+        return state.meta[file.name];
+      }
+
+      function ensureFolderExists(folderPath) {
+        const clean = (folderPath || "").trim().replace(/^\/+|\/+$/g, "");
+        if (!clean) return;
+        if (!state.folders.includes(clean)) {
+          state.folders.push(clean);
+          state.folders.sort((a, b) => a.localeCompare(b, "nl", { numeric: true }));
+        }
+      }
+
+      function autoOrganizeFolders() {
+        const all = getAllFiles();
+        let moved = 0;
+        for (const f of all) {
+          const m = state.meta[f.name] || detectFromFileName(f.name);
+          if (m.number) {
+            const targetFolder = m.role === "onderlegger"
+              ? `Nummer ${m.number}/Onderleggers`
+              : `Nummer ${m.number}`;
+            m.folder = targetFolder;
+            ensureFolderExists(targetFolder);
+            state.meta[f.name] = m;
+            moved++;
           }
         }
-        renderList();
-        showToast(`Verificatie klaar: ${okCount} geldig, ${failCount} ongeldig.`, failCount > 0 ? "red" : "ok");
-      });
+        persistAll();
+        renderAll();
+        showToast(`${moved} document(en) automatisch op nummer in mappen ingedeeld.`, "ok");
+      }
 
       // =========================================================================
-      // GITHUB API: OPHALEN & VERWIJDEREN
+      // WEB CRYPTO: SHA-256 & HMAC-SHA256
+      // =========================================================================
+      function bufToHex(buffer) {
+        return [...new Uint8Array(buffer)].map(b => b.toString(16).padStart(2, "0")).join("");
+      }
+
+      async function sha256Hex(arrayBuffer) {
+        const digest = await crypto.subtle.digest("SHA-256", arrayBuffer);
+        return bufToHex(digest);
+      }
+
+      async function hmacSha256Hex(secret, message) {
+        const enc = new TextEncoder();
+        const key = await crypto.subtle.importKey("raw", enc.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+        return bufToHex(await crypto.subtle.sign("HMAC", key, enc.encode(message)));
+      }
+
+      function buildSignPayload({ name, sha256, signer, signedAt, drawingHash }) {
+        return `${name}|${sha256}|${signer}|${signedAt}|${drawingHash || ""}`;
+      }
+
+      // =========================================================================
+      // VEERPEN TEKENVELD
+      // =========================================================================
+      const sigPad = $("sig-pad");
+      const padCtx = sigPad.getContext("2d");
+      let isDrawing = false, padHasInk = false;
+
+      function resetSigPad() { padCtx.clearRect(0, 0, sigPad.width, sigPad.height); padHasInk = false; }
+      function getPadPos(e) {
+        const r = sigPad.getBoundingClientRect();
+        const cx = e.touches ? e.touches[0].clientX : e.clientX;
+        const cy = e.touches ? e.touches[0].clientY : e.clientY;
+        return { x: ((cx - r.left) / r.width) * sigPad.width, y: ((cy - r.top) / r.height) * sigPad.height };
+      }
+      sigPad.addEventListener("mousedown", e => { isDrawing = true; padHasInk = true; const p = getPadPos(e); padCtx.beginPath(); padCtx.moveTo(p.x, p.y); });
+      sigPad.addEventListener("mousemove", e => { if (!isDrawing) return; const p = getPadPos(e); padCtx.lineWidth = 2.3; padCtx.lineCap = "round"; padCtx.strokeStyle = "#A31C1C"; padCtx.lineTo(p.x, p.y); padCtx.stroke(); });
+      window.addEventListener("mouseup", () => { isDrawing = false; });
+      $("btn-clear-pad").addEventListener("click", resetSigPad);
+
+      // =========================================================================
+      // GITHUB API
       // =========================================================================
       async function fetchDocuments() {
         state.loading = true;
         state.error = null;
-        btnRefresh.disabled = true;
-        renderList();
-
+        renderAll();
         try {
           const headers = { Accept: "application/vnd.github.v3+json" };
-          const savedToken = sessionStorage.getItem(SESSION_TOKEN);
-          if (savedToken) headers.Authorization = `Bearer ${savedToken}`;
+          const token = sessionStorage.getItem(SESSION_TOKEN);
+          if (token) headers.Authorization = `Bearer ${token}`;
 
           const resp = await fetch(`${GITHUB_API_BASE}/`, { headers });
-          if (!resp.ok) {
-            if (resp.status === 403) {
-              throw new Error("GitHub API-limiet bereikt. Probeer later opnieuw of voer in Veerpen-modus een token in.");
-            }
-            throw new Error(`Kon bestanden niet ophalen uit ${REPO_OWNER}/${REPO_NAME} (HTTP ${resp.status}).`);
-          }
-
+          if (!resp.ok) throw new Error(`GitHub API HTTP ${resp.status}`);
           const data = await resp.json();
-          if (!Array.isArray(data)) throw new Error("Onverwacht antwoord van de GitHub API.");
-
-          state.files = data
-            .filter(item => item && item.type === "file" && !item.name.startsWith(".") && !IGNORED_FILES.has(item.name))
-            .sort((a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" }));
+          state.files = (Array.isArray(data) ? data : []).filter(
+            i => i && i.type === "file" && !i.name.startsWith(".") && !IGNORED_FILES.has(i.name)
+          );
+          for (const f of state.files) {
+            if (!state.meta[f.name]) {
+              state.meta[f.name] = detectFromFileName(f.name);
+              ensureFolderExists(state.meta[f.name].folder);
+            }
+          }
+          persistAll();
         } catch (err) {
-          state.error = err && err.message ? err.message : "Netwerkfout bij het laden.";
+          state.error = err.message;
         } finally {
           state.loading = false;
-          btnRefresh.disabled = false;
-          renderList();
-        }
-      }
-
-      async function deleteFromGitHub(file) {
-        const token = ghTokenInput.value.trim() || sessionStorage.getItem(SESSION_TOKEN) || "";
-        if (!token) throw new Error("Vul eerst een geldig GitHub Personal Access Token (contents: write) in.");
-
-        const encodedPath = file.path.split("/").map(encodeURIComponent).join("/");
-        const resp = await fetch(`${GITHUB_API_BASE}/${encodedPath}`, {
-          method: "DELETE",
-          headers: {
-            Accept: "application/vnd.github.v3+json",
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: `Verwijder ${file.name} via Documentenbeheerder`,
-            sha: file.sha
-          })
-        });
-
-        if (!resp.ok) {
-          const errJson = await resp.json().catch(() => ({}));
-          throw new Error(`GitHub-verwijdering mislukt: ${errJson.message || `HTTP ${resp.status}`}`);
+          renderAll();
         }
       }
 
       // =========================================================================
-      // RENDERING
+      // RENDERING (SIDEBAR + DOCUMENTENLIJST)
       // =========================================================================
       function getAllFiles() {
         const map = new Map();
         for (const f of state.files) map.set(f.name, f);
         for (const f of state.localFiles) map.set(f.name, f);
-        return [...map.values()].sort((a, b) => a.name.localeCompare(b.name, "nl", { sensitivity: "base" }));
+        return [...map.values()].filter(f => !state.hiddenFiles.has(f.name));
       }
 
-      function renderList() {
+      function renderSidebar(allFiles) {
+        const onderleggersCount = allFiles.filter(f => (state.meta[f.name]?.role) === "onderlegger").length;
+        const signedCount = allFiles.filter(f => Boolean(state.signatures[f.name])).length;
+
+        const views = [
+          { type: "all", value: "", label: "Alle documenten", count: allFiles.length },
+          { type: "onderleggers", value: "", label: "Onderleggers & bijlagen", count: onderleggersCount },
+          { type: "signed", value: "", label: "Ondertekend (Veerpen)", count: signedCount }
+        ];
+
+        navViews.innerHTML = views.map(v => `
+          <li>
+            <button type="button" class="nav-btn ${state.activeFilter.type === v.type ? "is-active" : ""}" data-filter-type="${v.type}" data-filter-val="">
+              <span>${escapeHtml(v.label)}</span>
+              <span class="nav-count">${v.count}</span>
+            </button>
+          </li>
+        `).join("");
+
+        // Mappenstructuur
+        navFolders.innerHTML = state.folders.map(folder => {
+          const count = allFiles.filter(f => (state.meta[f.name]?.folder || "Algemeen") === folder).length;
+          const active = state.activeFilter.type === "folder" && state.activeFilter.value === folder;
+          return `
+            <li>
+              <button type="button" class="nav-btn ${active ? "is-active" : ""}" data-filter-type="folder" data-filter-val="${escapeHtml(folder)}">
+                <span>${escapeHtml(folder)}</span>
+                <span class="nav-count">${count}</span>
+              </button>
+            </li>
+          `;
+        }).join("");
+
+        // Herkende nummers
+        const numMap = new Map();
+        for (const f of allFiles) {
+          const num = state.meta[f.name]?.number;
+          if (num) numMap.set(num, (numMap.get(num) || 0) + 1);
+        }
+        const sortedNums = [...numMap.entries()].sort((a, b) => a[0].localeCompare(b[0], "nl", { numeric: true }));
+
+        navNumbers.innerHTML = sortedNums.length === 0
+          ? `<li style="font-size:12px; color:var(--muted); padding:4px 8px;">Nog geen nummers herkend</li>`
+          : sortedNums.map(([num, cnt]) => {
+              const active = state.activeFilter.type === "number" && state.activeFilter.value === num;
+              return `
+                <li>
+                  <button type="button" class="nav-btn ${active ? "is-active" : ""}" data-filter-type="number" data-filter-val="${escapeHtml(num)}">
+                    <span style="font-family:var(--mono);">${escapeHtml(num)}</span>
+                    <span class="nav-count">${cnt}</span>
+                  </button>
+                </li>
+              `;
+            }).join("");
+
+        document.querySelectorAll(".nav-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            state.activeFilter = { type: btn.dataset.filterType, value: btn.dataset.filterVal };
+            renderAll();
+          });
+        });
+
+        $("folder-datalist").innerHTML = state.folders.map(f => `<option value="${escapeHtml(f)}"></option>`).join("");
+      }
+
+      function renderAll() {
+        const allFiles = getAllFiles();
+        renderSidebar(allFiles);
+
         if (state.loading) {
           docCounter.textContent = "Laden...";
-          listContainer.innerHTML = `<div class="state-box"><span class="spinner" aria-hidden="true"></span>Documenten ophalen uit <strong>${REPO_OWNER}/${REPO_NAME}</strong>...</div>`;
+          listContainer.innerHTML = `<div class="state-box">Documenten ophalen uit <strong>${REPO_OWNER}/${REPO_NAME}</strong>...</div>`;
           return;
         }
 
-        const combined = getAllFiles();
-        if (state.error && combined.length === 0) {
+        if (state.error && allFiles.length === 0) {
           docCounter.textContent = "Fout";
-          listContainer.innerHTML = `
-            <div class="state-box state-box--error">
-              <p><strong>Ophalen mislukt</strong></p>
-              <p>${escapeHtml(state.error)}</p>
-              <button type="button" class="btn btn--primary" id="btn-retry">Opnieuw proberen</button>
-            </div>
-          `;
-          document.getElementById("btn-retry").addEventListener("click", fetchDocuments);
+          listContainer.innerHTML = `<div class="state-box state-box--error"><p>${escapeHtml(state.error)}</p><button type="button" class="btn btn--primary" id="btn-retry">Opnieuw proberen</button></div>`;
+          $("btn-retry").addEventListener("click", fetchDocuments);
           return;
         }
 
         const q = state.query.trim().toLowerCase();
-        const unfiltered = combined.filter(f => !state.hiddenFiles.has(f.name));
-        const visible = unfiltered.filter(f => {
+        let visible = allFiles.filter(f => {
+          const m = state.meta[f.name] || detectFromFileName(f.name);
+          if (state.activeFilter.type === "onderleggers" && m.role !== "onderlegger") return false;
+          if (state.activeFilter.type === "signed" && !state.signatures[f.name]) return false;
+          if (state.activeFilter.type === "folder" && (m.folder || "Algemeen") !== state.activeFilter.value) return false;
+          if (state.activeFilter.type === "number" && m.number !== state.activeFilter.value) return false;
           if (!q) return true;
-          const sigText = state.signatures[f.name] ? "ondertekend geverifieerd" : "";
-          return f.name.toLowerCase().includes(q) || sigText.includes(q);
+          const hay = `${f.name} ${m.number} ${m.subject} ${m.sender} ${m.folder} ${m.role} ${m.date}`.toLowerCase();
+          return hay.includes(q);
         });
 
-        docCounter.textContent = q
-          ? `${visible.length} van ${unfiltered.length} documenten`
-          : `${visible.length} ${visible.length === 1 ? "document" : "documenten"}`;
+        // Sorteren
+        visible.sort((a, b) => {
+          const ma = state.meta[a.name] || {};
+          const mb = state.meta[b.name] || {};
+          if (state.sortBy === "number") {
+            const na = ma.number || "ZZZZ";
+            const nb = mb.number || "ZZZZ";
+            const cmp = na.localeCompare(nb, "nl", { numeric: true });
+            if (cmp !== 0) return cmp;
+            // Hoofddocument vóór onderlegger bij gelijk nummer
+            if (ma.role !== mb.role) return ma.role === "onderlegger" ? 1 : -1;
+          } else if (state.sortBy === "date") {
+            const cmp = (mb.date || "").localeCompare(ma.date || "");
+            if (cmp !== 0) return cmp;
+          }
+          return a.name.localeCompare(b.name, "nl", { numeric: true });
+        });
+
+        docCounter.textContent = `${visible.length} van ${allFiles.length}`;
 
         if (visible.length === 0) {
-          listContainer.innerHTML = `<div class="state-box"><p style="margin:0;">Geen documenten gevonden.</p></div>`;
+          listContainer.innerHTML = `<div class="state-box">Geen documenten in deze selectie.</div>`;
           return;
         }
 
@@ -2083,207 +1363,420 @@
         ul.className = "doc-list";
 
         for (const file of visible) {
+          const m = state.meta[file.name] || detectFromFileName(file.name);
           const { base, ext } = splitFileName(file.name);
           const liveUrl = file.isLocal ? file.blobUrl : `${SITE_BASE_URL}/${encodeURIComponent(file.name)}`;
-          const isHtml = ext.toLowerCase() === "html";
           const sig = state.signatures[file.name];
           const vStatus = state.verifyStatus[file.name];
 
           const li = document.createElement("li");
           li.className = `doc-item ${vStatus === "ok" ? "is-verified" : vStatus === "invalid" ? "is-invalid" : ""}`;
 
-          let sigBadgeMarkup = "";
+          let sigBadge = "";
           if (sig) {
-            const cls = vStatus === "ok" ? "sig-badge--ok" : vStatus === "invalid" ? "sig-badge--invalid" : "sig-badge--signed";
+            const cls = vStatus === "ok" ? "badge--ok" : vStatus === "invalid" ? "badge--invalid" : "badge--signed";
             const lbl = vStatus === "ok" ? "Geverifieerd" : vStatus === "invalid" ? "Ongeldig" : "Ondertekend";
-            sigBadgeMarkup = `<button type="button" class="sig-badge ${cls}" data-verify-name="${escapeHtml(file.name)}" title="Klik om handtekening live te verifiëren">${lbl}</button>`;
+            sigBadge = `<button type="button" class="badge ${cls}" data-verify="${escapeHtml(file.name)}">${lbl}</button>`;
           }
 
-          const adminBtns = state.unlocked
-            ? `
-              <button type="button" class="btn btn--sm" data-sign-name="${escapeHtml(file.name)}">
-                ${sig ? "Herteken" : "Onderteken"}
-              </button>
-              <button type="button" class="btn btn--primary btn--sm" data-delete-name="${escapeHtml(file.name)}">
-                Verwijder
-              </button>
-            `
-            : "";
-
           li.innerHTML = `
-            <div class="doc-main">
-              <div class="doc-title-row">
-                <a class="doc-link" href="${liveUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(base)}</a>
-                ${ext ? `<span class="ext-badge ${isHtml ? "ext-badge--html" : ""}">${escapeHtml(ext)}</span>` : ""}
-                ${file.isLocal ? `<span class="ext-badge ext-badge--local">LOKAAL</span>` : ""}
-                ${sigBadgeMarkup}
+            <div class="doc-top">
+              <div class="doc-main">
+                <div class="doc-title-row">
+                  ${m.number ? `<span class="badge badge--num"># ${escapeHtml(m.number)}</span>` : ""}
+                  <a class="doc-link" href="${liveUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(base)}</a>
+                  ${ext ? `<span class="badge ${ext.toLowerCase() === "html" ? "badge--html" : ""}">${escapeHtml(ext.toUpperCase())}</span>` : ""}
+                  ${m.role === "onderlegger" ? `<span class="badge badge--onderlegger">Onderlegger</span>` : ""}
+                  <span class="badge badge--folder">${escapeHtml(m.folder || "Algemeen")}</span>
+                  ${sigBadge}
+                </div>
+                <div class="doc-meta">
+                  <span>${escapeHtml(formatBytes(file.size))}</span>
+                  <span>&bull;</span>
+                  <span>${escapeHtml(file.name)}</span>
+                  ${sig ? `<span>&bull;</span><span>SHA: ${escapeHtml(sig.sha256.slice(0, 10))}…</span>` : ""}
+                </div>
               </div>
-              <div class="doc-meta">
-                <span>${escapeHtml(formatBytes(file.size))}</span>
-                <span>&bull;</span>
-                <span>${escapeHtml(file.name)}</span>
-                ${sig ? `<span>&bull;</span><span>SHA: ${escapeHtml(sig.sha256.slice(0, 12))}…</span>` : ""}
+
+              <div class="doc-actions">
+                <button type="button" class="btn btn--sm" data-meta="${escapeHtml(file.name)}">Headers / Map</button>
+                ${sig ? `<button type="button" class="btn btn--sm" data-verify="${escapeHtml(file.name)}">Verifieer</button>` : ""}
+                ${state.unlocked ? `
+                  <button type="button" class="btn btn--sm" data-sign="${escapeHtml(file.name)}">${sig ? "Herteken" : "Onderteken"}</button>
+                  <button type="button" class="btn btn--primary btn--sm" data-del="${escapeHtml(file.name)}">Verwijder</button>
+                ` : ""}
               </div>
             </div>
-            <div class="doc-actions">
-              ${!file.isLocal && file.html_url ? `<a class="gh-link" href="${escapeHtml(file.html_url)}" target="_blank" rel="noopener noreferrer">GitHub</a>` : ""}
-              ${sig ? `<button type="button" class="btn btn--sm" data-verify-name="${escapeHtml(file.name)}">Verifieer</button>` : ""}
-              ${adminBtns}
+
+            <div class="admin-meta-strip">
+              <div class="meta-cell"><strong>Onderwerp</strong><span>${escapeHtml(m.subject || "—")}</span></div>
+              <div class="meta-cell"><strong>Afzender / Bron</strong><span>${escapeHtml(m.sender || "—")}</span></div>
+              <div class="meta-cell"><strong>Datum</strong><span>${escapeHtml(m.date || "—")}</span></div>
+              <div class="meta-cell"><strong>Headers</strong><span>${Object.keys(m.rawHeaders || {}).length} herkend</span></div>
             </div>
           `;
-
           ul.appendChild(li);
         }
 
         listContainer.innerHTML = "";
         listContainer.appendChild(ul);
 
-        const findByName = (name) => combined.find(f => f.name === name);
-
-        ul.querySelectorAll("[data-verify-name]").forEach(el => {
-          el.addEventListener("click", () => {
-            const f = findByName(el.dataset.verifyName);
-            if (f) openVerifyModal(f);
-          });
-        });
-
-        if (state.unlocked) {
-          ul.querySelectorAll("[data-sign-name]").forEach(el => {
-            el.addEventListener("click", () => {
-              const f = findByName(el.dataset.signName);
-              if (f) openSignModal(f);
-            });
-          });
-
-          ul.querySelectorAll("[data-delete-name]").forEach(el => {
-            el.addEventListener("click", () => {
-              const f = findByName(el.dataset.deleteName);
-              if (f) openConfirmModal(f);
-            });
-          });
-        }
+        const findF = (n) => allFiles.find(x => x.name === n);
+        ul.querySelectorAll("[data-meta]").forEach(b => b.addEventListener("click", () => openMetaModal(findF(b.dataset.meta))));
+        ul.querySelectorAll("[data-verify]").forEach(b => b.addEventListener("click", () => openVerifyModal(findF(b.dataset.verify))));
+        ul.querySelectorAll("[data-sign]").forEach(b => b.addEventListener("click", () => openSignModal(findF(b.dataset.sign))));
+        ul.querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", () => openDeleteModal(findF(b.dataset.del))));
       }
 
       // =========================================================================
-      // VERWIJDER-MODAL
+      // MODAL: HEADERS & MAPINDELING
       // =========================================================================
-      function openConfirmModal(file) {
+      async function openMetaModal(file) {
+        if (!file) return;
+        state.pendingMetaFile = file;
+        $("meta-filename").textContent = file.name;
+        $("meta-modal").classList.add("visible");
+        const m = await scanFileHeaders(file, false);
+        fillMetaModal(m);
+      }
+
+      function fillMetaModal(m) {
+        $("meta-number").value = m.number || "";
+        $("meta-role").value = m.role || "hoofddocument";
+        $("meta-folder").value = m.folder || "Algemeen";
+        $("meta-subject").value = m.subject || "";
+        $("meta-sender").value = m.sender || "";
+        $("meta-date").value = m.date || "";
+        const entries = Object.entries(m.rawHeaders || {});
+        $("meta-raw-headers").innerHTML = entries.length === 0
+          ? `<tr><td colspan="2" style="color:var(--muted);">Geen tekstheaders gevonden (binair bestand of geen sleutel:waarde-regels).</td></tr>`
+          : entries.map(([k, v]) => `<tr><th>${escapeHtml(k)}</th><td>${escapeHtml(v)}</td></tr>`).join("");
+      }
+
+      $("btn-meta-rescan").addEventListener("click", async () => {
+        if (!state.pendingMetaFile) return;
+        const m = await scanFileHeaders(state.pendingMetaFile, true);
+        fillMetaModal(m);
+        renderAll();
+        showToast("Headers opnieuw uitgelezen.", "ok");
+      });
+
+      $("btn-meta-save").addEventListener("click", () => {
+        if (!state.pendingMetaFile) return;
+        const name = state.pendingMetaFile.name;
+        const folder = $("meta-folder").value.trim() || "Algemeen";
+        ensureFolderExists(folder);
+        state.meta[name] = {
+          ...(state.meta[name] || {}),
+          number: $("meta-number").value.trim().toUpperCase(),
+          role: $("meta-role").value,
+          folder,
+          subject: $("meta-subject").value.trim(),
+          sender: $("meta-sender").value.trim(),
+          date: $("meta-date").value.trim()
+        };
+        persistAll();
+        $("meta-modal").classList.remove("visible");
+        renderAll();
+        showToast("Administratieve gegevens & map opgeslagen.", "ok");
+      });
+
+      $("btn-meta-cancel").addEventListener("click", () => $("meta-modal").classList.remove("visible"));
+
+      // =========================================================================
+      // MODAL: ONDERTEKENEN & VERIFIËREN
+      // =========================================================================
+      async function openSignModal(file) {
+        state.pendingSign = file;
+        state.pendingSignHash = null;
+        $("sign-filename").textContent = file.name;
+        $("sign-hash-preview").textContent = "Berekenen...";
+        $("sign-error").classList.remove("visible");
+        $("btn-sign-confirm").disabled = true;
+        resetSigPad();
+        $("sign-modal").classList.add("visible");
+        try {
+          const hash = await sha256Hex(await getFileArrayBuffer(file));
+          state.pendingSignHash = hash;
+          $("sign-hash-preview").textContent = hash;
+          $("btn-sign-confirm").disabled = false;
+        } catch (err) {
+          $("sign-error").textContent = err.message;
+          $("sign-error").classList.add("visible");
+        }
+      }
+
+      $("btn-sign-cancel").addEventListener("click", () => $("sign-modal").classList.remove("visible"));
+      $("btn-sign-confirm").addEventListener("click", async () => {
+        const file = state.pendingSign;
+        if (!file || !state.pendingSignHash || !state.unlocked) return;
+        const signer = $("signer-name-input").value.trim() || "Beheerder";
+        const signedAt = new Date().toISOString();
+        const drawing = padHasInk ? sigPad.toDataURL("image/png") : "";
+        const drawingHash = drawing ? await sha256Hex(new TextEncoder().encode(drawing)) : "";
+        const payload = buildSignPayload({ name: file.name, sha256: state.pendingSignHash, signer, signedAt, drawingHash });
+        const hmac = await hmacSha256Hex(state.activeSecret, payload);
+
+        state.signatures[file.name] = { sha256: state.pendingSignHash, hmac, signer, signedAt, drawing, drawingHash };
+        state.verifyStatus[file.name] = "ok";
+        persistAll();
+        $("sign-modal").classList.remove("visible");
+        renderAll();
+        showToast(`"${file.name}" ondertekend met veerpen.`, "ok");
+      });
+
+      async function verifyFile(file, secret = "") {
+        const sig = state.signatures[file.name];
+        if (!sig) return { status: "unsigned", message: "Geen handtekening." };
+        const liveSha = await sha256Hex(await getFileArrayBuffer(file));
+        if (liveSha !== sig.sha256) {
+          state.verifyStatus[file.name] = "invalid";
+          return { status: "invalid", liveSha, message: "WAARSCHUWING: Bestandsinhoud (SHA-256) is gewijzigd." };
+        }
+        if (!secret) {
+          state.verifyStatus[file.name] = "hash-only";
+          return { status: "hash-only", liveSha, message: "SHA-256 klopt. Voer de geheime string in voor HMAC-verificatie." };
+        }
+        const expected = await hmacSha256Hex(secret, buildSignPayload({ name: file.name, sha256: liveSha, signer: sig.signer, signedAt: sig.signedAt, drawingHash: sig.drawingHash || "" }));
+        if (expected === sig.hmac) {
+          state.verifyStatus[file.name] = "ok";
+          return { status: "ok", liveSha, message: "GEVERIFIEERD: Inhoud (SHA-256) en HMAC-handtekening kloppen volledig." };
+        }
+        state.verifyStatus[file.name] = "invalid";
+        return { status: "invalid", liveSha, message: "ONGELDIG: HMAC-handtekening komt niet overeen met de geheime string." };
+      }
+
+      async function openVerifyModal(file, customSecret = "") {
+        state.pendingVerifyFile = file;
+        const sig = state.signatures[file.name];
+        $("verify-filename").textContent = file.name;
+        $("verify-banner").className = "verify-banner";
+        $("verify-banner").textContent = "Verifiëren...";
+        $("verify-details").innerHTML = "";
+        $("verify-secret-box").style.display = "none";
+        $("btn-remove-sig").style.display = state.unlocked && sig ? "inline-flex" : "none";
+        $("verify-modal").classList.add("visible");
+
+        const res = await verifyFile(file, customSecret || state.activeSecret);
+        renderAll();
+        $("verify-banner").className = `verify-banner verify-banner--${res.status === "ok" ? "ok" : res.status === "invalid" ? "invalid" : "warn"}`;
+        $("verify-banner").textContent = res.message;
+        if (sig) {
+          $("verify-details").innerHTML = `
+            <span class="field-label">Ondertekenaar</span>
+            <span class="hash-box">${escapeHtml(sig.signer)} &bull; ${escapeHtml(new Date(sig.signedAt).toLocaleString("nl-NL"))}</span>
+            <span class="field-label">Live SHA-256</span>
+            <span class="hash-box">${escapeHtml(res.liveSha || "—")}</span>
+            <span class="field-label">HMAC-SHA256</span>
+            <span class="hash-box">${escapeHtml(sig.hmac)}</span>
+          `;
+          if (!state.unlocked && res.status !== "ok") $("verify-secret-box").style.display = "block";
+        }
+      }
+
+      $("btn-run-hmac-verify").addEventListener("click", () => openVerifyModal(state.pendingVerifyFile, $("verify-secret-input").value.trim()));
+      $("btn-remove-sig").addEventListener("click", () => {
+        if (!state.pendingVerifyFile || !state.unlocked) return;
+        delete state.signatures[state.pendingVerifyFile.name];
+        delete state.verifyStatus[state.pendingVerifyFile.name];
+        persistAll();
+        $("verify-modal").classList.remove("visible");
+        renderAll();
+      });
+      $("btn-verify-close").addEventListener("click", () => $("verify-modal").classList.remove("visible"));
+
+      // =========================================================================
+      // VERWIJDEREN, UPLOADEN, MAPPEN & BEHEERACTIES
+      // =========================================================================
+      function openDeleteModal(file) {
         state.pendingDelete = file;
-        state.deleting = false;
-        modalError.classList.remove("visible");
-        btnModalConfirm.disabled = false;
-        btnModalCancel.disabled = false;
-        btnModalConfirm.textContent = "Bevestig verwijderen";
-        modalFilename.textContent = file.name;
-
-        if (file.isLocal) {
-          modalModeTag.textContent = "Lokaal toegevoegd document verwijderen";
-          modalDetail.textContent = "Dit verwijdert het lokaal geladen bestand uit deze sessie.";
-        } else if (state.deleteMode === "github") {
-          modalModeTag.textContent = "Definitief verwijderen uit GitHub (DELETE API)";
-          modalDetail.textContent = `Dit verwijdert het bestand permanent uit ${REPO_OWNER}/${REPO_NAME}.`;
-        } else {
-          modalModeTag.textContent = "Lokaal verbergen uit overzicht";
-          modalDetail.textContent = "Het bestand wordt verborgen in localStorage en kan later worden hersteld.";
-        }
-        confirmModal.classList.add("visible");
+        $("modal-filename").textContent = file.name;
+        $("modal-detail").textContent = file.isLocal
+          ? "Verwijdert het lokaal geladen bestand uit deze sessie."
+          : state.deleteMode === "github"
+            ? `Verwijdert het bestand definitief uit ${REPO_OWNER}/${REPO_NAME} via GitHub API.`
+            : "Verbergt het bestand lokaal uit het overzicht.";
+        $("modal-error").classList.remove("visible");
+        $("confirm-modal").classList.add("visible");
       }
 
-      function closeAllModals() {
-        if (!state.deleting) confirmModal.classList.remove("visible");
-        signModal.classList.remove("visible");
-        verifyModal.classList.remove("visible");
-      }
-
-      btnModalCancel.addEventListener("click", () => { if (!state.deleting) confirmModal.classList.remove("visible"); });
-      confirmModal.addEventListener("click", (e) => { if (e.target === confirmModal && !state.deleting) confirmModal.classList.remove("visible"); });
-
-      btnModalConfirm.addEventListener("click", async () => {
+      $("btn-modal-cancel").addEventListener("click", () => $("confirm-modal").classList.remove("visible"));
+      $("btn-modal-confirm").addEventListener("click", async () => {
         const file = state.pendingDelete;
-        if (!file || state.deleting) return;
-
+        if (!file) return;
         if (file.isLocal) {
           state.localFiles = state.localFiles.filter(f => f.name !== file.name);
-          confirmModal.classList.remove("visible");
-          renderList();
-          showToast(`"${file.name}" verwijderd uit sessie.`);
-          return;
-        }
-
-        if (state.deleteMode === "local") {
+        } else if (state.deleteMode === "local") {
           state.hiddenFiles.add(file.name);
-          saveHiddenFiles();
-          confirmModal.classList.remove("visible");
-          renderList();
-          showToast(`"${file.name}" verborgen uit overzicht.`);
-          return;
-        }
-
-        state.deleting = true;
-        btnModalConfirm.disabled = true;
-        btnModalCancel.disabled = true;
-        btnModalConfirm.textContent = "Verwijderen...";
-        modalError.classList.remove("visible");
-
-        try {
-          await deleteFromGitHub(file);
+        } else {
+          const token = $("gh-token-input").value.trim() || sessionStorage.getItem(SESSION_TOKEN) || "";
+          if (!token) { $("modal-error").textContent = "GitHub-token vereist."; $("modal-error").classList.add("visible"); return; }
+          const resp = await fetch(`${GITHUB_API_BASE}/${encodeURIComponent(file.name)}`, {
+            method: "DELETE",
+            headers: { Accept: "application/vnd.github.v3+json", Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+            body: JSON.stringify({ message: `Verwijder ${file.name}`, sha: file.sha })
+          });
+          if (!resp.ok) { $("modal-error").textContent = `HTTP ${resp.status}`; $("modal-error").classList.add("visible"); return; }
           state.files = state.files.filter(f => f.name !== file.name);
-          state.hiddenFiles.delete(file.name);
-          saveHiddenFiles();
-          state.deleting = false;
-          confirmModal.classList.remove("visible");
-          renderList();
-          showToast(`"${file.name}" definitief verwijderd uit GitHub.`, "red");
-        } catch (err) {
-          state.deleting = false;
-          btnModalConfirm.disabled = false;
-          btnModalCancel.disabled = false;
-          btnModalConfirm.textContent = "Bevestig verwijderen";
-          modalError.textContent = err.message || "Verwijderen mislukt.";
-          modalError.classList.add("visible");
         }
+        persistAll();
+        $("confirm-modal").classList.remove("visible");
+        renderAll();
+        showToast(`"${file.name}" verwijderd.`);
       });
 
-      // =========================================================================
-      // ZOEKEN, TOETSENBORD & INITIALISATIE
-      // =========================================================================
-      searchInput.addEventListener("input", () => {
-        state.query = searchInput.value;
-        btnClearSearch.classList.toggle("visible", state.query.length > 0);
-        renderList();
+      $("btn-create-folder").addEventListener("click", () => {
+        const val = $("new-folder-input").value.trim();
+        if (!val) return;
+        ensureFolderExists(val);
+        $("new-folder-input").value = "";
+        persistAll();
+        renderAll();
+        showToast(`Map "${val}" aangemaakt.`, "ok");
       });
 
-      btnClearSearch.addEventListener("click", () => {
-        searchInput.value = "";
-        state.query = "";
-        btnClearSearch.classList.remove("visible");
-        renderList();
-        searchInput.focus();
+      $("btn-scan-all").addEventListener("click", async () => {
+        const all = getAllFiles();
+        showToast(`Headers scannen van ${all.length} document(en)...`);
+        for (const f of all) await scanFileHeaders(f, true);
+        renderAll();
+        showToast("Alle headers uitgelezen en nummers bijgewerkt.", "ok");
       });
 
-      btnRefresh.addEventListener("click", fetchDocuments);
+      $("btn-auto-folders").addEventListener("click", autoOrganizeFolders);
 
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          closeAllModals();
-          if (state.unlockOpen && !state.unlocked) setUnlockPanelVisible(false);
+      $("btn-verify-all").addEventListener("click", async () => {
+        const signed = getAllFiles().filter(f => state.signatures[f.name]);
+        let ok = 0, bad = 0;
+        for (const f of signed) {
+          const r = await verifyFile(f, state.activeSecret);
+          if (r.status === "ok") ok++; else bad++;
         }
+        renderAll();
+        showToast(`Verificatie: ${ok} geldig, ${bad} ongeldig.`, bad ? "red" : "ok");
       });
 
-      window.addEventListener("load", () => {
-        const hiddenArr = loadStorageJson(STORAGE_HIDDEN, []);
-        state.hiddenFiles = Array.isArray(hiddenArr) ? new Set(hiddenArr) : new Set();
-        state.signatures = loadStorageJson(STORAGE_SIGS, {});
-        saveHiddenFiles();
+      $("btn-add-file").addEventListener("click", () => $("file-upload-input").click());
+      $("file-upload-input").addEventListener("change", async (e) => {
+        for (const file of [...(e.target.files || [])]) {
+          const buffer = await file.arrayBuffer();
+          const blobUrl = URL.createObjectURL(new Blob([buffer], { type: file.type || "application/octet-stream" }));
+          const obj = { name: file.name, size: file.size, isLocal: true, buffer, blobUrl };
+          state.localFiles = state.localFiles.filter(f => f.name !== file.name);
+          state.localFiles.push(obj);
+          await scanFileHeaders(obj, true);
+        }
+        e.target.value = "";
+        renderAll();
+        showToast("Document(en) toegevoegd en headers gescand.", "ok");
+      });
 
-        const savedScale = parseFloat(localStorage.getItem(STORAGE_FONT));
-        applyFontScale(Number.isFinite(savedScale) ? savedScale : 1);
+      $("btn-export-manifest").addEventListener("click", () => {
+        const payload = {
+          repo: `${REPO_OWNER}/${REPO_NAME}`,
+          exportedAt: new Date().toISOString(),
+          folders: state.folders,
+          meta: state.meta,
+          signatures: state.signatures
+        };
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
+        a.download = `manifest-${REPO_NAME}.json`;
+        a.click();
+      });
 
+      $("btn-import-manifest").addEventListener("click", () => $("manifest-import-input").click());
+      $("manifest-import-input").addEventListener("change", async (e) => {
+        const f = e.target.files?.[0];
+        e.target.value = "";
+        if (!f) return;
         try {
-          const savedToken = sessionStorage.getItem(SESSION_TOKEN);
-          if (savedToken) ghTokenInput.value = savedToken;
-        } catch {}
+          const p = JSON.parse(await f.text());
+          if (Array.isArray(p.folders)) p.folders.forEach(ensureFolderExists);
+          if (p.meta) state.meta = { ...state.meta, ...p.meta };
+          if (p.signatures) state.signatures = { ...state.signatures, ...p.signatures };
+          persistAll();
+          renderAll();
+          showToast("Manifest geïmporteerd.", "ok");
+        } catch { showToast("Ongeldig manifest.", "red"); }
+      });
 
+      // =========================================================================
+      // VEERPEN ONTGRENDELEN, LETTERGROOTTE & ZOEKEN
+      // =========================================================================
+      $("btn-quill").addEventListener("click", () => {
+        if (state.unlocked) return $("admin-bar").scrollIntoView({ behavior: "smooth" });
+        state.unlockOpen = !state.unlockOpen;
+        $("unlock-panel").classList.toggle("visible", state.unlockOpen);
+        if (state.unlockOpen) $("secret-input").focus();
+      });
+      $("btn-close-unlock").addEventListener("click", () => { state.unlockOpen = false; $("unlock-panel").classList.remove("visible"); });
+      $("unlock-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const val = $("secret-input").value.trim();
+        if (val === GEHEIME_STRING) {
+          state.unlocked = true;
+          state.activeSecret = val;
+          state.unlockOpen = false;
+          $("unlock-panel").classList.remove("visible");
+          $("admin-bar").classList.add("visible");
+          $("btn-quill").classList.add("is-unlocked");
+          $("quill-label").textContent = "Veerpen actief";
+          $("secret-input").value = "";
+          renderAll();
+          showToast("Veerpen ontgrendeld.", "ok");
+        } else {
+          $("unlock-error").classList.add("visible");
+        }
+      });
+      $("btn-lock").addEventListener("click", () => {
+        state.unlocked = false;
+        state.activeSecret = "";
+        $("admin-bar").classList.remove("visible");
+        $("btn-quill").classList.remove("is-unlocked");
+        $("quill-label").textContent = "Veerpen";
+        renderAll();
+      });
+
+      document.querySelectorAll('input[name="deleteMode"]').forEach(r => r.addEventListener("change", e => {
+        state.deleteMode = e.target.value;
+        $("lbl-mode-local").classList.toggle("is-active", state.deleteMode === "local");
+        $("lbl-mode-github").classList.toggle("is-active", state.deleteMode === "github");
+        $("token-row").classList.toggle("visible", state.deleteMode === "github");
+      }));
+
+      $("btn-save-token").addEventListener("click", () => {
+        const t = $("gh-token-input").value.trim();
+        if (t) { sessionStorage.setItem(SESSION_TOKEN, t); showToast("Token opgeslagen in sessie.", "ok"); }
+      });
+      $("btn-clear-token").addEventListener("click", () => { $("gh-token-input").value = ""; sessionStorage.removeItem(SESSION_TOKEN); });
+      $("btn-restore-hidden").addEventListener("click", () => { state.hiddenFiles.clear(); persistAll(); renderAll(); });
+
+      $("search-input").addEventListener("input", e => { state.query = e.target.value; renderAll(); });
+      $("sort-select").addEventListener("change", e => { state.sortBy = e.target.value; renderAll(); });
+      $("btn-refresh").addEventListener("click", fetchDocuments);
+
+      function applyFont(s) {
+        state.fontScale = Math.max(0.85, Math.min(1.35, Math.round(s * 100) / 100));
+        document.documentElement.style.setProperty("--doc-scale", String(state.fontScale));
+        localStorage.setItem(STORAGE_FONT, String(state.fontScale));
+      }
+      $("btn-font-down").addEventListener("click", () => applyFont(state.fontScale - 0.1));
+      $("btn-font-reset").addEventListener("click", () => applyFont(1));
+      $("btn-font-up").addEventListener("click", () => applyFont(state.fontScale + 0.1));
+
+      // Initialisatie
+      window.addEventListener("load", () => {
+        state.hiddenFiles = new Set(loadJson(STORAGE_HIDDEN, []));
+        state.signatures = loadJson(STORAGE_SIGS, {});
+        state.meta = loadJson(STORAGE_META, {});
+        const savedFolders = loadJson(STORAGE_FOLDERS, null);
+        if (Array.isArray(savedFolders) && savedFolders.length) state.folders = savedFolders;
+        const sc = parseFloat(localStorage.getItem(STORAGE_FONT));
+        if (Number.isFinite(sc)) applyFont(sc);
+        const tk = sessionStorage.getItem(SESSION_TOKEN);
+        if (tk) $("gh-token-input").value = tk;
+        persistAll();
         fetchDocuments();
       });
     })();
