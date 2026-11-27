@@ -119,7 +119,7 @@
       position: absolute;
       top: calc(100% + 4px);
       left: 0;
-      min-width: 240px;
+      min-width: 250px;
       background: var(--bg);
       border: 1px solid var(--border-strong);
       border-top: 3px solid var(--red);
@@ -174,6 +174,15 @@
     .input-field, .select-field { padding: 7px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 13px; }
     .input-field { flex: 1; min-width: 150px; }
     .input-field:focus, .select-field:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(163, 28, 28, 0.12); }
+
+    /* DUBBELING-SCHAKELAAR */
+    .dedup-toggle {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px;
+      border-radius: var(--radius-sm); border: 1px solid var(--border-strong);
+      background: var(--bg); font-size: 12.5px; font-weight: 600; color: var(--text); cursor: pointer;
+    }
+    .dedup-toggle input { accent-color: var(--red); margin: 0; }
+    .dedup-toggle.has-dups { border-color: var(--warn-border); background: var(--warn-soft); color: var(--warn); }
 
     /* BALKEN */
     .notify-bar, .bulk-bar {
@@ -245,6 +254,7 @@
     .doc-item.is-verified { border-left: 3.5px solid var(--ok); }
     .doc-item.is-invalid { border-left: 3.5px solid var(--red); }
     .doc-item.is-alert { box-shadow: inset 0 0 0 1.5px var(--red-border); }
+    .doc-item.is-duplicate { border-left: 3.5px solid var(--warn); background: var(--warn-soft); }
 
     .doc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .doc-main { min-width: 0; flex: 1; }
@@ -265,6 +275,7 @@
     .badge--ok { background: var(--ok-soft); border-color: var(--ok-border); color: var(--ok); font-family: var(--sans); cursor: pointer; }
     .badge--invalid { background: var(--red-soft); border-color: var(--red-border); color: var(--red); font-family: var(--sans); cursor: pointer; }
     .badge--signed { background: var(--warn-soft); border-color: var(--warn-border); color: var(--warn); font-family: var(--sans); cursor: pointer; }
+    .badge--dup { background: var(--warn-soft); border-color: var(--warn-border); color: var(--warn); font-family: var(--sans); }
 
     .doc-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12px; color: var(--muted); font-family: var(--mono); }
     .admin-meta-strip { margin-top: 9px; padding: 8px 10px; border-radius: var(--radius-sm); background: var(--bg); border: 1px solid var(--border); display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px 12px; font-size: 12px; }
@@ -356,6 +367,7 @@
         <div class="menu-dropdown">
           <button type="button" class="menu-action" id="m-upload"><span>+ Document uploaden (naar Tijdelijk)</span><span class="menu-hint">Veerpen</span></button>
           <button type="button" class="menu-action" id="m-scan"><span>Scan alle headers &amp; inhoud</span><span class="menu-hint">Veerpen</span></button>
+          <button type="button" class="menu-action" id="m-dedup-scan"><span>Scan op dubbelingen (SHA-256)</span><span class="menu-hint">Veerpen</span></button>
           <button type="button" class="menu-action" id="m-auto-archive"><span>Auto-archiveer op nummer</span><span class="menu-hint">Veerpen</span></button>
           <div class="menu-sep"></div>
           <button type="button" class="menu-action" id="m-verify-all"><span>Verifieer alle Veerpen-zegels</span></button>
@@ -505,6 +517,11 @@
               <input type="search" id="search-input" class="search-input" placeholder="Zoek op nummer, map, POD, trefwoord of bestandsnaam..." />
               <button type="button" class="btn btn--sm" id="btn-clear-search" title="Zoekveld wissen">Wis</button>
             </div>
+            <label class="dedup-toggle" id="dedup-toggle-wrap" title="Verberg dubbele bestanden op basis van hash, Message-ID of dossiernummer + datum + onderwerp">
+              <input type="checkbox" id="toggle-dedup" checked />
+              <span>Sluit dubbelingen uit</span>
+              <span id="dedup-badge" style="font-family:var(--mono); font-size:11px;"></span>
+            </label>
             <select id="sort-select" class="select-field">
               <option value="number">Sorteer op nummer</option>
               <option value="name">Sorteer op naam (A-Z)</option>
@@ -531,7 +548,7 @@
 
     <footer class="footer">
       <span>Bron: <a href="https://github.com/goija/nummer" target="_blank" rel="noopener noreferrer">github.com/goija/nummer</a></span>
-      <span style="font-family:var(--mono);">Archiefbeheer + PDF-Zwartlak + Solid PODs (.ttl/.acl/PUT) + Audit</span>
+      <span style="font-family:var(--mono);">Archiefbeheer + PDF-Zwartlak + Solid PODs (.ttl/.acl/PUT) + Dubbeling-uitsluiting + Audit</span>
     </footer>
   </div>
 
@@ -637,6 +654,7 @@
         <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
           <select id="audit-filter" class="select-field">
             <option value="all">Alle acties</option>
+            <option value="DUBBELING_UITGESLOTEN">Dubbeling uitgesloten</option>
             <option value="VERWIJDERD_NA_CONTROLE">Verwijderd na controle</option>
             <option value="MAP_WIJZIGING">Mapwijzigingen</option>
             <option value="POD_BEHEER">POD-beheer &amp; PUT</option>
@@ -787,12 +805,13 @@
         hidden: `pro_hidden_${REPO_NAME}`, sigs: `pro_sigs_${REPO_NAME}`, meta: `pro_meta_${REPO_NAME}`,
         folders: `pro_folders_${REPO_NAME}`, pods: `pro_pods_${REPO_NAME}`, pii: `pro_pii_${REPO_NAME}`,
         audit: `pro_audit_${REPO_NAME}`, systems: `pro_sys_${REPO_NAME}`, watch: `pro_watch_${REPO_NAME}`,
-        font: "pro_font_scale", token: "pro_gh_token", solidToken: "pro_solid_token"
+        dedup: `pro_dedup_${REPO_NAME}`, font: "pro_font_scale", token: "pro_gh_token", solidToken: "pro_solid_token"
       };
 
       const state = {
         files: [], localFiles: [], textCache: {}, selected: new Set(), loading: true, error: null,
         query: "", watchKeywords: "", dateFrom: "", dateTo: "", sortBy: "number",
+        excludeDuplicates: true, duplicateMap: new Map(),
         activeFilter: { type: "all", value: "" }, fontScale: 1,
         unlocked: false, activeSecret: "", unlockOpen: false, deleteMode: "local",
         hiddenFiles: new Set(),
@@ -818,6 +837,132 @@
       function splitFileName(n) { const i = n.lastIndexOf("."); return i <= 0 ? { base: n, ext: "" } : { base: n.slice(0, i), ext: n.slice(i + 1) }; }
       function formatBytes(b) { if (!Number.isFinite(b) || b < 0) return "—"; if (b < 1024) return `${b} B`; if (b < 1048576) return `${(b / 1024).toFixed(1).replace(".", ",")} KB`; return `${(b / 1048576).toFixed(2).replace(".", ",")} MB`; }
       function loadJson(k, fb) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch { return fb; } }
+
+      // =======================================================================
+      // DUBBELING-UITSLUITING (DRIETRAPS: HASH -> MESSAGE-ID -> METADATA)
+      // =======================================================================
+      const STATUS_RANK = { "gearchiveerd": 3, "in-behandeling": 2, "tijdelijk": 1 };
+
+      function normalizeDedupText(val = "") {
+        return String(val)
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .replace(/\s*\(\d+\)(?=\.[^.]+$|$)/g, "")
+          .replace(/[-_\s]+kopie(?=\.[^.]+$|$)/g, "")
+          .replace(/[^a-z0-9]+/g, " ")
+          .trim();
+      }
+
+      function getMessageIdFromHeaders(rawHeaders = {}) {
+        for (const [k, v] of Object.entries(rawHeaders || {})) {
+          if (k.toLowerCase() === "message-id" && v) {
+            return String(v).replace(/^<|>$/g, "").trim().toLowerCase();
+          }
+        }
+        return "";
+      }
+
+      function getFileContentHash(file) {
+        const m = state.meta[file.name] || {};
+        const sig = state.signatures[file.name];
+        return m.sha256 || sig?.sha256 || file.sha || "";
+      }
+
+      function buildMetadataKey(file) {
+        const m = state.meta[file.name] || detectFromFileName(file.name);
+        const num = normalizeDedupText(m.number || "");
+        const date = String(m.date || "").slice(0, 10);
+        const { base, ext } = splitFileName(file.name);
+        const title = normalizeDedupText(m.subject || base);
+        if (!num && !title) return "";
+        return `${num}|${date}|${title}|${ext.toLowerCase()}`;
+      }
+
+      function pickPrimaryFile(a, b) {
+        const sigA = Boolean(state.signatures[a.name]);
+        const sigB = Boolean(state.signatures[b.name]);
+        if (sigA !== sigB) return sigA ? a : b;
+
+        const ma = state.meta[a.name] || {};
+        const mb = state.meta[b.name] || {};
+        const rankA = STATUS_RANK[ma.status] || 0;
+        const rankB = STATUS_RANK[mb.status] || 0;
+        if (rankA !== rankB) return rankA > rankB ? a : b;
+
+        // Voorkeur voor niet-kopie bestandsnaam (kortere, schone naam)
+        const aIsCopy = /\(\d+\)|kopie/i.test(a.name);
+        const bIsCopy = /\(\d+\)|kopie/i.test(b.name);
+        if (aIsCopy !== bIsCopy) return aIsCopy ? b : a;
+
+        return a.name.length <= b.name.length ? a : b;
+      }
+
+      function analyzeDuplicates(files) {
+        const keyToWinner = new Map();
+        const excludedMap = new Map(); // file.name -> { reason, primaryName }
+
+        for (const file of files) {
+          const m = state.meta[file.name] || {};
+          const keys = [];
+
+          const hash = getFileContentHash(file);
+          if (hash) keys.push({ key: `hash:${hash}`, reason: m.sha256 || state.signatures[file.name]?.sha256 ? "SHA-256 (identieke inhoud)" : "Git-SHA (identieke inhoud)" });
+
+          const msgId = getMessageIdFromHeaders(m.rawHeaders);
+          if (msgId) keys.push({ key: `msg:${msgId}`, reason: "Header Message-ID" });
+
+          const metaKey = buildMetadataKey(file);
+          if (metaKey) keys.push({ key: `meta:${metaKey}`, reason: "Dossiernummer + datum + naam" });
+
+          let match = null;
+          let matchReason = "";
+          for (const item of keys) {
+            if (keyToWinner.has(item.key)) {
+              match = keyToWinner.get(item.key);
+              matchReason = item.reason;
+              break;
+            }
+          }
+
+          if (!match) {
+            for (const item of keys) keyToWinner.set(item.key, file);
+            if (!keys.length) keyToWinner.set(`id:${file.name}`, file);
+          } else if (match.name !== file.name) {
+            const winner = pickPrimaryFile(match, file);
+            const loser = winner === file ? match : file;
+
+            excludedMap.set(loser.name, { reason: matchReason, primaryName: winner.name });
+
+            for (const [k, v] of keyToWinner.entries()) {
+              if (v === loser) keyToWinner.set(k, winner);
+            }
+            for (const item of keys) keyToWinner.set(item.key, winner);
+          }
+        }
+
+        const uniqueFiles = files.filter(f => !excludedMap.has(f.name));
+        return { uniqueFiles, excludedMap };
+      }
+
+      async function checkIncomingDuplicate(fileName, buffer, existingFiles) {
+        const incomingSha = await sha256Hex(buffer);
+        const tempObj = { name: fileName, size: buffer.byteLength, isLocal: true };
+        const incomingMetaKey = buildMetadataKey(tempObj);
+
+        for (const existing of existingFiles) {
+          const exMeta = state.meta[existing.name] || {};
+          const exSha = exMeta.sha256 || state.signatures[existing.name]?.sha256 || "";
+          if (exSha && exSha === incomingSha) {
+            return { isDuplicate: true, reason: "SHA-256 (identieke inhoud)", primary: existing, sha256: incomingSha };
+          }
+          const exMetaKey = buildMetadataKey(existing);
+          if (incomingMetaKey && exMetaKey && incomingMetaKey === exMetaKey) {
+            return { isDuplicate: true, reason: "Bestandsnaam / dossiermetadata", primary: existing, sha256: incomingSha };
+          }
+        }
+        return { isDuplicate: false, reason: "", primary: null, sha256: incomingSha };
+      }
 
       // =======================================================================
       // MENUBALK DROPDOWNS
@@ -899,6 +1044,7 @@
           localStorage.setItem(KEYS.audit, JSON.stringify(state.auditLog));
           localStorage.setItem(KEYS.systems, JSON.stringify(state.systems));
           localStorage.setItem(KEYS.watch, state.watchKeywords);
+          localStorage.setItem(KEYS.dedup, JSON.stringify(state.excludeDuplicates));
         } catch {}
       }
 
@@ -1016,8 +1162,9 @@
         ttl += `<${baseUri}>\n  a ldp:BasicContainer ;\n  dcterms:title "${pod.name.replace(/"/g, '\\"')}" ;\n  dcterms:created "${pod.createdAt}" .\n\n`;
         for (const f of docs) {
           const m = state.meta[f.name] || {}, sig = state.signatures[f.name];
+          const digest = sig?.sha256 || m.sha256 || "";
           ttl += `<${baseUri}${encodeURIComponent(f.name)}>\n  a ldp:Resource ;\n  dcterms:title "${redactPlain(m.subject || f.name).replace(/"/g, '\\"')}" ;\n`;
-          if (sig?.sha256) ttl += `  sec:digestValue "${sig.sha256}" ;\n`;
+          if (digest) ttl += `  sec:digestValue "${digest}" ;\n`;
           ttl += `  dcterms:isPartOf <${baseUri}> .\n\n`;
         }
         return ttl;
@@ -1141,7 +1288,7 @@
         const dateMatch = base.match(/\b(20\d{2}[-_.]\d{2}[-_.]\d{2})\b/);
         const isOnderlegger = /(onderlegger|bijlage|bewijs|bon|factuur|scan|kopie)/i.test(base);
         const num = numMatch ? numMatch[1].replace(/[_\s]+/g, "-").toUpperCase() : "";
-        return { number: num, role: isOnderlegger ? "onderlegger" : "hoofddocument", status: num ? "in-behandeling" : "tijdelijk", folder: num ? (isOnderlegger ? "Onderleggers" : "Algemeen") : TEMP_FOLDER, podId: "", retention: "7 jaar", notes: "", date: dateMatch ? dateMatch[1].replace(/[_.]/g, "-") : "", subject: base.replace(/[-_]+/g, " ").trim(), sender: "", rawHeaders: {} };
+        return { number: num, role: isOnderlegger ? "onderlegger" : "hoofddocument", status: num ? "in-behandeling" : "tijdelijk", folder: num ? (isOnderlegger ? "Onderleggers" : "Algemeen") : TEMP_FOLDER, podId: "", retention: "7 jaar", notes: "", date: dateMatch ? dateMatch[1].replace(/[_.]/g, "-") : "", subject: base.replace(/[-_]+/g, " ").trim(), sender: "", rawHeaders: {}, sha256: "" };
       }
 
       async function getFileArrayBuffer(file) {
@@ -1155,9 +1302,11 @@
       async function scanFileHeaders(file, force = false) {
         if (!force && state.meta[file.name] && Object.keys(state.meta[file.name].rawHeaders || {}).length) return state.meta[file.name];
         let parsed = detectFromFileName(file.name);
-        if (TEXT_EXTS.has(splitFileName(file.name).ext.toLowerCase())) {
-          try {
-            const text = new TextDecoder("utf-8", { fatal: false }).decode((await getFileArrayBuffer(file)).slice(0, 65536));
+        try {
+          const buf = await getFileArrayBuffer(file);
+          parsed.sha256 = await sha256Hex(buf);
+          if (TEXT_EXTS.has(splitFileName(file.name).ext.toLowerCase())) {
+            const text = new TextDecoder("utf-8", { fatal: false }).decode(buf.slice(0, 65536));
             state.textCache[file.name] = text;
             const raw = {};
             for (const line of text.split(/\r?\n/).slice(0, 80)) {
@@ -1170,9 +1319,9 @@
               else if (/^(datum|date|verzonden)$/.test(lk)) parsed.date = v;
             }
             parsed.rawHeaders = raw;
-          } catch {}
-        }
-        state.meta[file.name] = { ...parsed, ...(state.meta[file.name] || {}), rawHeaders: parsed.rawHeaders };
+          }
+        } catch {}
+        state.meta[file.name] = { ...parsed, ...(state.meta[file.name] || {}), rawHeaders: parsed.rawHeaders, sha256: parsed.sha256 || state.meta[file.name]?.sha256 || "" };
         ensureFolderExists(state.meta[file.name].folder); persistAll();
         return state.meta[file.name];
       }
@@ -1241,30 +1390,32 @@
         $("bulk-pod-select").innerHTML = `<option value="">Geen POD</option>` + state.pods.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join("");
       }
 
-      function renderSidebar(all) {
+      function renderSidebar(all, uniqueFiles, excludedMap) {
+        const baseList = state.excludeDuplicates ? uniqueFiles : all;
         $("nav-views").innerHTML = [
-          { type: "all", label: "Alle documenten", count: all.length },
-          { type: "temp", label: "Tijdelijk (te archiveren)", count: all.filter(f => (state.meta[f.name]?.folder || TEMP_FOLDER) === TEMP_FOLDER).length },
-          { type: "archived", label: "Definitief gearchiveerd", count: all.filter(f => state.meta[f.name]?.status === "gearchiveerd").length },
-          { type: "alerts", label: "Notificatie-treffers", count: all.filter(f => getMatchedKeywords(f).length > 0).length }
+          { type: "all", label: "Alle documenten", count: baseList.length },
+          { type: "temp", label: "Tijdelijk (te archiveren)", count: baseList.filter(f => (state.meta[f.name]?.folder || TEMP_FOLDER) === TEMP_FOLDER).length },
+          { type: "archived", label: "Definitief gearchiveerd", count: baseList.filter(f => state.meta[f.name]?.status === "gearchiveerd").length },
+          { type: "duplicates", label: "Dubbelingen (uitgesloten)", count: excludedMap.size },
+          { type: "alerts", label: "Notificatie-treffers", count: baseList.filter(f => getMatchedKeywords(f).length > 0).length }
         ].map(v => `<li><button type="button" class="nav-btn ${state.activeFilter.type === v.type ? "is-active" : ""}" data-ft="${v.type}" data-fv=""><span>${v.label}</span><span class="nav-count">${v.count}</span></button></li>`).join("");
 
         $("folder-add-box").style.display = state.unlocked ? "flex" : "none";
         $("nav-folders").innerHTML = state.folders.map(folder => {
-          const cnt = all.filter(f => (state.meta[f.name]?.folder || TEMP_FOLDER) === folder).length;
+          const cnt = baseList.filter(f => (state.meta[f.name]?.folder || TEMP_FOLDER) === folder).length;
           const act = state.activeFilter.type === "folder" && state.activeFilter.value === folder;
           const del = state.unlocked && folder !== TEMP_FOLDER ? `<button type="button" class="btn btn--ghost btn--xs" data-del-folder="${escapeHtml(folder)}" title="Verwijder map na controle">&times;</button>` : "";
           return `<li class="nav-row"><button type="button" class="nav-btn ${act ? "is-active" : ""}" data-ft="folder" data-fv="${escapeHtml(folder)}"><span>${escapeHtml(folder)}</span><span class="nav-count">${cnt}</span></button>${del}</li>`;
         }).join("");
 
         $("nav-pods").innerHTML = state.pods.map(pod => {
-          const cnt = all.filter(f => state.meta[f.name]?.podId === pod.id).length;
+          const cnt = baseList.filter(f => state.meta[f.name]?.podId === pod.id).length;
           const act = state.activeFilter.type === "pod" && state.activeFilter.value === pod.id;
           return `<li><button type="button" class="nav-btn ${act ? "is-active" : ""}" data-ft="pod" data-fv="${escapeHtml(pod.id)}"><span>${escapeHtml(pod.name)}</span><span class="nav-count">${cnt}</span></button></li>`;
         }).join("");
 
         const numMap = new Map();
-        for (const f of all) { const n = state.meta[f.name]?.number; if (n) numMap.set(n, (numMap.get(n) || 0) + 1); }
+        for (const f of baseList) { const n = state.meta[f.name]?.number; if (n) numMap.set(n, (numMap.get(n) || 0) + 1); }
         $("nav-numbers").innerHTML = [...numMap.entries()].sort((a, b) => a[0].localeCompare(b[0], "nl", { numeric: true })).map(([n, c]) =>
           `<li><button type="button" class="nav-btn ${state.activeFilter.type === "number" && state.activeFilter.value === n ? "is-active" : ""}" data-ft="number" data-fv="${escapeHtml(n)}"><span style="font-family:var(--mono);">${escapeHtml(n)}</span><span class="nav-count">${c}</span></button></li>`
         ).join("") || `<li style="font-size:12px; color:var(--muted); padding:4px 8px;">Nog geen nummers</li>`;
@@ -1276,8 +1427,17 @@
 
       function renderAll() {
         const all = getAllFiles();
-        renderSidebar(all);
+        const { uniqueFiles, excludedMap } = analyzeDuplicates(all);
+        state.duplicateMap = excludedMap;
+
+        // Werk dubbeling-schakelaar bij
+        const dupCount = excludedMap.size;
+        $("dedup-badge").textContent = dupCount > 0 ? `(${dupCount})` : "";
+        $("dedup-toggle-wrap").classList.toggle("has-dups", state.excludeDuplicates && dupCount > 0);
+
+        renderSidebar(all, uniqueFiles, excludedMap);
         updateBulkBar();
+
         const hits = getWatchList().length ? all.filter(f => getMatchedKeywords(f).length > 0) : [];
         $("notify-bar").classList.toggle("visible", hits.length > 0);
         if (hits.length) $("notify-text").innerHTML = `<strong>Notificatie:</strong> ${hits.length} document(en) matchen je trefwoorden.`;
@@ -1286,7 +1446,11 @@
         if (state.error && !all.length) { $("list-container").innerHTML = `<div class="state-box state-box--error">${escapeHtml(state.error)}</div>`; return; }
 
         const q = state.query.trim().toLowerCase();
-        let visible = all.filter(f => {
+        const pool = state.activeFilter.type === "duplicates"
+          ? all.filter(f => excludedMap.has(f.name))
+          : (state.excludeDuplicates ? uniqueFiles : all);
+
+        let visible = pool.filter(f => {
           const m = state.meta[f.name] || detectFromFileName(f.name);
           const folder = m.folder || TEMP_FOLDER;
           if (state.activeFilter.type === "temp" && folder !== TEMP_FOLDER) return false;
@@ -1308,8 +1472,14 @@
           return a.name.localeCompare(b.name, "nl", { numeric: true });
         });
 
-        $("doc-counter").textContent = `${visible.length} van ${all.length}`;
-        if (!visible.length) { $("list-container").innerHTML = `<div class="state-box">Geen documenten in deze selectie.</div>`; return; }
+        $("doc-counter").textContent = state.activeFilter.type === "duplicates"
+          ? `${visible.length} dubbeling(en)`
+          : `${visible.length} van ${all.length}${state.excludeDuplicates && dupCount ? ` (−${dupCount} dubbel)` : ""}`;
+
+        if (!visible.length) {
+          $("list-container").innerHTML = `<div class="state-box">${state.activeFilter.type === "duplicates" ? "Geen dubbelingen gevonden." : "Geen documenten in deze selectie."}</div>`;
+          return;
+        }
 
         const ul = document.createElement("ul"); ul.className = "doc-list";
         for (const file of visible) {
@@ -1319,9 +1489,10 @@
           const folder = m.folder || TEMP_FOLDER;
           const pod = state.pods.find(p => p.id === m.podId);
           const kws = getMatchedKeywords(file);
+          const dupInfo = excludedMap.get(file.name);
 
           const li = document.createElement("li");
-          li.className = `doc-item ${vStatus === "ok" ? "is-verified" : vStatus === "invalid" ? "is-invalid" : ""} ${kws.length ? "is-alert" : ""}`;
+          li.className = `doc-item ${vStatus === "ok" ? "is-verified" : vStatus === "invalid" ? "is-invalid" : ""} ${kws.length ? "is-alert" : ""} ${dupInfo ? "is-duplicate" : ""}`;
           li.innerHTML = `
             <div class="doc-top">
               <div class="doc-main">
@@ -1330,6 +1501,7 @@
                   ${m.number ? `<span class="badge badge--num"># ${escapeHtml(m.number)}</span>` : ""}
                   <a class="doc-link" href="#" data-view="${escapeHtml(file.name)}">${redactHtml(base)}</a>
                   ${ext ? `<span class="badge ${ext.toLowerCase() === "pdf" ? "badge--pdf" : ext.toLowerCase() === "eml" ? "badge--eml" : ""}">${escapeHtml(ext.toUpperCase())}</span>` : ""}
+                  ${dupInfo ? `<span class="badge badge--dup" title="Overeenkomst op ${escapeHtml(dupInfo.reason)} met ${escapeHtml(dupInfo.primaryName)}">Dubbeling (${escapeHtml(dupInfo.reason)}) &rarr; ${redactHtml(dupInfo.primaryName)}</span>` : ""}
                   ${folder === TEMP_FOLDER ? `<span class="badge badge--temp">Tijdelijk</span>` : m.status === "gearchiveerd" ? `<span class="badge badge--archived">Gearchiveerd</span>` : ""}
                   <span class="badge badge--folder">${escapeHtml(folder)}</span>
                   ${pod ? `<span class="badge badge--pod">POD: ${escapeHtml(pod.name)}</span>` : ""}
@@ -1373,11 +1545,35 @@
       // MENU-ACTIES & BULK-ARCHIVERING
       // =======================================================================
       $("m-upload").addEventListener("click", () => { if (requireUnlock()) $("file-upload-input").click(); });
-      $("m-scan").addEventListener("click", async () => { if (!requireUnlock()) return; for (const f of getAllFiles()) await scanFileHeaders(f, true); renderAll(); showToast("Headers gescand.", "ok"); });
+      $("m-scan").addEventListener("click", async () => { if (!requireUnlock()) return; for (const f of getAllFiles()) await scanFileHeaders(f, true); renderAll(); showToast("Headers & hashes gescand.", "ok"); });
+      $("m-dedup-scan").addEventListener("click", async () => {
+        if (!requireUnlock()) return;
+        showToast("SHA-256 hashes berekenen...");
+        const all = getAllFiles();
+        for (const f of all) {
+          if (!state.meta[f.name]?.sha256) {
+            try {
+              const hash = await sha256Hex(await getFileArrayBuffer(f));
+              state.meta[f.name] = { ...(state.meta[f.name] || detectFromFileName(f.name)), sha256: hash };
+            } catch {}
+          }
+        }
+        persistAll();
+        const { excludedMap } = analyzeDuplicates(all);
+        if (excludedMap.size > 0) {
+          logAudit("DUBBELING_UITGESLOTEN", `${excludedMap.size} dubbeling(en)`, "Gedetecteerd tijdens SHA-256 scan.");
+          showToast(`${excludedMap.size} dubbeling(en) gevonden en uitgesloten.`, "ok");
+        } else {
+          showToast("Geen dubbelingen gevonden.", "ok");
+        }
+        renderAll();
+      });
       $("m-auto-archive").addEventListener("click", () => {
         if (!requireUnlock()) return;
+        const { uniqueFiles } = analyzeDuplicates(getAllFiles());
+        const targetFiles = state.excludeDuplicates ? uniqueFiles : getAllFiles();
         let moved = 0;
-        for (const f of getAllFiles()) { const m = state.meta[f.name] || detectFromFileName(f.name); if (m.number) { m.folder = m.role === "onderlegger" ? `Nummer ${m.number}/Onderleggers` : `Nummer ${m.number}`; m.status = "gearchiveerd"; ensureFolderExists(m.folder); state.meta[f.name] = m; moved++; } }
+        for (const f of targetFiles) { const m = state.meta[f.name] || detectFromFileName(f.name); if (m.number) { m.folder = m.role === "onderlegger" ? `Nummer ${m.number}/Onderleggers` : `Nummer ${m.number}`; m.status = "gearchiveerd"; ensureFolderExists(m.folder); state.meta[f.name] = m; moved++; } }
         if (moved) logAudit("ARCHIEF_VERPLAATSING", `${moved} doc(s)`, "Auto-gearchiveerd op nummer.");
         renderAll(); showToast(`${moved} document(en) gearchiveerd.`, "ok");
       });
@@ -1415,12 +1611,19 @@
 
       $("m-analysis").addEventListener("click", () => {
         const all = getAllFiles();
+        const { uniqueFiles, excludedMap } = analyzeDuplicates(all);
+        const dupRows = [...excludedMap.entries()].map(([name, info]) =>
+          `<tr><td>${redactHtml(name)}</td><td>${redactHtml(info.primaryName)}</td><td><span class="badge badge--dup">${escapeHtml(info.reason)}</span></td></tr>`
+        ).join("");
         $("analysis-content").innerHTML = `<div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-val">${all.length}</div><div class="kpi-lbl">Documenten</div></div>
+          <div class="kpi-card"><div class="kpi-val">${uniqueFiles.length}</div><div class="kpi-lbl">Unieke documenten</div></div>
+          <div class="kpi-card"><div class="kpi-val">${excludedMap.size}</div><div class="kpi-lbl">Dubbelingen uitgesloten</div></div>
           <div class="kpi-card"><div class="kpi-val">${state.folders.length}</div><div class="kpi-lbl">Mappen</div></div>
           <div class="kpi-card"><div class="kpi-val">${state.pods.length}</div><div class="kpi-lbl">Archief-PODs</div></div>
           <div class="kpi-card"><div class="kpi-val">${state.auditLog.length}</div><div class="kpi-lbl">Audit-regels</div></div>
-        </div>`;
+        </div>
+        ${excludedMap.size ? `<div class="sys-card"><div class="sys-card-head"><span>Gedetecteerde dubbelingen</span></div>
+          <table class="header-table"><thead><tr><th>Uitgesloten kopie</th><th>Primair document</th><th>Reden</th></tr></thead><tbody>${dupRows}</tbody></table></div>` : ""}`;
         $("analysis-modal").classList.add("visible");
       });
       $("m-audit").addEventListener("click", () => { if (requireUnlock()) { renderAudit(); $("audit-modal").classList.add("visible"); } });
@@ -1469,6 +1672,7 @@
         const drawing = padHasInk ? sigPad.toDataURL("image/png") : "", drawingHash = drawing ? await sha256Hex(new TextEncoder().encode(drawing)) : "";
         const hmac = await hmacSha256Hex(state.activeSecret, buildSignPayload({ name: f.name, sha256: state.pendingSignHash, signer, signedAt, drawingHash }));
         state.signatures[f.name] = { sha256: state.pendingSignHash, hmac, signer, signedAt, drawing, drawingHash }; state.verifyStatus[f.name] = "ok";
+        state.meta[f.name] = { ...(state.meta[f.name] || detectFromFileName(f.name)), sha256: state.pendingSignHash };
         logAudit("VEERPEN_ZEGEL", f.name, `Ondertekend door ${signer}.`);
         $("sign-modal").classList.remove("visible"); renderAll(); showToast("Ondertekend.", "ok");
       });
@@ -1555,14 +1759,35 @@
 
       $("btn-create-folder").addEventListener("click", () => { const v = $("new-folder-input").value.trim(); if (!v || !state.unlocked) return; ensureFolderExists(v); $("new-folder-input").value = ""; logAudit("MAP_WIJZIGING", v, "Map aangemaakt."); renderAll(); });
       $("file-upload-input").addEventListener("change", async e => {
+        let added = 0, skipped = 0;
         for (const file of [...(e.target.files || [])]) {
           const buffer = await file.arrayBuffer();
+          const check = await checkIncomingDuplicate(file.name, buffer, getAllFiles());
+          if (check.isDuplicate) {
+            logAudit("DUBBELING_UITGESLOTEN", file.name, `Overeenkomst (${check.reason}) met "${check.primary.name}".`);
+            const forceAdd = confirm(
+              `Dubbeling gedetecteerd (${check.reason}).\n` +
+              `Bestaand document: ${check.primary.name}\n\n` +
+              `Annuleren = uitsluiten (aanbevolen)\nOK = toch toevoegen aan "${TEMP_FOLDER}"`
+            );
+            if (!forceAdd) { skipped++; continue; }
+          }
           const obj = { name: file.name, size: file.size, isLocal: true, buffer, blobUrl: URL.createObjectURL(new Blob([buffer], { type: file.type || "application/octet-stream" })) };
           state.localFiles = state.localFiles.filter(f => f.name !== file.name); state.localFiles.push(obj);
-          const m = await scanFileHeaders(obj, true); m.folder = TEMP_FOLDER; m.status = "tijdelijk"; state.meta[file.name] = m;
+          const m = await scanFileHeaders(obj, true); m.folder = TEMP_FOLDER; m.status = "tijdelijk"; m.sha256 = check.sha256; state.meta[file.name] = m;
           logAudit("ARCHIEF_VERPLAATSING", file.name, `Geüpload naar ${TEMP_FOLDER}.`);
+          added++;
         }
-        e.target.value = ""; renderAll(); showToast(`Toegevoegd aan "${TEMP_FOLDER}".`, "ok");
+        e.target.value = ""; renderAll();
+        if (added && skipped) showToast(`${added} toegevoegd, ${skipped} dubbeling(en) uitgesloten.`, "ok");
+        else if (skipped) showToast(`${skipped} dubbeling(en) uitgesloten.`, "red");
+        else if (added) showToast(`Toegevoegd aan "${TEMP_FOLDER}".`, "ok");
+      });
+
+      $("toggle-dedup").addEventListener("change", e => {
+        state.excludeDuplicates = e.target.checked;
+        persistAll();
+        renderAll();
       });
 
       $("btn-quill").addEventListener("click", () => { if (state.unlocked) return $("admin-bar").scrollIntoView({ behavior: "smooth" }); state.unlockOpen = !state.unlockOpen; $("unlock-panel").classList.toggle("visible", state.unlockOpen); if (state.unlockOpen) $("secret-input").focus(); });
@@ -1597,6 +1822,8 @@
         state.auditLog = loadJson(KEYS.audit, []);
         state.pii = { ...state.pii, ...loadJson(KEYS.pii, {}) };
         state.systems = { ...state.systems, ...loadJson(KEYS.systems, {}) };
+        state.excludeDuplicates = loadJson(KEYS.dedup, true);
+        $("toggle-dedup").checked = Boolean(state.excludeDuplicates);
         const savedFolders = loadJson(KEYS.folders, null); if (Array.isArray(savedFolders) && savedFolders.length) state.folders = savedFolders;
         const savedPods = loadJson(KEYS.pods, null); if (Array.isArray(savedPods) && savedPods.length) state.pods = savedPods;
         ensureFolderExists(TEMP_FOLDER);
