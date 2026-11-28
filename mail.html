@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Basisinstellingen en responsieve viewport -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Een mooie zaterdagochtend-cocktail</title>
+  <style>
+    /* ==========================================================================
+       Ontwerptokens en hoog-contrast kleurenpalet (zonder externe afhankelijkheden)
+       ========================================================================== */
+    :root {
+      --bg-page: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-subtle: #FAF8F8;
+      --bg-meta: #F6F4F4;
+      --text-main: #1A1A1A;
+      --text-muted: #4A4A4A;
+      --accent-red: #A31C1C;
+      --accent-red-dark: #7D1414;
+      --accent-red-soft: #FDF3F3;
+      --border-light: #E2DCDC;
+      --border-strong: #C9BFBF;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --shadow-card: 0 2px 10px rgba(26, 26, 26, 0.04);
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --base-font-size: 19px;
+    }
+
+    /* Basisreset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: var(--base-font-size);
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-sans);
+      line-height: 1.68;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    /* Hoofdcontainer met ruime witruimte */
+    .dossier-container {
+      width: 100%;
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 2.25rem 1.25rem 3.5rem;
+    }
+
+    /* ==========================================================================
+       Header en tekstgrootte-schakelaar
+       ========================================================================== */
+    .dossier-header {
+      border-bottom: 3px solid var(--accent-red);
+      padding-bottom: 1.75rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .header-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.9rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .dossier-label {
+      display: inline-block;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--accent-red);
+      background-color: var(--accent-red-soft);
+      border: 1px solid rgba(163, 28, 28, 0.25);
+      padding: 0.32rem 0.75rem;
+      border-radius: var(--radius-sm);
+    }
+
+    /* A- / A+ bedieningspaneel */
+    .font-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      padding: 0.25rem 0.4rem;
+      border-radius: var(--radius-md);
+    }
+
+    .font-controls-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 0 0.35rem;
+    }
+
+    .font-btn {
+      appearance: none;
+      background-color: #FFFFFF;
+      color: var(--text-main);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 700;
+      min-width: 2.45rem;
+      min-height: 2.2rem;
+      padding: 0.3rem 0.65rem;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .font-btn:hover,
+    .font-btn:focus-visible {
+      background-color: var(--accent-red);
+      color: #FFFFFF;
+      border-color: var(--accent-red);
+      outline: 2px solid var(--accent-red);
+      outline-offset: 2px;
+    }
+
+    .font-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background-color: var(--bg-subtle);
+      color: var(--text-muted);
+      border-color: var(--border-light);
+    }
+
+    .font-size-indicator {
+      font-size: 0.74rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      min-width: 3rem;
+      text-align: center;
+    }
+
+    .dossier-title {
+      margin: 0 0 0.75rem 0;
+      font-size: clamp(1.65rem, 4vw, 2.3rem);
+      line-height: 1.2;
+      font-weight: 800;
+      color: var(--accent-red);
+      letter-spacing: -0.02em;
+    }
+
+    .dossier-subtitle {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+      max-width: 68ch;
+    }
+
+    /* ==========================================================================
+       Dossierkaarten (genummerde secties)
+       ========================================================================== */
+    .dossier-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .dossier-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-left: 5px solid var(--accent-red);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.65rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .card-number {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: var(--radius-sm);
+      background-color: var(--accent-red);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 0.9rem;
+      line-height: 1;
+      margin-top: 0.12rem;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 1.22rem;
+      line-height: 1.35;
+      font-weight: 700;
+      color: var(--accent-red);
+      word-break: break-word;
+    }
+
+    .card-body {
+      margin: 0;
+      color: var(--text-main);
+    }
+
+    /* Actieknoppen en externe links */
+    .card-actions {
+      margin-top: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .action-link,
+    .toggle-btn,
+    .print-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 0.65rem 1.05rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    }
+
+    .action-link {
+      background-color: var(--accent-red);
+      color: #FFFFFF;
+      border: 2px solid var(--accent-red);
+    }
+
+    .action-link:hover,
+    .action-link:focus-visible {
+      background-color: var(--accent-red-dark);
+      border-color: var(--accent-red-dark);
+      outline: 2px solid var(--accent-red);
+      outline-offset: 2px;
+    }
+
+    .action-link-outline {
+      background-color: #FFFFFF;
+      color: var(--accent-red);
+      border: 2px solid var(--accent-red);
+    }
+
+    .action-link-outline:hover,
+    .action-link-outline:focus-visible {
+      background-color: var(--accent-red-soft);
+      color: var(--accent-red-dark);
+      border-color: var(--accent-red-dark);
+      outline: 2px solid var(--accent-red);
+      outline-offset: 2px;
+    }
+
+    .toggle-btn {
+      background-color: var(--bg-subtle);
+      color: var(--accent-red);
+      border: 2px solid var(--accent-red);
+    }
+
+    .toggle-btn:hover,
+    .toggle-btn:focus-visible {
+      background-color: var(--accent-red);
+      color: #FFFFFF;
+      outline: 2px solid var(--accent-red);
+      outline-offset: 2px;
+    }
+
+    .chevron-icon {
+      display: inline-block;
+      transition: transform 0.2s ease;
+      font-size: 0.85em;
+    }
+
+    .toggle-btn[aria-expanded="true"] .chevron-icon {
+      transform: rotate(180deg);
+    }
+
+    /* ==========================================================================
+       Uitklapbaar technisch metadata-overzicht (standaard verborgen)
+       ========================================================================== */
+    .metadata-panel {
+      margin-top: 1.1rem;
+      background-color: var(--bg-meta);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.25rem;
+    }
+
+    .metadata-panel[hidden] {
+      display: none;
+    }
+
+    .metadata-heading {
+      margin: 0 0 0.75rem 0;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent-red);
+    }
+
+    .metadata-list {
+      margin: 0;
+      display: grid;
+      grid-template-columns: minmax(140px, auto) 1fr;
+      gap: 0.45rem 1.25rem;
+      font-size: 0.88rem;
+    }
+
+    .metadata-list dt {
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .metadata-list dd {
+      margin: 0;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      word-break: break-word;
+    }
+
+    /* ==========================================================================
+       Footer met printknop en datumstempel
+       ========================================================================== */
+    .dossier-footer {
+      margin-top: 2.75rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--border-light);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .print-btn {
+      background-color: #FFFFFF;
+      color: var(--text-main);
+      border: 2px solid var(--text-main);
+    }
+
+    .print-btn:hover,
+    .print-btn:focus-visible {
+      background-color: var(--text-main);
+      color: #FFFFFF;
+      outline: 2px solid var(--accent-red);
+      outline-offset: 2px;
+    }
+
+    .footer-stamp {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .footer-stamp strong {
+      color: var(--accent-red);
+    }
+
+    /* ==========================================================================
+       Responsieve aanpassingen voor kleinere schermen
+       ========================================================================== */
+    @media (max-width: 600px) {
+      .dossier-container {
+        padding: 1.4rem 1rem 2.5rem;
+      }
+
+      .dossier-card {
+        padding: 1.25rem 1.15rem;
+      }
+
+      .metadata-list {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
+      }
+
+      .metadata-list dd {
+        margin-bottom: 0.6rem;
+      }
+
+      .dossier-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* ==========================================================================
+       Afdruk- / PDF-stijlen
+       ========================================================================== */
+    @media print {
+      body {
+        background-color: #FFFFFF;
+        color: #000000;
+      }
+
+      .dossier-container {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      .font-controls,
+      .print-btn,
+      .toggle-btn {
+        display: none !important;
+      }
+
+      .dossier-card {
+        box-shadow: none;
+        break-inside: avoid;
+        border: 1px solid #BDBDBD;
+        border-left: 5px solid #A31C1C;
+      }
+
+      .action-link,
+      .action-link-outline {
+        background: none;
+        color: #A31C1C;
+        border: none;
+        padding: 0;
+        text-decoration: underline;
+      }
+
+      /* Toon de URL achter externe links bij het afdrukken */
+      .action-link::after,
+      .action-link-outline::after {
+        content: " (" attr(href) ")";
+        font-weight: 400;
+        font-size: 0.82em;
+        color: #4A4A4A;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dossier-container">
+    <!-- ====================================================================
+         Header met dossierlabel, tekstgrootte-schakelaar, titel en ondertitel
+         ==================================================================== -->
+    <header class="dossier-header">
+      <div class="header-top-bar">
+        <span class="dossier-label">DOSSIER 6:179 &bull; 28 NOVEMBER 2026</span>
+
+        <div class="font-controls" role="group" aria-label="Tekstgrootte aanpassen">
+          <span class="font-controls-label">Tekst</span>
+          <button type="button" id="btn-font-decrease" class="font-btn" aria-label="Tekstgrootte verkleinen">A-</button>
+          <span id="font-size-display" class="font-size-indicator" aria-live="polite">19px</span>
+          <button type="button" id="btn-font-increase" class="font-btn" aria-label="Tekstgrootte vergroten">A+</button>
+        </div>
+      </div>
+
+      <h1 class="dossier-title">Een mooie zaterdagochtend-cocktail</h1>
+      <p class="dossier-subtitle">
+        Juridische dierenaansprakelijkheid, muziek over kansberekening, auteursrecht en een flinke lading ruwe PDF-binaire data.
+      </p>
+    </header>
+
+    <!-- ====================================================================
+         Hoofdinhoud: vier genummerde dossierkaarten
+         ==================================================================== -->
+    <main class="dossier-grid">
+      <!-- Sectie 1 -->
+      <article class="dossier-card" aria-labelledby="sec-1-title">
+        <div class="card-header">
+          <span class="card-number" aria-hidden="true">1</span>
+          <h2 id="sec-1-title" class="card-title">Artikel 6:179 BW (schaapjes op het droge)</h2>
+        </div>
+        <p class="card-body">
+          De risicoaansprakelijkheid van de bezitter van een dier voor schade die het dier uit eigen energie aanricht. Of het nu om weggelopen schapen of om een muis in een patroon gaat, de juridische kern draait om de onberekenbaarheid van het dier — een aardig contrast met strakke wiskundige modellen.
+        </p>
+      </article>
+
+      <!-- Sectie 2 -->
+      <article class="dossier-card" aria-labelledby="sec-2-title">
+        <div class="card-header">
+          <span class="card-number" aria-hidden="true">2</span>
+          <h2 id="sec-2-title" class="card-title">Nummer 22 (: 2 = 11)</h2>
+        </div>
+        <p class="card-body">
+          Sting – Shape of My Heart sluit daar thematisch naadloos op aan, met het motief van iemand die kaarten legt om de verborgen geometrie van het toeval en de wetmatigheid achter getallen te doorgronden [00:56].
+        </p>
+        <div class="card-actions">
+          <a
+            href="https://www.youtube.com/watch?v=NlwIDxCjL-8"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="action-link"
+          >
+            Bekijk op YouTube &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- Sectie 3 -->
+      <article class="dossier-card" aria-labelledby="sec-3-title">
+        <div class="card-header">
+          <span class="card-number" aria-hidden="true">3</span>
+          <h2 id="sec-3-title" class="card-title">LLM-auteursrechten (floort.net/posts/llm-auteursrechten/)</h2>
+        </div>
+        <p class="card-body">
+          Ik kan die pagina niet rechtstreeks uitlezen, maar als je een passage of stelling uit dat stuk wilt bespreken of toetsen aan het Nederlandse auteurs- of vermogensrecht, plak de tekst er dan gerust even bij.
+        </p>
+        <div class="card-actions">
+          <a
+            href="https://floort.net/posts/llm-auteursrechten/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="action-link action-link-outline"
+          >
+            Open artikel op floort.net &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- Sectie 4 -->
+      <article class="dossier-card" aria-labelledby="sec-4-title">
+        <div class="card-header">
+          <span class="card-number" aria-hidden="true">4</span>
+          <h2 id="sec-4-title" class="card-title">De FlateDecode-brij onderaan</h2>
+        </div>
+        <p class="card-body">
+          Dat blok tekst is de ruwe, gecomprimeerde binaire code van een PDF-export uit Proton Mail (aangemaakt op 26 oktober 2026 om 17:26 UTC via Chrome/Skia op Linux, met het lettertype Ubuntu Sans). Omdat de stream-objecten zlib-gecomprimeerd zijn en via kopiëren/plakken zijn omgezet naar platte tekens, is de eigenlijke e-mailtekst hieruit niet meer te reconstrueren.
+        </p>
+        <div class="card-actions">
+          <button
+            type="button"
+            id="btn-toggle-meta"
+            class="toggle-btn"
+            aria-expanded="false"
+            aria-controls="pdf-metadata-panel"
+          >
+            <span id="toggle-meta-label">Toon technische PDF-metadata</span>
+            <span class="chevron-icon" aria-hidden="true">&#9662;</span>
+          </button>
+        </div>
+
+        <!-- Standaard verborgen metadata-overzicht -->
+        <section id="pdf-metadata-panel" class="metadata-panel" hidden aria-label="Technische PDF-metadata">
+          <h3 class="metadata-heading">Technische PDF-metadata</h3>
+          <dl class="metadata-list">
+            <dt>PDF-generator</dt>
+            <dd>Skia/PDF m156</dd>
+
+            <dt>Tijdstip</dt>
+            <dd>2026-10-26 17:26:21 UTC</dd>
+
+            <dt>Filter</dt>
+            <dd>/FlateDecode</dd>
+
+            <dt>Font</dt>
+            <dd>Ubuntu Sans</dd>
+          </dl>
+        </section>
+      </article>
+    </main>
+
+    <!-- ====================================================================
+         Footer met printknop en datumstempel
+         ==================================================================== -->
+    <footer class="dossier-footer">
+      <button type="button" id="btn-print" class="print-btn">
+        Afdrukken / PDF
+      </button>
+      <p class="footer-stamp">
+        Datumstempel: <strong>28 november 2026</strong> &bull; Dossier 6:179
+      </p>
+    </footer>
+  </div>
+
+  <!-- ======================================================================
+       Vanilla JavaScript voor tekstgrootte, metadata-toggle en afdrukken
+       ====================================================================== -->
+  <script>
+    (function () {
+      "use strict";
+
+      try {
+        // 1. Tekstgrootte-schakelaar (standaard 19px, bereik 15px - 26px)
+        const MIN_SIZE = 15;
+        const MAX_SIZE = 26;
+        let currentFontSize = 19;
+
+        const rootElement = document.documentElement;
+        const btnDecrease = document.getElementById("btn-font-decrease");
+        const btnIncrease = document.getElementById("btn-font-increase");
+        const sizeDisplay = document.getElementById("font-size-display");
+
+        function updateFontSize(newSize) {
+          currentFontSize = Math.max(MIN_SIZE, Math.min(MAX_SIZE, newSize));
+          rootElement.style.setProperty("--base-font-size", currentFontSize + "px");
+          sizeDisplay.textContent = currentFontSize + "px";
+          btnDecrease.disabled = currentFontSize <= MIN_SIZE;
+          btnIncrease.disabled = currentFontSize >= MAX_SIZE;
+        }
+
+        if (btnDecrease && btnIncrease && sizeDisplay) {
+          btnDecrease.addEventListener("click", function () {
+            updateFontSize(currentFontSize - 1);
+          });
+
+          btnIncrease.addEventListener("click", function () {
+            updateFontSize(currentFontSize + 1);
+          });
+
+          updateFontSize(19);
+        }
+
+        // 2. In- en uitklapbaar technisch metadata-overzicht (standaard verborgen)
+        const btnToggleMeta = document.getElementById("btn-toggle-meta");
+        const toggleMetaLabel = document.getElementById("toggle-meta-label");
+        const metadataPanel = document.getElementById("pdf-metadata-panel");
+
+        if (btnToggleMeta && metadataPanel && toggleMetaLabel) {
+          btnToggleMeta.addEventListener("click", function () {
+            const isHidden = metadataPanel.hasAttribute("hidden");
+            if (isHidden) {
+              metadataPanel.removeAttribute("hidden");
+              btnToggleMeta.setAttribute("aria-expanded", "true");
+              toggleMetaLabel.textContent = "Verberg technische PDF-metadata";
+            } else {
+              metadataPanel.setAttribute("hidden", "");
+              btnToggleMeta.setAttribute("aria-expanded", "false");
+              toggleMetaLabel.textContent = "Toon technische PDF-metadata";
+            }
+          });
+        }
+
+        // 3. Afdrukknop
+        const btnPrint = document.getElementById("btn-print");
+        if (btnPrint) {
+          btnPrint.addEventListener("click", function () {
+            window.print();
+          });
+        }
+      } catch (err) {
+        // Stille foutafhandeling zodat de pagina altijd bruikbaar blijft
+        console.error("Fout bij initialisatie van de pagina-interactie:", err);
+      }
+    })();
+  </script>
+</body>
+</html>
